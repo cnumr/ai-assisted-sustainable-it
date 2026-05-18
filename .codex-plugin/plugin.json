@@ -1,0 +1,38 @@
+{
+  "name": "ecocode",
+  "version": "1.0.0",
+  "description": "Audit d'éco-conception web selon les 115 bonnes pratiques Green IT. Analyse front-end et back-end avec agents spécialisés.",
+  "author": {
+    "name": "Renaud Heluin",
+    "email": "renaud.heluin@novagaia.fr"
+  },
+  "homepage": "https://github.com/your-org/ecocode-plugin",
+  "repository": "https://github.com/your-org/ecocode-plugin",
+  "license": "MIT",
+  "keywords": [
+    "ecocode",
+    "green-it",
+    "eco-conception",
+    "sustainability",
+    "web-performance",
+    "accessibility"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "EcoCode — Audit Green IT",
+    "shortDescription": "Audit d'éco-conception web basé sur les 115 bonnes pratiques Green IT",
+    "longDescription": "EcoCode analyse votre projet web selon les 115 bonnes pratiques Green IT du référentiel CNUMR. Il identifie automatiquement le périmètre front-end et back-end, délègue l'analyse à des agents spécialisés, et produit un rapport hiérarchisé avec des recommandations actionnables.",
+    "developerName": "Renaud Heluin",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Read"],
+    "defaultPrompt": [
+      "Lance un audit éco-conception sur ce projet.",
+      "Analyse le front-end de ce projet selon les bonnes pratiques Green IT."
+    ],
+    "websiteURL": "https://github.com/your-org/ecocode-plugin",
+    "brandColor": "#22C55E",
+    "composerIcon": "./assets/ecocode-small.svg",
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
+  }
+}
