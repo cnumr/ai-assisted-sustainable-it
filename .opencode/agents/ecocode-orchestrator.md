@@ -32,7 +32,8 @@ Quand tu reçois une demande d'audit :
 4. **Reçois et agrège les résultats** des deux agents.
 
 5. **Produis un rapport consolidé** avec :
-   - Score d'impact global (1-10) selon la méthode du skill `ecocode`
+   - **EcoIndex officiel** (score 0-100, grade A-G, CO2 et eau par page vue) retourné par l'agent front via `calculer_ecoindex`
+   - **Score d'impact interne** (1-10) calculé selon la méthode du skill `ecocode` à partir des sévérités détectées sur toutes les couches
    - Top 5 des problèmes critiques toutes couches confondues
    - Plan d'action priorisé par ratio effort/impact (matrice P1→P4)
    - Références aux numéros et intitulés des bonnes pratiques Green IT mobilisées

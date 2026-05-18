@@ -84,9 +84,15 @@ Structure du rapport de synthèse :
 ```markdown
 # Rapport Éco-conception — [Nom du projet]
 
-## Score d'impact global : X/10
+## EcoIndex officiel : XX/100 — Grade A
+
+_Score Green IT officiel (100 = excellent, 0 = très mauvais) calculé sur : nœuds DOM, requêtes HTTP, taille transférée_
+_Émissions : X,XX gCO2e/page vue — Eau : X,XX cl/page vue_
+
+## Score d'impact interne : X/10
 
 _(1 = très éco-responsable, 10 = très énergivore)_
+_Calculé à partir des sévérités détectées : base 5 + 0,5 par problème Haute + 0,2 par problème Moyenne − 0,1 par bonne pratique respectée_
 
 ## Top 5 des problèmes critiques
 
@@ -113,13 +119,36 @@ _(1 = très éco-responsable, 10 = très énergivore)_
 [Liste des numéros et intitulés des pratiques citées]
 ```
 
-## Calcul du score d'impact global
+## Calcul de l'EcoIndex officiel
+
+Appeler `mcp-greenit : calculer_ecoindex` avec les 3 métriques mesurées pendant l'analyse front :
+
+| Paramètre   | Source                                                    |
+| ----------- | --------------------------------------------------------- |
+| `dom_nodes` | Nœuds DOM comptés via Playwright ou analyse statique HTML |
+| `requests`  | Nombre de requêtes HTTP capturées via Playwright          |
+| `size_kb`   | Taille totale transférée en KB capturée via Playwright    |
+| `url`       | URL analysée (optionnel, pour contexte)                   |
+
+Le MCP retourne :
+
+- Un **score EcoIndex de 0 à 100** (100 = excellent, 0 = très mauvais)
+- Un **grade A à G** (A = excellent, G = très mauvais)
+- Une estimation des **émissions CO2** et de la **consommation d'eau** par page vue
+
+**Si l'analyse porte uniquement sur du code source (sans URL)**, estimer les métriques à partir de l'analyse statique (compter les éléments HTML, les balises `<script>` et `<link>`, et les tailles de fichiers) puis appeler quand même `calculer_ecoindex` avec ces estimations — en signalant qu'il s'agit d'une estimation.
+
+## Calcul du score d'impact interne
+
+Complémentaire à l'EcoIndex, ce score reflète la gravité qualitative des problèmes détectés sur toutes les couches (front + back) :
 
 - Base : 5/10 (application non analysée)
-- Chaque problème **Haute** sévérité : +0.5 point
-- Chaque problème **Moyenne** sévérité : +0.2 point
-- Chaque bonne pratique déjà respectée : -0.1 point
+- Chaque problème **Haute** sévérité : +0,5 point
+- Chaque problème **Moyenne** sévérité : +0,2 point
+- Chaque bonne pratique déjà respectée : −0,1 point
 - Score plafonné entre 1 et 10
+
+Ce score couvre aussi le back-end (où l'EcoIndex ne s'applique pas) et donne une vue holistique de la dette éco-conception.
 
 ## Priorisation effort/impact
 

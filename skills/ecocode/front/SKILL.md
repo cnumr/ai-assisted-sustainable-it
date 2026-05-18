@@ -215,18 +215,32 @@ Avant toute analyse, détecter et gérer un éventuel mur d'authentification.
 2. Intercepter les requêtes réseau → lister ressources, tailles, types, domaines
 3. Mesurer DOMContentLoaded, Load, LCP, CLS
 4. Capturer le nombre de nœuds DOM
-5. Lister les scripts tiers et leur poids
-6. Vérifier les headers de cache (Cache-Control, Expires, ETag)
-7. Vérifier le protocole (HTTP/1.1 vs HTTP/2)
-8. Détecter les redirections (301, 302)
-9. Vérifier la lecture automatique audio/vidéo
-10. Contrôler la présence d'un Service Worker
+5. Calculer : total des requêtes HTTP + taille totale transférée en KB
+6. Appeler mcp-greenit : calculer_ecoindex avec {dom_nodes, requests, size_kb, url}
+7. Lister les scripts tiers et leur poids
+8. Vérifier les headers de cache (Cache-Control, Expires, ETag)
+9. Vérifier le protocole (HTTP/1.1 vs HTTP/2)
+10. Détecter les redirections (301, 302)
+11. Vérifier la lecture automatique audio/vidéo
+12. Contrôler la présence d'un Service Worker
 ```
 
 ## Format de rapport
 
 ```markdown
 ## Analyse Front-end
+
+### EcoIndex
+
+| Métrique          | Valeur mesurée |
+| ----------------- | -------------- |
+| Nœuds DOM         | XXX            |
+| Requêtes HTTP     | XX             |
+| Taille transférée | X,X MB         |
+| **EcoIndex**      | **XX/100**     |
+| **Grade**         | **A**          |
+| CO2 / page vue    | X,XX gCO2e     |
+| Eau / page vue    | X,XX cl        |
 
 ### Problèmes détectés
 
