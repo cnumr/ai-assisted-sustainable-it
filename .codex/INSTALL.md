@@ -28,7 +28,7 @@ or reference them in your prompts:
 /ecocode front        # Analyse front-end uniquement
 /ecocode back         # Analyse back-end uniquement
 
-/rgaa                 # Audit accessibilité RGAA (en développement)
+/rgaa https://example.com  # Audit accessibilité RGAA d'une page
 ```
 
 ## Agents
