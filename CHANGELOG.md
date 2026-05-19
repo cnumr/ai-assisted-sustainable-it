@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-### Added
+### Ajouté
 
 - Rapport light + guide de correction complet interactif : après chaque audit, une question propose un guide détaillé avec code avant/après, liste précise des éléments trouvés et commandes exactes — généré depuis le contexte existant sans relecture de fichiers
 

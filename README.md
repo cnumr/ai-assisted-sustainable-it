@@ -36,7 +36,7 @@ Compatible Claude Code, OpenCode, Cursor, Gemini et Codex.
 
 ### Modes de rapport
 
-Chaque audit génère d'abord un **rapport light** (tableau des problèmes + analyse par sévérité). À la fin, une question propose un **guide de correction complet** :
+Chaque audit génère d'abord un **rapport light** (tableau des problèmes + analyse par sévérité). À la fin de l'audit, une question est automatiquement posée pour proposer un **guide de correction complet** (optionnel, généré à la demande) :
 
 - Liste précise des éléments trouvés dans le code
 - Exemples avant/après adaptés au projet
