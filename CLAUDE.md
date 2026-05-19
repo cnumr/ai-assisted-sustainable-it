@@ -10,7 +10,7 @@ Le MCP `playwright` est optionnel (nécessaire pour l'analyse d'URLs en runtime)
 
 ## Skills
 
-- **`ecocode`** — Orchestration principale : identifie le périmètre, délègue aux sous-skills, produit un rapport light puis propose un guide de correction complet sur demande
+- **`ecocode`** — Orchestration principale : identifie le périmètre, délègue aux sous-skills, écrit les fichiers d'audit et propose un plan d'action sur demande
 - **`ecocode/front`** — Analyse front-end : assets, JS, CSS, HTTP, DOM, cache, build
 - **`ecocode/back`** — Analyse back-end : BDD, cache serveur, API, workers, infrastructure
 
