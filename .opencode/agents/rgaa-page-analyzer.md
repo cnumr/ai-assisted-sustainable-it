@@ -6,7 +6,6 @@ description: >
   statuts C/NC/NA/⚠ par critère. Retourne un JSON structuré des résultats.
   Lecture seule — ne modifie aucun fichier.
 mode: subagent
-model: anthropic/claude-sonnet-4-5
 permission:
   edit: deny
 ---

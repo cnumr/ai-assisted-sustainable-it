@@ -5,7 +5,6 @@ description: >
   les corrections par rapport effort/impact écologique et peux modifier les
   fichiers directement si demandé.
 mode: subagent
-model: anthropic/claude-sonnet-4-5
 permission:
   edit: ask
 ---

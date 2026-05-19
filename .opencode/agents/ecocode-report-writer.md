@@ -5,7 +5,6 @@ description: >
   dans docs/ecocode/audits/. Utilise-moi après l'analyse, avant de proposer le
   plan d'action.
 mode: subagent
-model: anthropic/claude-haiku-4-5
 permission:
   edit: allow
 ---

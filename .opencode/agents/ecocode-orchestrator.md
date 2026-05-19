@@ -6,7 +6,6 @@ description: >
   ou les deux, délègue aux agents spécialisés, puis agrège les résultats en un
   rapport unifié avec score global et plan d'action priorisé.
 mode: subagent
-model: anthropic/claude-sonnet-4-5
 permission:
   edit: deny
 ---

@@ -4,7 +4,6 @@ description: >
   l'orchestrateur et écris le fichier markdown horodaté dans docs/rgaa/audits/.
   Utilise-moi après l'agrégation, avant la génération de la checklist manuelle.
 mode: subagent
-model: anthropic/claude-haiku-4-5
 permission:
   edit: allow
 ---

@@ -5,7 +5,6 @@ description: >
   horodaté dans docs/rgaa/checklists/ avec les procédures de test pour chaque
   critère.
 mode: subagent
-model: anthropic/claude-haiku-4-5
 permission:
   edit: allow
 ---

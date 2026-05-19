@@ -5,7 +5,6 @@ description: >
   traitements, transferts de données. Je consulte les 115 bonnes pratiques
   Green IT via le MCP et mappe chaque problème à la pratique correspondante.
 mode: subagent
-model: anthropic/claude-haiku-4-5
 permission:
   edit: deny
 ---

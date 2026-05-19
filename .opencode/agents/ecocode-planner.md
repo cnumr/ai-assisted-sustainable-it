@@ -5,7 +5,6 @@ description: >
   avec cases à cocher, code avant/après et commandes exactes. Utilise-moi
   après ecocode-report-writer, sur demande de l'utilisateur.
 mode: subagent
-model: anthropic/claude-sonnet-4-6
 permission:
   edit: allow
 ---

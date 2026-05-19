@@ -7,7 +7,6 @@ description: >
   conformité, puis délègue le rapport à rgaa-reporter et la checklist manuelle
   à rgaa-checklist.
 mode: subagent
-model: anthropic/claude-sonnet-4-5
 permission:
   edit: deny
 ---
