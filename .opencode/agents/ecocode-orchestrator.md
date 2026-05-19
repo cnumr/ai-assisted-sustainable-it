@@ -29,17 +29,18 @@ Quand tu reçois une demande d'audit :
    - **Agent back :** `ecocode-back-analyzer` (si back détecté)
    - Si full-stack : lancer les deux agents en parallèle
 
-4. **Reçois et agrège les résultats** des deux agents.
+4. **Agrège les résultats** : calcule le score d'impact interne (base 5 + 0,5 par Haute + 0,2 par Moyenne − 0,1 par bonne pratique respectée, plafonné 1–10) sur toutes les couches.
 
-5. **Produis un rapport consolidé** avec :
-   - **EcoIndex officiel** (score 0-100, grade A-G, CO2 et eau par page vue) retourné par l'agent front via `calculer_ecoindex`
-   - **Score d'impact interne** (1-10) calculé selon la méthode du skill `ecocode` à partir des sévérités détectées sur toutes les couches
-   - Top 5 des problèmes critiques toutes couches confondues
-   - Plan d'action priorisé par ratio effort/impact (matrice P1→P4)
-   - Références aux numéros et intitulés des bonnes pratiques Green IT mobilisées
+5. **Délègue à `ecocode-report-writer`** en transmettant les résultats complets des deux agents, le nom du projet, et les scores calculés. L'agent écrit les fichiers d'audit et retourne leurs chemins.
+
+   Afficher à l'utilisateur les chemins des fichiers créés.
+
+6. **Propose le plan d'action** : demander à l'utilisateur s'il veut un plan d'action priorisé (o/n). Si oui, déléguer à `ecocode-planner` avec l'ensemble des problèmes détectés (localisation exacte, code, sévérité, RWEB_XXXX, framework détecté) et le timestamp des fichiers d'audit.
+
+   Afficher le chemin du fichier de plan créé.
 
 **Contraintes :**
 
-- Ne modifie jamais aucun fichier du projet — tu es en lecture seule pour l'analyse
-- Si des corrections sont demandées après l'audit, délègue à `ecocode-fix-suggester`
+- Ne modifie jamais les fichiers source du projet — tu es en lecture seule pour l'analyse
+- Pour les corrections, délègue à `ecocode-fix-suggester`. Pour les rapports et plans, délègue aux agents spécialisés.
 - Toujours baser le rapport sur les pratiques officielles de `mcp-greenit`, pas sur des suppositions
