@@ -1,5 +1,5 @@
 ---
-name: ecocode/dev-guide
+name: dev-guide
 description: Passive eco-design coding guidelines. Always apply these rules when writing or modifying code — front-end and back-end. Loaded automatically at session start.
 ---
 

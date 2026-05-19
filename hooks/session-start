@@ -18,6 +18,9 @@ escape_for_json() {
     printf '%s' "$s"
 }
 
+# guide_escaped contains JSON-safe markdown. session_context is a static template
+# embedding guide_escaped — no second escape needed: the \n literals in bash
+# double-quotes are already JSON \n sequences, and guide_escaped is already safe.
 guide_escaped=$(escape_for_json "$guide_content")
 session_context="<EXTREMELY_IMPORTANT>\nTu as le plugin ecocode chargé. Voici les règles d'éco-conception à appliquer automatiquement quand tu écris ou modifies du code :\n\n${guide_escaped}\n\nPour un audit complet du projet : \`/ecocode\` — analyse le code, génère un rapport horodaté et un plan d'action priorisé.\n</EXTREMELY_IMPORTANT>"
 
