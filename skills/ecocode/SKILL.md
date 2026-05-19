@@ -39,6 +39,39 @@ digraph routing {
 }
 ```
 
+## Étape −1 — Détecter le mode d'entrée
+
+**Si l'argument est `plan`, `fix`, ou `fix RWEB_XXX` :**
+
+1. Trouver le dernier fichier d'audit :
+   ```bash
+   ls docs/ecocode/audits/*.md 2>/dev/null | sort -r | head -1
+   ```
+2. Si aucun fichier trouvé : signaler qu'aucun audit n'existe et continuer vers l'Étape 0 pour un nouvel audit.
+3. Si un fichier trouvé : extraire le timestamp du nom de fichier (format `YYYY-MM-DDTHH-MM`), trouver tous les fichiers correspondant à ce timestamp, et déléguer à `ecocode/resume` avec :
+   - `auditPaths` : tous les fichiers de ce timestamp
+   - `action` : l'argument reçu
+   - `timestamp` : le timestamp extrait
+
+   Terminer. Ne pas continuer vers l'Étape 0.
+
+**Si l'argument est vide (appel standard `/ecocode`) :**
+
+1. Vérifier si `docs/ecocode/audits/` contient des fichiers :
+   ```bash
+   ls docs/ecocode/audits/*.md 2>/dev/null | wc -l
+   ```
+2. Si des fichiers existent : trouver le plus récent, extraire sa date, et demander :
+   > "Audit existant trouvé (du {date formatée lisiblement}). Reprendre depuis cet audit ou lancer un nouvel audit ?
+   >
+   > - **reprendre** — plan d'action, correction ou résumé sans re-analyser
+   > - **nouvel** — relancer l'analyse complète
+   >
+   > (reprendre/nouvel)"
+   - Si **reprendre** : déléguer à `ecocode/resume` avec `action: summary`. Terminer.
+   - Si **nouvel** : continuer vers l'Étape 0.
+3. Si aucun fichier : continuer vers l'Étape 0.
+
 ## Étape 0 — Choisir le mode d'exécution
 
 Avant toute analyse, poser cette question :
