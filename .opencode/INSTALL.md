@@ -52,8 +52,10 @@ The plugin registers the following agents:
 | `ecocode-front-analyzer` | ecocode | Analyse le code client (lecture seule)                 |
 | `ecocode-back-analyzer`  | ecocode | Analyse le code serveur (lecture seule)                |
 | `ecocode-fix-suggester`  | ecocode | Propose et applique les corrections (sur confirmation) |
-| `rgaa-auditor`           | rgaa    | Audit RGAA (stub)                                      |
-| `rgaa-reporter`          | rgaa    | Rapport RGAA (stub)                                    |
+| `rgaa-orchestrator`      | rgaa    | Coordonne l'audit RGAA                                 |
+| `rgaa-page-analyzer`     | rgaa    | Analyse une page (statuts C/NC/NA/⚠)                   |
+| `rgaa-reporter`          | rgaa    | Écrit le rapport d'audit horodaté dans docs/           |
+| `rgaa-checklist`         | rgaa    | Génère la checklist manuelle des tests ⚠               |
 
 ## MCP Configuration
 

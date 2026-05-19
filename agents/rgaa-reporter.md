@@ -57,9 +57,9 @@ Quand tu reçois les résultats d'audit :
 
 ## Résultats par critère
 
-| Critère                  | Intitulé | Statut  |
-| ------------------------ | -------- | ------- | -------------- | --- |
-| {une ligne par critère : | {id}     | {title} | {statut emoji} | }   |
+| Critère | Intitulé | Statut      |
+| ------- | -------- | ----------- |
+| {id}    | {title}  | {C/NC/NA/⚠} |
 
 ---
 

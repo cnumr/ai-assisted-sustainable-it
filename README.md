@@ -105,7 +105,7 @@ Quand des fichiers d'audit existent dans `docs/ecocode/audits/`, le plugin le d√
 Ou manuellement :
 
 ```bash
-git clone https://github.com/your-org/ia-tools ~/.claude/plugins/ia-tools
+git clone https://github.com/novagaia/ia-tools ~/.claude/plugins/ia-tools
 ln -s ~/.claude/plugins/ia-tools/skills/ecocode ~/.claude/skills/ecocode
 ln -s ~/.claude/plugins/ia-tools/agents/ecocode-*.md ~/.claude/agents/
 ```
@@ -121,7 +121,7 @@ npx skills add <owner>/ia-tools
 
 ```json
 {
-  "plugins": ["ia-tools@git+https://github.com/your-org/ia-tools.git"]
+  "plugins": ["ia-tools@git+https://github.com/novagaia/ia-tools.git"]
 }
 ```
 
