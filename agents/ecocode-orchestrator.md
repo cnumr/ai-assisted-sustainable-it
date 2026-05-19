@@ -43,7 +43,7 @@ Quand tu reçois une demande d'audit :
    >
    > (auto/interactif)"
 
-   Garder le mode choisi en contexte pour les étapes 7 et 8.
+   Garder le mode choisi en contexte pour les étapes 6 et 7.
 
 2. **Identifie le périmètre** en lisant le projet (fichiers source, package.json, structure des dossiers, URLs fournies). Détermine si l'analyse concerne le front, le back, ou les deux.
 
