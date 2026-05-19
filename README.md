@@ -34,6 +34,9 @@ Compatible Claude Code, OpenCode, Cursor, Gemini et Codex.
 /ecocode front                # Analyse front-end uniquement
 /ecocode back                 # Analyse back-end uniquement
 /ecocode https://example.com  # Analyse d'une URL (requiert playwright)
+/ecocode plan                 # Plan d'action depuis le dernier audit (sans re-analyser)
+/ecocode fix                  # Correction guidée depuis le dernier audit
+/ecocode fix RWEB_042         # Correction ciblée sur une pratique spécifique
 ```
 
 ### Modes d'exécution
@@ -46,6 +49,17 @@ En début d'audit, le plugin demande le mode souhaité :
 | **interactif** | Demande confirmation avant d'écrire les fichiers d'audit, puis avant de générer le plan d'action.            |
 
 Les deux modes génèrent les mêmes fichiers dans `docs/ecocode/audits/` et `docs/ecocode/plans/`.
+
+### Reprise d'audit
+
+Quand des fichiers d'audit existent dans `docs/ecocode/audits/`, le plugin le détecte automatiquement et propose de reprendre depuis le dernier audit plutôt que de relancer l'analyse complète.
+
+| Sous-commande           | Action                                                            |
+| ----------------------- | ----------------------------------------------------------------- |
+| `/ecocode`              | Détecte les audits existants et propose reprendre ou nouvel audit |
+| `/ecocode plan`         | Génère le plan d'action depuis le dernier audit sans re-analyser  |
+| `/ecocode fix`          | Liste les problèmes et propose une correction guidée              |
+| `/ecocode fix RWEB_XXX` | Correction ciblée sur la pratique identifiée par son code         |
 
 ## Installation
 

@@ -4,6 +4,8 @@
 
 ### Ajouté
 
+- Reprise d'audit existant : `/ecocode plan`, `/ecocode fix`, `/ecocode fix RWEB_XXX` reprennent depuis le dernier audit sans re-analyser ; détection automatique à chaque appel `/ecocode` quand des audits existent dans `docs/ecocode/audits/`
+- Sous-skill `ecocode/resume` : lecture des fichiers d'audit markdown, extraction des problèmes et des scores, routage vers `ecocode-planner` ou `ecocode-fix-suggester`
 - Deux modes d'exécution : `auto` (audit complet sans interruption avec résumé final) et `interactif` (confirmations avant l'écriture des fichiers et avant le plan d'action)
 - Agent `ecocode-report-writer` : écriture automatique des résultats d'audit dans des fichiers markdown horodatés séparés par couche (`docs/ecocode/audits/{timestamp}-audit-front.md`, `docs/ecocode/audits/{timestamp}-audit-back.md`) au lieu de l'affichage terminal
 - Agent `ecocode-planner` : génération sur demande d'un plan d'action priorisé P1→P4 dans `docs/ecocode/plans/{timestamp}-plan.md`, avec cases à cocher, code avant/après adapté au framework, et commandes exactes
