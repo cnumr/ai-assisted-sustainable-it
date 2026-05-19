@@ -1,0 +1,13 @@
+{
+  "name": "rgaa",
+  "description": "Audit d'accessibilité web selon le référentiel RGAA 4.2.1.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Renaud Heluin",
+    "email": "renaud.heluin@novagaia.fr"
+  },
+  "homepage": "https://github.com/your-org/ia-tools",
+  "repository": "https://github.com/your-org/ia-tools",
+  "license": "MIT",
+  "keywords": ["rgaa", "accessibilite", "a11y", "audit"]
+}
