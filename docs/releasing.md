@@ -16,9 +16,14 @@
 Le script met à jour automatiquement :
 
 - `package.json`
-- `.claude-plugin/plugin.json`
-- `.cursor-plugin/plugin.json`
-- `.claude-plugin/marketplace.json`
+- `.claude-plugin/plugins/ecocode/plugin.json`
+- `.codex-plugin/plugins/ecocode/plugin.json`
+- `.cursor-plugin/plugins/ecocode/plugin.json`
+- `.claude-plugin/plugins/rgaa/plugin.json`
+- `.codex-plugin/plugins/rgaa/plugin.json`
+- `.cursor-plugin/plugins/rgaa/plugin.json`
+- `.claude-plugin/marketplace.json` (versions ecocode et rgaa)
+- `.codex-plugin/marketplace.json` (versions ecocode et rgaa)
 - `gemini-extension.json`
 
 ## Fichiers déclarés
@@ -48,3 +53,4 @@ Les champs imbriqués utilisent la notation pointée : `"plugins.0.version"`.
 | Correction d'une pratique Green IT      | `patch`   |
 | Breaking change dans le format de skill | `major`   |
 | Ajout d'une plateforme supportée        | `minor`   |
+| Ajout d'un nouvel outil (ex: rgaa)      | `minor`   |

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SessionStart hook for ecocode plugin — injects passive dev-guide
+# SessionStart hook for ia-tools — injects ecocode passive dev-guide
 
 set -euo pipefail
 

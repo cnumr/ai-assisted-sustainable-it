@@ -1,11 +1,11 @@
-# Tests Claude Code — EcoCode
+# Tests Claude Code — ia-tools
 
-Tests automatisés pour les skills EcoCode, utilisant Claude Code CLI en mode headless.
+Tests automatisés pour les skills ia-tools, utilisant Claude Code CLI en mode headless.
 
 ## Prérequis
 
 - Claude Code CLI installé et dans le PATH (`claude --version`)
-- Plugin EcoCode installé localement (voir `docs/contributing.md`)
+- ia-tools installé localement (voir `docs/contributing.md`)
 - `python3` disponible (pour les assertions JSON du test bootstrap)
 
 ## Lancer les tests

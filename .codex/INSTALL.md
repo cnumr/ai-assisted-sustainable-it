@@ -1,30 +1,34 @@
-# Installing Ecocode for Codex
+# Installing ia-tools for Codex
 
 ## Prerequisites
 
 - [Codex CLI](https://github.com/openai/codex) installed
-- `mcp-greenit` MCP server configured (required)
+- `mcp-greenit` MCP server configured (required for ecocode)
+- `mcp-rgaa` MCP server configured (required for rgaa)
 
 ## Installation
 
 ```bash
-# Clone the plugin
-git clone https://github.com/your-org/ecocode-plugin ~/.agents/plugins/ecocode
+# Clone the repo
+git clone https://github.com/novagaia/ia-tools ~/.agents/plugins/ia-tools
 
-# Symlink the skill
+# Symlink the skills you want
 mkdir -p ~/.agents/skills
-ln -s ~/.agents/plugins/ecocode/skills/ecocode ~/.agents/skills/ecocode
+ln -s ~/.agents/plugins/ia-tools/skills/ecocode ~/.agents/skills/ecocode
+ln -s ~/.agents/plugins/ia-tools/skills/rgaa ~/.agents/skills/rgaa
 ```
 
 ## Usage
 
-The skill is auto-discovered from `~/.agents/skills/`. Use it via the `skill` tool
-or reference it in your prompts:
+Skills are auto-discovered from `~/.agents/skills/`. Use them via the `skill` tool
+or reference them in your prompts:
 
 ```
-/ecocode              # Audit complet
+/ecocode              # Audit éco-conception complet
 /ecocode front        # Analyse front-end uniquement
 /ecocode back         # Analyse back-end uniquement
+
+/rgaa                 # Audit accessibilité RGAA (en développement)
 ```
 
 ## Agents
@@ -35,6 +39,6 @@ Agent definitions are in `agents/` and can be referenced by name.
 ## Updating
 
 ```bash
-cd ~/.agents/plugins/ecocode
+cd ~/.agents/plugins/ia-tools
 git pull
 ```

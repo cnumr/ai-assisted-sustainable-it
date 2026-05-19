@@ -1,6 +1,5 @@
 {
-  "name": "ecocode",
+  "name": "ia-tools",
   "version": "1.0.0",
-  "type": "module",
-  "main": ".opencode/plugins/ecocode.js"
+  "type": "module"
 }

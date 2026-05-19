@@ -1,4 +1,4 @@
-# Tester le plugin EcoCode
+# Tester ia-tools
 
 ## Prérequis
 
@@ -7,7 +7,8 @@
   ```json
   {
     "enabledPlugins": {
-      "ecocode@ecocode-dev": true
+      "ecocode@ia-tools-dev": true,
+      "rgaa@ia-tools-dev": true
     }
   }
   ```
@@ -29,6 +30,13 @@ Le répertoire `tests/claude-code/` contient une suite de tests headless. Voir `
 ./tests/claude-code/run-skill-tests.sh --test test-ecocode-bootstrap.sh
 ```
 
+## Test de la structure multi-outils
+
+```bash
+# Vérifier la structure des manifests et fichiers
+./tests/structure/test-multi-tool-structure.sh
+```
+
 ## Test du bootstrap (SessionStart hook)
 
 ```bash
@@ -37,16 +45,19 @@ CLAUDE_PLUGIN_ROOT="$(pwd)" bash hooks/session-start
 ```
 
 La sortie doit être un JSON avec `hookSpecificOutput.additionalContext` contenant
-le contenu de `skills/ecocode/SKILL.md` enveloppé dans `<EXTREMELY_IMPORTANT>`.
+le contenu de `skills/ecocode/dev-guide/SKILL.md` enveloppé dans `<EXTREMELY_IMPORTANT>`.
 
 ## Test des skills
 
 ```bash
-# Depuis le répertoire du plugin, lancer une session headless
+# Tester ecocode
 claude -p "Lance un audit ecocode sur ce projet" --allowedTools all
+
+# Tester rgaa (stub)
+claude -p "Décris le skill rgaa" --allowedTools all
 ```
 
-Vérifier dans la session que :
+Vérifier dans la session ecocode que :
 
 - Le skill `ecocode` est chargé automatiquement via le bootstrap
 - L'agent `ecocode-orchestrator` est invoqué
@@ -62,12 +73,19 @@ Vérifier dans la session que :
 ## Test OpenCode
 
 ```bash
-# Vérifier que le plugin JS se charge sans erreur
+# Vérifier que le plugin ecocode JS se charge sans erreur
 node --input-type=module <<'EOF'
 import { EcocodePlugin } from './.opencode/plugins/ecocode.js';
 const plugin = await EcocodePlugin({ client: null, directory: '.' });
 console.log('config hook:', typeof plugin.config);
 console.log('transform hook:', typeof plugin['experimental.chat.messages.transform']);
+EOF
+
+# Vérifier que le plugin rgaa JS se charge sans erreur
+node --input-type=module <<'EOF'
+import { RgaaPlugin } from './.opencode/plugins/rgaa.js';
+const plugin = await RgaaPlugin({ client: null, directory: '.' });
+console.log('config hook:', typeof plugin.config);
 EOF
 ```
 

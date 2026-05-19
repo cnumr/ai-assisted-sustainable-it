@@ -1,18 +1,19 @@
-# Installing Ecocode for OpenCode
+# Installing ia-tools for OpenCode
 
 ## Prerequisites
 
 - [OpenCode.ai](https://opencode.ai) installed
-- `mcp-greenit` MCP server configured (required)
+- `mcp-greenit` MCP server configured (required for ecocode)
+- `mcp-rgaa` MCP server configured (required for rgaa)
 - `playwright` MCP server configured (optional — needed for URL analysis)
 
 ## Installation
 
-Add ecocode to the `plugin` array in your `opencode.json`:
+Add ia-tools to the `plugin` array in your `opencode.json`:
 
 ```json
 {
-  "plugin": ["ecocode@git+https://github.com/your-org/ecocode-plugin.git"]
+  "plugin": ["ia-tools@git+https://github.com/novagaia/ia-tools.git"]
 }
 ```
 
@@ -29,26 +30,30 @@ Use OpenCode's native `skill` tool:
 use skill tool to load ecocode
 use skill tool to load ecocode/front
 use skill tool to load ecocode/back
+use skill tool to load rgaa
 ```
 
 Or use slash commands:
 
 ```
-/ecocode              # Audit complet
+/ecocode              # Audit éco-conception complet
 /ecocode front        # Analyse front-end uniquement
 /ecocode back         # Analyse back-end uniquement
+/rgaa                 # Audit accessibilité RGAA (en développement)
 ```
 
 ## Agents
 
-The plugin registers four agents:
+The plugin registers the following agents:
 
-| Agent                    | Rôle                                                   |
-| ------------------------ | ------------------------------------------------------ |
-| `ecocode-orchestrator`   | Coordonne l'audit complet                              |
-| `ecocode-front-analyzer` | Analyse le code client (lecture seule)                 |
-| `ecocode-back-analyzer`  | Analyse le code serveur (lecture seule)                |
-| `ecocode-fix-suggester`  | Propose et applique les corrections (sur confirmation) |
+| Agent                    | Outil   | Rôle                                                   |
+| ------------------------ | ------- | ------------------------------------------------------ |
+| `ecocode-orchestrator`   | ecocode | Coordonne l'audit éco-conception                       |
+| `ecocode-front-analyzer` | ecocode | Analyse le code client (lecture seule)                 |
+| `ecocode-back-analyzer`  | ecocode | Analyse le code serveur (lecture seule)                |
+| `ecocode-fix-suggester`  | ecocode | Propose et applique les corrections (sur confirmation) |
+| `rgaa-auditor`           | rgaa    | Audit RGAA (stub)                                      |
+| `rgaa-reporter`          | rgaa    | Rapport RGAA (stub)                                    |
 
 ## MCP Configuration
 

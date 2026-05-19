@@ -1,6 +1,6 @@
 {
-  "name": "ecocode",
-  "description": "Plugin d'audit éco-conception web selon les 115 bonnes pratiques Green IT",
+  "name": "ia-tools",
+  "description": "Outils d'audit qualité web : éco-conception (115 bonnes pratiques Green IT) et accessibilité RGAA 4.2.1",
   "version": "1.0.0",
   "contextFileName": "GEMINI.md"
 }
