@@ -50,6 +50,20 @@ En début d'audit, le plugin demande le mode souhaité :
 
 Les deux modes génèrent les mêmes fichiers dans `docs/ecocode/audits/` et `docs/ecocode/plans/`.
 
+### Mode développement passif
+
+À chaque démarrage de session, le plugin injecte automatiquement un guide compact de 19 règles d'éco-conception. Claude les applique en écrivant du code — sans qu'on ait à appeler `/ecocode`.
+
+Les règles couvrent :
+
+| Couche    | Thèmes                                                                     |
+| --------- | -------------------------------------------------------------------------- |
+| Front-end | Lazy-loading, imports ciblés, CSS > JS, batch DOM, délégation d'événements |
+| Back-end  | Async, cache, batch queries, types DB, TTL données                         |
+| Build     | Cache-Control, minification                                                |
+
+Ce mode est actif par défaut. Il est complémentaire aux audits explicites via `/ecocode`.
+
 ### Reprise d'audit
 
 Quand des fichiers d'audit existent dans `docs/ecocode/audits/`, le plugin le détecte automatiquement et propose de reprendre depuis le dernier audit plutôt que de relancer l'analyse complète.

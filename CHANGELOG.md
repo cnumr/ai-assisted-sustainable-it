@@ -4,6 +4,7 @@
 
 ### Ajouté
 
+- Mode développement passif : guide compact de 19 règles Green IT (RWEB_0007 à RWEB_0106) injecté automatiquement à chaque session via le hook `SessionStart` — Claude applique les bonnes pratiques d'éco-conception en écrivant du code sans appel explicite à `/ecocode`
 - Reprise d'audit existant : `/ecocode plan`, `/ecocode fix`, `/ecocode fix RWEB_XXX` reprennent depuis le dernier audit sans re-analyser ; détection automatique à chaque appel `/ecocode` quand des audits existent dans `docs/ecocode/audits/`
 - Sous-skill `ecocode/resume` : lecture des fichiers d'audit markdown, extraction des problèmes et des scores, routage vers `ecocode-planner` ou `ecocode-fix-suggester`
 - Deux modes d'exécution : `auto` (audit complet sans interruption avec résumé final) et `interactif` (confirmations avant l'écriture des fichiers et avant le plan d'action)
