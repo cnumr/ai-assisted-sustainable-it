@@ -289,3 +289,53 @@ Avant toute analyse, détecter et gérer un éventuel mur d'authentification.
 - **Sévérité subjective** : baser la sévérité sur la fréquence d'exposition et le volume de données impliqué
 - **Oublier l'analyse runtime** : l'analyse statique seule manque les requêtes dynamiques, les autoplay, les scripts tiers
 - **Confondre optimisation image et format** : RWEB_0049 (optimisation/compression) ≠ RWEB_0048 (dimensionnement)
+
+## Format du guide de correction complet
+
+> Généré uniquement si l'utilisateur le demande, depuis les données collectées. Ne pas relire les fichiers.
+
+Pour chaque problème du rapport light, produire une section dans cet ordre :
+
+### Problème N — [Titre du problème]
+
+**Pratique :** RWEB_XXXX — [intitulé officiel de la fiche Green IT]  
+**Sévérité :** Haute / Moyenne / Faible
+
+**Éléments trouvés dans ton code :**
+
+- `chemin/exact/fichier.ext` ([taille] KB) — [contexte : affiché en Xpx, chargé sur chaque page, etc.]
+- `chemin/exact/autre-fichier.ext` ([taille] KB) — [contexte]
+
+**Impact estimé :** [chiffre concret, ex: -74% bande passante, -2 requêtes bloquantes]
+
+**Avant :**
+
+```[langage]
+[extrait exact du code trouvé dans le projet, avec le chemin en commentaire]
+```
+
+**Après :**
+
+```[langage]
+[code corrigé, adapté au projet analysé — pas un exemple générique]
+```
+
+**Étapes :**
+
+1. [Action précise sur les fichiers listés ci-dessus]
+   ```bash
+   [commande exacte si applicable, avec les vrais noms de fichiers]
+   ```
+2. [Étape suivante]
+3. [Vérification : comment confirmer que le problème est résolu]
+
+**Outils recommandés :**
+
+- `[nom-outil]` — [description en une ligne] : `[commande d'installation]`
+
+**Règles impératives :**
+
+- Les fichiers listés sont ceux réellement trouvés pendant l'analyse, jamais des exemples génériques
+- Le code "Avant" est extrait du projet, le code "Après" est adapté à sa stack (React, Vue, Vite, etc.)
+- Les commandes incluent les vrais noms de fichiers collectés pendant l'analyse
+- Si plusieurs fichiers ont le même problème, les lister tous explicitement
