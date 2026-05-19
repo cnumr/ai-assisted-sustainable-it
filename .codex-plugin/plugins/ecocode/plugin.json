@@ -17,7 +17,7 @@
     "web-performance",
     "accessibility"
   ],
-  "skills": "./skills/",
+  "skills": "../../../skills/",
   "interface": {
     "displayName": "EcoCode — Audit Green IT",
     "shortDescription": "Audit d'éco-conception web basé sur les 115 bonnes pratiques Green IT",
@@ -31,8 +31,8 @@
     ],
     "websiteURL": "https://github.com/your-org/ecocode-plugin",
     "brandColor": "#22C55E",
-    "composerIcon": "./assets/ecocode-small.svg",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "../../../assets/ecocode-small.svg",
+    "logo": "../../../assets/app-icon.png",
     "screenshots": []
   }
 }
