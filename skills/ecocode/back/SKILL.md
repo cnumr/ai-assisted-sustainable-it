@@ -11,6 +11,17 @@ Sous-skill spécialisé dans l'audit éco-conception back-end. Mappe chaque prob
 
 **REQUIRED PARENT SKILL:** `ecocode` — ce sous-skill est délégué par le skill parent.
 
+## Collecte précise (obligatoire pendant l'analyse)
+
+Pendant toute l'analyse, pour chaque problème détecté, noter immédiatement dans le contexte :
+
+- **Localisation exacte** : `orders/controller.py:45`, `api/products.js:23-31`
+- **Pattern problématique** : le code ou la requête exacte qui pose problème
+- **Valeurs mesurées** : nombre de requêtes dans une boucle, taille du payload, absence de TTL
+- **Contexte** : taille estimée de la table, fréquence d'appel, données chaudes ou froides
+
+Ces données ne sont pas affichées dans le rapport light mais servent à générer le guide de correction complet si l'utilisateur le demande — sans relire les fichiers.
+
 ## Axes d'analyse
 
 ### 1. Requêtes BDD — efficacité et sur-sélection
