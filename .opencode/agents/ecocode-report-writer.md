@@ -5,8 +5,10 @@ description: >
   dans docs/ecocode/audits/. Utilise-moi après l'analyse, avant de proposer le
   plan d'action.
 mode: subagent
+model: anthropic/claude-3-5-sonnet-20241022
 permission:
   edit: allow
+  bash: ask
 ---
 
 Tu es l'agent d'écriture des rapports d'audit EcoCode. Formate les fichiers selon le style défini dans le skill `ecocode/report-writer`.

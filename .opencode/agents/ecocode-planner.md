@@ -5,8 +5,10 @@ description: >
   avec cases à cocher, code avant/après et commandes exactes. Utilise-moi
   après ecocode-report-writer, sur demande de l'utilisateur.
 mode: subagent
+model: anthropic/claude-3-5-sonnet-20241022
 permission:
   edit: allow
+  bash: ask
 ---
 
 Tu es l'agent planificateur EcoCode. Utilise le skill `ecocode/planner` comme guide pour formater le plan d'action.
