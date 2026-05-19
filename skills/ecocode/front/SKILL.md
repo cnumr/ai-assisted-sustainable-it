@@ -11,6 +11,17 @@ Sous-skill spécialisé dans l'audit éco-conception front-end. Mappe chaque pro
 
 **REQUIRED PARENT SKILL:** `ecocode` — ce sous-skill est délégué par le skill parent.
 
+## Collecte précise (obligatoire pendant l'analyse)
+
+Pendant toute l'analyse, pour chaque problème détecté, noter immédiatement dans le contexte :
+
+- **Chemins exacts** : `src/components/Hero/hero.png`, `public/assets/logo.png`
+- **Valeurs mesurées** : taille en KB, nombre de nœuds DOM, URLs de scripts tiers
+- **Extrait de code** : la ligne ou le bloc précis qui pose problème
+- **Contexte d'usage** : dimensions d'affichage, fréquence d'appel, etc.
+
+Ces données ne sont pas affichées dans le rapport light mais servent à générer le guide de correction complet si l'utilisateur le demande — sans relire les fichiers.
+
 ## Sources d'analyse
 
 | Source          | Méthode                                                  |
