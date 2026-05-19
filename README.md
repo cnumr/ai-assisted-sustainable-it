@@ -1,7 +1,16 @@
-# Ecocode Plugin
+# ia-tools
 
-Plugin d'audit éco-conception web basé sur les [115 bonnes pratiques Green IT](https://github.com/cnumr/best-practices).
-Compatible Claude Code, OpenCode, Cursor, Gemini et Codex.
+Suite d'outils d'audit pour Claude Code, OpenCode, Cursor, Gemini et Codex.
+
+- **Éco-conception web** : audit basé sur les [115 bonnes pratiques Green IT](https://github.com/cnumr/best-practices)
+- **Accessibilité** : audit RGAA 4.2.1
+
+## Outils disponibles
+
+| Outil     | Description                                             | Statut           |
+| --------- | ------------------------------------------------------- | ---------------- |
+| `ecocode` | Audit éco-conception web, 115 bonnes pratiques Green IT | Stable           |
+| `rgaa`    | Audit accessibilité RGAA 4.2.1                          | En développement |
 
 ## Prérequis
 
@@ -80,32 +89,35 @@ Quand des fichiers d'audit existent dans `docs/ecocode/audits/`, le plugin le d�
 ### Claude Code
 
 ```bash
-git clone https://github.com/your-org/ecocode-plugin ~/.claude/plugins/ecocode
-ln -s ~/.claude/plugins/ecocode/skills/ecocode ~/.claude/skills/ecocode
-ln -s ~/.claude/plugins/ecocode/agents/ecocode-orchestrator.md ~/.claude/agents/ecocode-orchestrator.md
-ln -s ~/.claude/plugins/ecocode/agents/ecocode-front-analyzer.md ~/.claude/agents/ecocode-front-analyzer.md
-ln -s ~/.claude/plugins/ecocode/agents/ecocode-back-analyzer.md ~/.claude/agents/ecocode-back-analyzer.md
-ln -s ~/.claude/plugins/ecocode/agents/ecocode-fix-suggester.md ~/.claude/agents/ecocode-fix-suggester.md
+# Installe les outils via le marketplace Claude Code
+/plugin marketplace add <owner>/ia-tools
+```
+
+Ou manuellement :
+
+```bash
+git clone https://github.com/your-org/ia-tools ~/.claude/plugins/ia-tools
+ln -s ~/.claude/plugins/ia-tools/skills/ecocode ~/.claude/skills/ecocode
+ln -s ~/.claude/plugins/ia-tools/agents/ecocode-*.md ~/.claude/agents/
+```
+
+### CLI
+
+```bash
+npx skills add <owner>/ia-tools
+# La CLI liste les outils disponibles et demande lequel installer
 ```
 
 ### OpenCode
 
 ```json
 {
-  "plugin": ["ecocode@git+https://github.com/your-org/ecocode-plugin.git"]
+  "plugins": ["ia-tools@git+https://github.com/your-org/ia-tools.git"]
 }
 ```
 
 Voir [`.opencode/INSTALL.md`](.opencode/INSTALL.md) pour les détails.
 
-### Cursor
+### Cursor, Gemini, Codex
 
-Ajouter le dépôt dans les sources de plugins Cursor. Le fichier `.cursor-plugin/plugin.json` est auto-détecté.
-
-### Gemini
-
-Le fichier `gemini-extension.json` et `GEMINI.md` sont auto-détectés par Gemini CLI.
-
-### Codex
-
-Voir [`.codex/INSTALL.md`](.codex/INSTALL.md) pour les détails.
+Les fichiers de configuration auto-détectés (`.cursor-plugin/plugin.json`, `gemini-extension.json`, `.codex/INSTALL.md`) définissent l'intégration avec chaque plateforme.
