@@ -36,13 +36,16 @@ Compatible Claude Code, OpenCode, Cursor, Gemini et Codex.
 /ecocode https://example.com  # Analyse d'une URL (requiert playwright)
 ```
 
-### Modes de rapport
+### Modes d'exécution
 
-Chaque audit génère :
+En début d'audit, le plugin demande le mode souhaité :
 
-1. **Fichiers d'audit** (automatiques) : deux fichiers markdown horodatés dans `docs/ecocode/audits/` — un par couche analysée. Destinés aux développeurs de chaque domaine.
+| Mode           | Comportement                                                                                                 |
+| -------------- | ------------------------------------------------------------------------------------------------------------ |
+| **auto**       | Enchaîne sans interruption : analyse → fichiers d'audit → plan d'action. Résumé des fichiers créés à la fin. |
+| **interactif** | Demande confirmation avant d'écrire les fichiers d'audit, puis avant de générer le plan d'action.            |
 
-2. **Plan d'action** (sur demande) : un fichier dans `docs/ecocode/plans/` avec les corrections priorisées P1→P4, cases à cocher, code avant/après et commandes exactes.
+Les deux modes génèrent les mêmes fichiers dans `docs/ecocode/audits/` et `docs/ecocode/plans/`.
 
 ## Installation
 
