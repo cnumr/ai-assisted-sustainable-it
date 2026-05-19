@@ -40,6 +40,8 @@ Lire chaque fichier fourni dans `auditPaths` et en extraire :
 
 La couche (front/back) est déduite du nom du fichier : `audit-front` → front-end, `audit-back` → back-end.
 
+**Framework détecté** : scanner les sections "Constat" de tous les problèmes détectés pour identifier un framework ou ORM (ex: React, Vue, Angular, Prisma, SQLAlchemy, Rails, Hibernate, Django, Express). Retenir la première mention trouvée, sinon `null`.
+
 Ne pas relire les fichiers source du projet — uniquement les fichiers d'audit.
 
 ## Étape 2 — Router selon l'action
@@ -48,7 +50,7 @@ Ne pas relire les fichiers source du projet — uniquement les fichiers d'audit.
 
 Déléguer à `ecocode-planner` avec :
 
-- `problems` : liste complète des problèmes extraits (couche, localisation, code exact trouvé, sévérité, RWEB_XXXX, effort estimé)
+- `problems` : liste complète des problèmes extraits (couche, localisation, code exact trouvé, sévérité, RWEB_XXXX) — l'effort sera estimé par `ecocode-planner` lui-même
 - `goodPractices` : liste des bonnes pratiques respectées
 - `timestamp` : identique aux fichiers d'audit (pour cohérence du nommage)
 - `auditPaths` : chemins des fichiers d'audit lus
@@ -77,8 +79,8 @@ Afficher :
 
 > "Audit du {date} — {nom du projet}
 >
-> Front-end : EcoIndex {score}/100 — Grade {grade} — Score d'impact {X}/10
-> Back-end : Score d'impact {X}/10
+> Front-end : EcoIndex {score}/100 — Grade {grade} — Score d'impact {X}/10 _(si fichier front présent)_
+> Back-end : Score d'impact {X}/10 _(si fichier back présent)_
 >
 > Problèmes : {N} au total ({A} haute, {B} moyenne, {C} faible sévérité)
 >
@@ -89,6 +91,8 @@ Afficher :
 > - **fix RWEB_XXX** — corriger un problème précis
 >
 > (plan / fix / fix RWEB_XXX)"
+
+N'afficher que les lignes correspondant aux fichiers d'audit effectivement lus.
 
 Attendre la réponse et router vers l'action correspondante.
 
