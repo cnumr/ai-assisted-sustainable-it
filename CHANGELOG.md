@@ -4,6 +4,11 @@
 
 ### Ajouté
 
+- Skill RGAA 4.2.1 complet : flow multi-pages, statuts C/NC/NA/⚠, taux de conformité (fourchette bas/haut), rapport horodaté + checklist manuelle
+- Agents RGAA : `rgaa-orchestrator` (coordination), `rgaa-page-analyzer` (analyse par page via MCP + Playwright), `rgaa-reporter` (rapport markdown), `rgaa-checklist` (checklist manuelle des tests ⚠)
+- Commande `/rgaa` avec support multi-URLs et détection du type d'audit (rapide par défaut)
+- Prérequis MCP `mcp-rgaa` documenté dans README, CLAUDE.md et fichiers d'installation
+
 - Mode développement passif : guide compact de 19 règles Green IT (RWEB_0007 à RWEB_0106) injecté automatiquement à chaque session via le hook `SessionStart` — Claude applique les bonnes pratiques d'éco-conception en écrivant du code sans appel explicite à `/ecocode`
 - Reprise d'audit existant : `/ecocode plan`, `/ecocode fix`, `/ecocode fix RWEB_XXX` reprennent depuis le dernier audit sans re-analyser ; détection automatique à chaque appel `/ecocode` quand des audits existent dans `docs/ecocode/audits/`
 - Sous-skill `ecocode/resume` : lecture des fichiers d'audit markdown, extraction des problèmes et des scores, routage vers `ecocode-planner` ou `ecocode-fix-suggester`

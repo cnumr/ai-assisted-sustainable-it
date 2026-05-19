@@ -7,34 +7,40 @@ Suite d'outils d'audit pour Claude Code, OpenCode, Cursor, Gemini et Codex.
 
 ## Outils disponibles
 
-| Outil     | Description                                             | Statut           |
-| --------- | ------------------------------------------------------- | ---------------- |
-| `ecocode` | Audit éco-conception web, 115 bonnes pratiques Green IT | Stable           |
-| `rgaa`    | Audit accessibilité RGAA 4.2.1                          | En développement |
+| Outil     | Description                                             | Statut |
+| --------- | ------------------------------------------------------- | ------ |
+| `ecocode` | Audit éco-conception web, 115 bonnes pratiques Green IT | Stable |
+| `rgaa`    | Audit accessibilité RGAA 4.2.1                          | Beta   |
 
 ## Prérequis
 
-- MCP `mcp-greenit` — accès au référentiel Green IT officiel (requis)
+- MCP `mcp-greenit` — accès au référentiel Green IT officiel (requis pour ecocode)
+- MCP `mcp-rgaa` — accès au référentiel RGAA 4.2.1 (requis pour rgaa)
 - MCP `playwright` — analyse d'URLs en runtime (optionnel)
 
 ## Skills
 
-| Skill           | Description                                                                    |
-| --------------- | ------------------------------------------------------------------------------ |
-| `ecocode`       | Orchestration principale : identifie le périmètre, délègue, produit le rapport |
-| `ecocode/front` | Analyse front-end : assets, JS, CSS, HTTP, DOM, cache, build                   |
-| `ecocode/back`  | Analyse back-end : BDD, cache serveur, API, workers, infrastructure            |
+| Skill           | Description                                                                     |
+| --------------- | ------------------------------------------------------------------------------- |
+| `ecocode`       | Orchestration principale : identifie le périmètre, délègue, produit le rapport  |
+| `ecocode/front` | Analyse front-end : assets, JS, CSS, HTTP, DOM, cache, build                    |
+| `ecocode/back`  | Analyse back-end : BDD, cache serveur, API, workers, infrastructure             |
+| `rgaa`          | Audit accessibilité RGAA 4.2.1 : analyse par page, rapport + checklist manuelle |
 
 ## Agents
 
-| Agent                    | Rôle                                | Permissions               |
-| ------------------------ | ----------------------------------- | ------------------------- |
-| `ecocode-orchestrator`   | Coordonne l'audit complet           | Lecture seule             |
-| `ecocode-front-analyzer` | Analyse le code client              | Lecture seule             |
-| `ecocode-back-analyzer`  | Analyse le code serveur             | Lecture seule             |
-| `ecocode-report-writer`  | Écrit les fichiers d'audit          | Écriture sur docs/        |
-| `ecocode-planner`        | Génère le plan d'action priorisé    | Écriture sur docs/        |
-| `ecocode-fix-suggester`  | Propose et applique les corrections | Écriture sur confirmation |
+| Agent                    | Outil   | Rôle                                 | Permissions               |
+| ------------------------ | ------- | ------------------------------------ | ------------------------- |
+| `ecocode-orchestrator`   | ecocode | Coordonne l'audit complet            | Lecture seule             |
+| `ecocode-front-analyzer` | ecocode | Analyse le code client               | Lecture seule             |
+| `ecocode-back-analyzer`  | ecocode | Analyse le code serveur              | Lecture seule             |
+| `ecocode-report-writer`  | ecocode | Écrit les fichiers d'audit           | Écriture sur docs/        |
+| `ecocode-planner`        | ecocode | Génère le plan d'action priorisé     | Écriture sur docs/        |
+| `ecocode-fix-suggester`  | ecocode | Propose et applique les corrections  | Écriture sur confirmation |
+| `rgaa-orchestrator`      | rgaa    | Coordonne l'audit RGAA               | Lecture seule             |
+| `rgaa-page-analyzer`     | rgaa    | Analyse une page (statuts C/NC/NA/⚠) | Lecture seule             |
+| `rgaa-reporter`          | rgaa    | Écrit le rapport d'audit horodaté    | Écriture sur docs/        |
+| `rgaa-checklist`         | rgaa    | Génère la checklist manuelle         | Écriture sur docs/        |
 
 ## Utilisation
 
@@ -46,6 +52,9 @@ Suite d'outils d'audit pour Claude Code, OpenCode, Cursor, Gemini et Codex.
 /ecocode plan                 # Plan d'action depuis le dernier audit (sans re-analyser)
 /ecocode fix                  # Correction guidée depuis le dernier audit
 /ecocode fix RWEB_042         # Correction ciblée sur une pratique spécifique
+
+/rgaa https://example.com                           # Audit RGAA d'une page
+/rgaa https://example.com https://example.com/page  # Échantillon multi-pages
 ```
 
 ### Modes d'exécution
