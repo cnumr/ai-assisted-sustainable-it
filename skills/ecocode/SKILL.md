@@ -119,6 +119,42 @@ _Calculé à partir des sévérités détectées : base 5 + 0,5 par problème Ha
 [Liste des numéros et intitulés des pratiques citées]
 ```
 
+## Étape 5 — Guide de correction complet (sur demande)
+
+Après avoir affiché le rapport light complet, poser cette question à l'utilisateur :
+
+> "Veux-tu le guide de correction complet ? Il liste les éléments précis trouvés dans ton code, avec des exemples avant/après et les commandes exactes pour chaque problème. (o/n)"
+
+**Si oui :**
+Générer le guide détaillé depuis les données collectées pendant l'analyse, sans relire les fichiers. Produire une section "Problème N" pour chaque problème du rapport light, en utilisant le format défini dans les sections "Format du guide de correction complet" des sous-skills `ecocode/front` et `ecocode/back`.
+
+Structure du guide complet :
+
+```markdown
+# Guide de correction — [Nom du projet]
+
+## Front-end
+
+### Problème 1 — [Titre]
+
+[section détaillée format ecocode/front]
+
+### Problème 2 — [Titre]
+
+[section détaillée format ecocode/front]
+
+## Back-end
+
+### Problème 1 — [Titre]
+
+[section détaillée format ecocode/back]
+```
+
+**Si non :**
+Terminer. Ne pas générer de contenu supplémentaire.
+
+**Règle token :** Le guide est produit depuis le contexte de la session en cours. Ne pas relancer d'analyse, ne pas relire de fichiers, ne pas rappeler de MCPs.
+
 ## Calcul de l'EcoIndex officiel
 
 Appeler `mcp-greenit : calculer_ecoindex` avec les 3 métriques mesurées pendant l'analyse front :
