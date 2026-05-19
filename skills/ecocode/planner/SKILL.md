@@ -46,7 +46,7 @@ Le timestamp est identique à celui des fichiers d'audit pour garantir la cohér
 
 1. Créer le dossier `docs/ecocode/plans/` s'il n'existe pas : `mkdir -p docs/ecocode/plans`
 2. Trier les problèmes par priorité P1→P4 selon la matrice effort/impact
-3. Pour chaque problème, rédiger une section avec case à cocher, code avant/après, et commandes
+3. Pour chaque problème, le placer dans la section correspondante (P1, P2, P3 ou P4) selon la matrice effort/impact. Chaque problème reçoit exactement une case à cocher dans sa section.
 4. Écrire le fichier `docs/ecocode/plans/{timestamp}-plan.md`
 5. Retourner le chemin du fichier créé à l'orchestrateur
 
@@ -77,7 +77,6 @@ Le timestamp est identique à celui des fichiers d'audit pour garantir la cohér
 ```[langage]
 [code exact trouvé dans le projet]
 ```
-````
 
 **Après :**
 
@@ -122,8 +121,7 @@ Le timestamp est identique à celui des fichiers d'audit pour garantir la cohér
 | RWEB      | Intitulé            | Priorité |
 | --------- | ------------------- | -------- |
 | RWEB_XXXX | [intitulé officiel] | P1       |
-
-```
+````
 
 ## Règles impératives
 
@@ -131,8 +129,13 @@ Le timestamp est identique à celui des fichiers d'audit pour garantir la cohér
 - Le code "Avant" doit être le code exact trouvé dans le projet (tel que collecté pendant l'analyse)
 - Le code "Après" doit être adapté au framework/ORM réel détecté (`framework` reçu de l'orchestrateur)
 - Chaque problème a exactement une case à cocher `- [ ]`
-- Si un problème n'a pas de code associé (problème d'architecture, d'hébergement), remplacer les blocs code par une liste d'étapes textuelles
-- Omettre une section entière P1/P2/P3/P4 si elle est vide plutôt que de la laisser vide
+- Si un problème n'a pas de code associé (problème d'architecture, d'hébergement), remplacer les blocs code par une liste d'étapes textuelles :
+  **Exemple :**
+  **Étapes :**
+  1. [Action concrète 1]
+  2. [Action concrète 2]
+  3. [Vérification]
+- Si une section P1/P2/P3/P4 ne contient aucun problème, ne pas inclure cette section dans le fichier final (ne pas inclure le titre de section non plus)
 - Toujours inclure la section "Références Green IT" en fin de fichier
+- Construire la table Références à partir de la liste `problems` reçue, en dédupliquant par code RWEB et en indiquant la priorité assignée
 - Le timestamp du plan est identique à celui des fichiers d'audit (transmis par l'orchestrateur)
-```
