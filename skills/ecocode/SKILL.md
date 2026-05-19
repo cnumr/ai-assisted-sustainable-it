@@ -39,6 +39,19 @@ digraph routing {
 }
 ```
 
+## Étape 0 — Choisir le mode d'exécution
+
+Avant toute analyse, poser cette question :
+
+> "Mode d'exécution pour cet audit :
+>
+> - **auto** — l'audit s'enchaîne sans interruption : analyse → fichiers d'audit → plan d'action. Tu reçois un résumé des fichiers créés à la fin.
+> - **interactif** — tu confirmes avant l'écriture des fichiers et avant la génération du plan.
+>
+> (auto/interactif)"
+
+Garder le mode choisi en contexte pour les Étapes 4 et 5.
+
 ## Étape 1 — Identifier le périmètre
 
 Indices pour détecter le front :
@@ -79,7 +92,16 @@ Pour le front accessible via URL, passer l'URL au sous-skill front.
 
 ## Étape 4 — Écrire les fichiers d'audit
 
-Déléguer à l'agent `ecocode-report-writer` en lui transmettant :
+**Si mode `auto` :** déléguer immédiatement à `ecocode-report-writer` sans confirmation. Conserver les chemins retournés pour le résumé final de l'Étape 5.
+
+**Si mode `interactif` :** poser d'abord la question :
+
+> "L'analyse est terminée. Veux-tu que j'écrive les fichiers d'audit dans `docs/ecocode/audits/` ? (o/n)"
+
+- Si **oui** : déléguer à `ecocode-report-writer` et afficher les chemins créés.
+- Si **non** : terminer. Ne pas passer à l'Étape 5.
+
+Dans les deux cas, transmettre à `ecocode-report-writer` :
 
 - Les résultats complets de l'agent front (tableau de problèmes + bonnes pratiques respectées + métriques EcoIndex)
 - Les résultats complets de l'agent back (tableau de problèmes + bonnes pratiques respectées)
@@ -88,37 +110,34 @@ Déléguer à l'agent `ecocode-report-writer` en lui transmettant :
 
 L'agent écrit les fichiers horodatés dans `docs/ecocode/audits/` et retourne leurs chemins.
 
-Afficher à l'utilisateur :
+## Étape 5 — Plan d'action
 
-> "Audit terminé. Rapports écrits dans :
->
-> - `docs/ecocode/audits/{timestamp}-audit-front.md`
-> - `docs/ecocode/audits/{timestamp}-audit-back.md`"
->
-> _(N'afficher que les fichiers effectivement créés selon le périmètre analysé.)_
-
-## Étape 5 — Plan d'action sur demande
-
-Après avoir affiché les chemins des fichiers d'audit, poser cette question :
-
-> "Veux-tu un plan d'action priorisé ? Il liste les corrections P1→P4 avec le code avant/après et les commandes exactes pour chaque problème. (o/n)"
-
-**Si oui :**
-Déléguer à l'agent `ecocode-planner` en lui transmettant :
+**Si mode `auto` :** déléguer immédiatement à `ecocode-planner` en lui transmettant :
 
 - L'ensemble des problèmes détectés (couche, localisation, code exact, sévérité, RWEB_XXXX)
 - Les bonnes pratiques déjà respectées
 - Le timestamp utilisé pour les fichiers d'audit (pour cohérence du nommage)
 - Le framework/ORM détecté (pour adapter le code "Après")
 
-L'agent écrit le plan dans `docs/ecocode/plans/{timestamp}-plan.md` et retourne son chemin.
+Puis afficher le résumé final :
 
-Afficher à l'utilisateur :
+> "Audit terminé. Fichiers créés :
+>
+> - `docs/ecocode/audits/{timestamp}-audit-front.md`
+> - `docs/ecocode/audits/{timestamp}-audit-back.md`
+> - `docs/ecocode/plans/{timestamp}-plan.md`"
+>
+> _(N'afficher que les fichiers effectivement créés selon le périmètre analysé.)_
 
-> "Plan d'action écrit dans : `docs/ecocode/plans/{timestamp}-plan.md`"
+**Si mode `interactif` :** poser la question :
 
-**Si non :**
-Terminer. Ne pas générer de contenu supplémentaire.
+> "Veux-tu un plan d'action priorisé ? Il liste les corrections P1→P4 avec le code avant/après et les commandes exactes pour chaque problème. (o/n)"
+
+- Si **oui** : déléguer à `ecocode-planner` avec les mêmes données listées ci-dessus. Afficher le chemin du fichier créé :
+
+  > "Plan d'action écrit dans : `docs/ecocode/plans/{timestamp}-plan.md`"
+
+- Si **non** : terminer. Ne pas générer de contenu supplémentaire.
 
 **Règle token :** L'agent planificateur reçoit les données du contexte de la session. Ne pas relancer d'analyse, ne pas relire de fichiers source.
 
