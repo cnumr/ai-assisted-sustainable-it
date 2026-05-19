@@ -20,13 +20,27 @@ Ce sous-skill écrit les résultats d'audit éco-conception dans des fichiers ma
 
 Le préfixe `YYYY-MM-DDTHH-MM` est calculé à partir de la date/heure courante (ex: `2026-05-19T14-32`).
 
+## Données reçues de l'orchestrateur
+
+L'agent reçoit les données suivantes :
+
+- `projectName` : nom du projet (extrait du package.json, README ou dossier courant)
+- `timestamp` : horodatage pour les noms de fichiers, format `YYYY-MM-DDTHH-MM` (ex: `2026-05-19T14-32`)
+- `frontData` : résultats complets de l'analyse front-end (si effectuée)
+- `backData` : résultats complets de l'analyse back-end (si effectuée)
+- `ecoIndex` : score EcoIndex officiel (score 0-100, grade A-G, CO2, eau) — front uniquement
+- `impactScore` : score d'impact interne pré-calculé (1-10) selon la formule du skill parent
+
 ## Étapes d'exécution
 
 1. Créer le dossier `docs/ecocode/audits/` s'il n'existe pas : `mkdir -p docs/ecocode/audits`
-2. Calculer le préfixe horodaté : `date +"%Y-%m-%dT%H-%M"`
-3. Écrire le fichier front si des données front sont disponibles
-4. Écrire le fichier back si des données back sont disponibles
-5. Retourner les chemins absolus des fichiers écrits à l'orchestrateur
+2. Utiliser le `timestamp` reçu pour construire les noms de fichiers : `${timestamp}-audit-front.md` et `${timestamp}-audit-back.md`
+   - Le format du timestamp est déjà `YYYY-MM-DDTHH-MM` (ex: `2026-05-19T14-32`)
+   - Exemple : `2026-05-19T14-32-audit-front.md`
+3. Pour la **date affichée dans le header** du fichier, utiliser le format `date +"%Y-%m-%d %H:%M"` (ex: `2026-05-19 14:32`)
+4. Écrire le fichier front si des données front sont disponibles
+5. Écrire le fichier back si des données back sont disponibles
+6. Retourner les chemins absolus des fichiers écrits à l'orchestrateur
 
 ## Format du fichier d'audit front
 
@@ -36,6 +50,8 @@ Le préfixe `YYYY-MM-DDTHH-MM` est calculé à partir de la date/heure courante 
 **Date :** YYYY-MM-DD HH:MM
 **EcoIndex :** XX/100 — Grade A (émissions : X,XX gCO2e/page vue — eau : X,XX cl/page vue)
 **Score d'impact interne :** X/10
+
+> Note : Le score d'impact interne est reçu pré-calculé de l'orchestrateur. L'agent report-writer l'insère directement dans le template.
 
 ---
 
@@ -61,6 +77,8 @@ Le préfixe `YYYY-MM-DDTHH-MM` est calculé à partir de la date/heure courante 
 ```
 
 ## Format du fichier d'audit back
+
+> Note : L'EcoIndex officiel (DOM, HTTP, taille) s'applique uniquement au front-end. Le fichier d'audit back ne contient donc pas de score EcoIndex.
 
 ```markdown
 # Audit Éco-conception Back-end — [Nom du projet]
