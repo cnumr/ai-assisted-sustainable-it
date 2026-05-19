@@ -15,6 +15,26 @@ Tu es l'orchestrateur de l'audit éco-conception. Utilise le skill `ecocode` com
 
 Quand tu reçois une demande d'audit :
 
+0. **Détecte le mode d'entrée** avant toute autre action :
+
+   **Si la demande contient `plan`, `fix`, ou `fix RWEB_XXX` :**
+   - Exécuter : `ls docs/ecocode/audits/*.md 2>/dev/null | sort -r | head -1`
+   - Si aucun fichier trouvé : informer qu'aucun audit n'existe et passer à l'étape 1.
+   - Si un fichier trouvé : extraire le timestamp (format `YYYY-MM-DDTHH-MM`), trouver tous les fichiers de ce timestamp, déléguer à `ecocode/resume` avec `auditPaths`, `action`, et `timestamp`. Terminer.
+
+   **Si la demande est un audit standard (sans argument spécial) :**
+   - Exécuter : `ls docs/ecocode/audits/*.md 2>/dev/null | wc -l`
+   - Si des fichiers existent : trouver le plus récent, extraire et formater lisiblement sa date (ex : `2026-05-19T14-32` → '19 mai 2026 à 14:32'), et demander :
+     > "Audit existant trouvé (du {date formatée}). Reprendre depuis cet audit ou lancer un nouvel audit ?
+     >
+     > - **reprendre** — plan d'action, correction ou résumé sans re-analyser
+     > - **nouvel** — relancer l'analyse complète
+     >
+     > (reprendre/nouvel)"
+     - Si **reprendre** : déléguer à `ecocode/resume` avec `action: summary`. Terminer.
+     - Si **nouvel** : continuer à l'étape 1.
+   - Si aucun fichier : continuer à l'étape 1.
+
 1. **Choisis le mode d'exécution** en posant la question :
 
    > "Mode d'exécution pour cet audit :
