@@ -23,6 +23,8 @@ Compatible Claude Code, OpenCode, Cursor, Gemini et Codex.
 | `ecocode-orchestrator`   | Coordonne l'audit complet           | Lecture seule             |
 | `ecocode-front-analyzer` | Analyse le code client              | Lecture seule             |
 | `ecocode-back-analyzer`  | Analyse le code serveur             | Lecture seule             |
+| `ecocode-report-writer`  | Écrit les fichiers d'audit          | Écriture sur docs/        |
+| `ecocode-planner`        | Génère le plan d'action priorisé    | Écriture sur docs/        |
 | `ecocode-fix-suggester`  | Propose et applique les corrections | Écriture sur confirmation |
 
 ## Utilisation
@@ -36,12 +38,11 @@ Compatible Claude Code, OpenCode, Cursor, Gemini et Codex.
 
 ### Modes de rapport
 
-Chaque audit génère d'abord un **rapport light** (tableau des problèmes + analyse par sévérité). À la fin de l'audit, une question est automatiquement posée pour proposer un **guide de correction complet** (optionnel, généré à la demande) :
+Chaque audit génère :
 
-- Liste précise des éléments trouvés dans le code
-- Exemples avant/après adaptés au projet
-- Commandes exactes et outils recommandés
-- Aucune recherche complémentaire nécessaire
+1. **Fichiers d'audit** (automatiques) : deux fichiers markdown horodatés dans `docs/ecocode/audits/` — un par couche analysée. Destinés aux développeurs de chaque domaine.
+
+2. **Plan d'action** (sur demande) : un fichier dans `docs/ecocode/plans/` avec les corrections priorisées P1→P4, cases à cocher, code avant/après et commandes exactes.
 
 ## Installation
 

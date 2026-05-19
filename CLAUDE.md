@@ -21,6 +21,8 @@ Le MCP `playwright` est optionnel (nécessaire pour l'analyse d'URLs en runtime)
 | `ecocode-orchestrator`   | Coordonne l'audit complet           | Lecture seule             |
 | `ecocode-front-analyzer` | Analyse le code client              | Lecture seule             |
 | `ecocode-back-analyzer`  | Analyse le code serveur             | Lecture seule             |
+| `ecocode-report-writer`  | Écrit les fichiers d'audit          | Écriture sur docs/        |
+| `ecocode-planner`        | Génère le plan d'action priorisé    | Écriture sur docs/        |
 | `ecocode-fix-suggester`  | Propose et applique les corrections | Écriture sur confirmation |
 
 ## Utilisation
