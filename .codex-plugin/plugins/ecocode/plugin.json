@@ -6,8 +6,8 @@
     "name": "Renaud Heluin",
     "email": "renaud.heluin@novagaia.fr"
   },
-  "homepage": "https://github.com/your-org/ecocode-plugin",
-  "repository": "https://github.com/your-org/ecocode-plugin",
+  "homepage": "https://github.com/novagaia/ia-tools",
+  "repository": "https://github.com/novagaia/ia-tools",
   "license": "MIT",
   "keywords": [
     "ecocode",
@@ -29,7 +29,7 @@
       "Lance un audit éco-conception sur ce projet.",
       "Analyse le front-end de ce projet selon les bonnes pratiques Green IT."
     ],
-    "websiteURL": "https://github.com/your-org/ecocode-plugin",
+      "websiteURL": "https://github.com/novagaia/ia-tools",
     "brandColor": "#22C55E",
     "composerIcon": "../../../assets/ecocode-small.svg",
     "logo": "../../../assets/app-icon.png",

@@ -10,8 +10,8 @@
       "name": "ecocode",
       "description": "Audit éco-conception web, 115 bonnes pratiques Green IT",
       "source": "./plugins/ecocode",
-      "category": "development",
       "version": "1.0.0",
+      "category": "development",
       "author": {
         "name": "Renaud Heluin",
         "email": "renaud.heluin@novagaia.fr"
@@ -21,8 +21,8 @@
       "name": "rgaa",
       "description": "Audit accessibilité RGAA 4.2.1",
       "source": "./plugins/rgaa",
-      "category": "development",
       "version": "1.0.0",
+      "category": "development",
       "author": {
         "name": "Renaud Heluin",
         "email": "renaud.heluin@novagaia.fr"

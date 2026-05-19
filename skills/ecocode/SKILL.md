@@ -1,6 +1,10 @@
 ---
 name: ecocode
 description: Use when asked about eco-design, green IT, ecological impact of code, carbon footprint of a web application, or ecocode audit. Orchestrates front/back sub-skills and produces a unified impact report.
+license: MIT
+metadata:
+  author: Renaud Heluin
+  version: "1.0"
 ---
 
 # EcoCode — Skill parent d'orchestration

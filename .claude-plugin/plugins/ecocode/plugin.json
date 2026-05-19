@@ -6,8 +6,8 @@
     "name": "Renaud Heluin",
     "email": "renaud.heluin@novagaia.fr"
   },
-  "homepage": "https://github.com/your-org/ecocode-plugin",
-  "repository": "https://github.com/your-org/ecocode-plugin",
+  "homepage": "https://github.com/novagaia/ia-tools",
+  "repository": "https://github.com/novagaia/ia-tools",
   "license": "MIT",
   "keywords": [
     "ecocode",
@@ -15,5 +15,9 @@
     "eco-conception",
     "sustainability",
     "web-performance"
-  ]
+  ],
+  "skills": "../../../skills/",
+  "agents": "../../../agents/",
+  "commands": "../../../commands/",
+  "hooks": "../../../hooks/hooks.json"
 }
