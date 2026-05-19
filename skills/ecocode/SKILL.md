@@ -61,7 +61,7 @@ digraph routing {
    ```bash
    ls docs/ecocode/audits/*.md 2>/dev/null | wc -l
    ```
-2. Si des fichiers existent : trouver le plus récent, extraire sa date, et demander :
+2. Si des fichiers existent : trouver le plus récent, extraire et formater lisiblement sa date (ex : `2026-05-19T14-32` → '19 mai 2026 à 14:32'), et demander :
    > "Audit existant trouvé (du {date formatée lisiblement}). Reprendre depuis cet audit ou lancer un nouvel audit ?
    >
    > - **reprendre** — plan d'action, correction ou résumé sans re-analyser
