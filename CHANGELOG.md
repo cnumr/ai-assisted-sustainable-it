@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Rapport light + guide de correction complet interactif : après chaque audit, une question propose un guide détaillé avec code avant/après, liste précise des éléments trouvés et commandes exactes — généré depuis le contexte existant sans relecture de fichiers
+
 ## 1.0.0 — 2026-05-18
 
 ### Ajouté

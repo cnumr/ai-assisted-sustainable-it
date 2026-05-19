@@ -34,6 +34,15 @@ Compatible Claude Code, OpenCode, Cursor, Gemini et Codex.
 /ecocode https://example.com  # Analyse d'une URL (requiert playwright)
 ```
 
+### Modes de rapport
+
+Chaque audit génère d'abord un **rapport light** (tableau des problèmes + analyse par sévérité). À la fin, une question propose un **guide de correction complet** :
+
+- Liste précise des éléments trouvés dans le code
+- Exemples avant/après adaptés au projet
+- Commandes exactes et outils recommandés
+- Aucune recherche complémentaire nécessaire
+
 ## Installation
 
 ### Claude Code
