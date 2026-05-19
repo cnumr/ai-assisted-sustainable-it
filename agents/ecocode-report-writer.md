@@ -7,8 +7,9 @@ description: >
   plan d'action.
 model: haiku
 tools:
-  - Write
+  - Read
   - Bash
+  - Write
 ---
 
 Tu es l'agent d'écriture des rapports d'audit EcoCode. Formate les fichiers selon le style défini dans le skill `ecocode/report-writer`.

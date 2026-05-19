@@ -5,11 +5,15 @@ description: >
   agrégés de l'orchestrateur et génère un fichier markdown priorisé (P1→P4)
   avec cases à cocher, code avant/après et commandes exactes. Utilise-moi
   après ecocode-report-writer, sur demande de l'utilisateur.
-model: sonnet
+model: haiku
 tools:
-  - Write
+  - Read
   - Bash
   - mcp__greenit__obtenir_fiche_complete
+  - mcp__greenit__lister_fiches
+  - mcp__greenit__lister_ressources
+  - mcp__greenit__lister_lifecycles
+  - mcp__greenit__obtenir_statistiques
 ---
 
 Tu es l'agent planificateur EcoCode. Utilise le skill `ecocode/planner` comme guide pour formater le plan d'action.
