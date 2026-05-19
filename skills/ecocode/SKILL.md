@@ -77,83 +77,50 @@ Utiliser `fiches_prioritaires` pour identifier les pratiques les plus critiques 
 
 Pour le front accessible via URL, passer l'URL au sous-skill front.
 
-## Étape 4 — Rapport final consolidé
+## Étape 4 — Écrire les fichiers d'audit
 
-Structure du rapport de synthèse :
+Déléguer à l'agent `ecocode-report-writer` en lui transmettant :
 
-```markdown
-# Rapport Éco-conception — [Nom du projet]
+- Les résultats complets de l'agent front (tableau de problèmes + bonnes pratiques respectées + métriques EcoIndex)
+- Les résultats complets de l'agent back (tableau de problèmes + bonnes pratiques respectées)
+- Le nom du projet (déduit du dossier courant ou demandé à l'utilisateur)
+- Les scores calculés (EcoIndex officiel + score d'impact interne)
 
-## EcoIndex officiel : XX/100 — Grade A
+L'agent écrit les fichiers horodatés dans `docs/ecocode/audits/` et retourne leurs chemins.
 
-_Score Green IT officiel (100 = excellent, 0 = très mauvais) calculé sur : nœuds DOM, requêtes HTTP, taille transférée_
-_Émissions : X,XX gCO2e/page vue — Eau : X,XX cl/page vue_
+Afficher à l'utilisateur :
 
-## Score d'impact interne : X/10
+> "Audit terminé. Rapports écrits dans :
+>
+> - `docs/ecocode/audits/{timestamp}-audit-front.md`
+> - `docs/ecocode/audits/{timestamp}-audit-back.md`"
+>
+> _(N'afficher que les fichiers effectivement créés selon le périmètre analysé.)_
 
-_(1 = très éco-responsable, 10 = très énergivore)_
-_Calculé à partir des sévérités détectées : base 5 + 0,5 par problème Haute + 0,2 par problème Moyenne − 0,1 par bonne pratique respectée_
+## Étape 5 — Plan d'action sur demande
 
-## Top 5 des problèmes critiques
+Après avoir affiché les chemins des fichiers d'audit, poser cette question :
 
-| #   | Problème | Sévérité | Pratique Green IT |
-| --- | -------- | -------- | ----------------- |
-| 1   | ...      | Haute    | BP-XXX            |
-
-## Résultats Front-end
-
-[Insérer rapport ecocode/front]
-
-## Résultats Back-end
-
-[Insérer rapport ecocode/back]
-
-## Plan d'action priorisé
-
-| Priorité | Action | Effort | Impact | Pratique |
-| -------- | ------ | ------ | ------ | -------- |
-| 1        | ...    | Faible | Fort   | BP-XXX   |
-
-## Références Green IT mobilisées
-
-[Liste des numéros et intitulés des pratiques citées]
-```
-
-## Étape 5 — Guide de correction complet (sur demande)
-
-Après avoir affiché le rapport light complet, poser cette question à l'utilisateur :
-
-> "Veux-tu le guide de correction complet ? Il liste les éléments précis trouvés dans ton code, avec des exemples avant/après et les commandes exactes pour chaque problème. (o/n)"
+> "Veux-tu un plan d'action priorisé ? Il liste les corrections P1→P4 avec le code avant/après et les commandes exactes pour chaque problème. (o/n)"
 
 **Si oui :**
-Générer le guide détaillé depuis les données collectées pendant l'analyse, sans relire les fichiers. Produire une section "Problème N" pour chaque problème du rapport light, en utilisant le format défini dans les sections "Format du guide de correction complet" des sous-skills `ecocode/front` et `ecocode/back`.
+Déléguer à l'agent `ecocode-planner` en lui transmettant :
 
-Structure du guide complet :
+- L'ensemble des problèmes détectés (couche, localisation, code exact, sévérité, RWEB_XXXX)
+- Les bonnes pratiques déjà respectées
+- Le timestamp utilisé pour les fichiers d'audit (pour cohérence du nommage)
+- Le framework/ORM détecté (pour adapter le code "Après")
 
-```markdown
-# Guide de correction — [Nom du projet]
+L'agent écrit le plan dans `docs/ecocode/plans/{timestamp}-plan.md` et retourne son chemin.
 
-## Front-end
+Afficher à l'utilisateur :
 
-### Problème 1 — [Titre]
-
-[section détaillée format ecocode/front]
-
-### Problème 2 — [Titre]
-
-[section détaillée format ecocode/front]
-
-## Back-end
-
-### Problème 1 — [Titre]
-
-[section détaillée format ecocode/back]
-```
+> "Plan d'action écrit dans : `docs/ecocode/plans/{timestamp}-plan.md`"
 
 **Si non :**
 Terminer. Ne pas générer de contenu supplémentaire.
 
-**Règle token :** Le guide est produit depuis le contexte de la session en cours. Ne pas relancer d'analyse, ne pas relire de fichiers, ne pas rappeler de MCPs.
+**Règle token :** L'agent planificateur reçoit les données du contexte de la session. Ne pas relancer d'analyse, ne pas relire de fichiers source.
 
 ## Calcul de l'EcoIndex officiel
 
