@@ -233,3 +233,56 @@ Solution type :
 - **Confondre cache applicatif et cache HTTP** : les deux sont nécessaires et complémentaires (RWEB_0016 ≠ RWEB_0074)
 - **Oublier les migrations** : vérifier aussi les fichiers de migration pour les index manquants et les types inadaptés
 - **Négliger l'infrastructure** : les axes 8 et 9 ont souvent un fort impact mais sont moins visibles dans le code
+
+## Format du guide de correction complet
+
+> Généré uniquement si l'utilisateur le demande, depuis les données collectées. Ne pas relire les fichiers.
+
+Pour chaque problème du rapport light, produire une section dans cet ordre :
+
+````markdown
+### Problème N — [Titre du problème]
+
+**Pratique :** RWEB_XXXX — [intitulé officiel de la fiche Green IT]
+**Sévérité :** Haute / Moyenne / Faible
+
+**Éléments trouvés dans ton code :**
+
+- `chemin/exact/fichier.py:45` — [description du pattern trouvé]
+- `chemin/exact/autre.js:23` — [idem]
+
+**Impact estimé :** [ex: N requêtes BDD par page vue au lieu de 1, +X ms latence]
+
+**Avant :**
+
+```[langage]
+[code exact trouvé dans le projet, avec le chemin en commentaire]
+```
+````
+
+**Après :**
+
+```[langage]
+[code corrigé, adapté au framework/ORM utilisé dans le projet]
+```
+
+**Étapes :**
+
+1. [Action précise sur les fichiers et lignes listés]
+   ```bash
+   [commande exacte si applicable]
+   ```
+2. [Étape suivante]
+3. [Vérification : requête EXPLAIN, log de requêtes, test de perf]
+
+**Outils recommandés :**
+
+- `[nom-outil]` — [description en une ligne] : `[commande d'installation ou de config]`
+
+```
+
+**Règles impératives :**
+- Les fichiers et numéros de ligne sont ceux réellement trouvés, jamais des exemples génériques
+- Le code "Avant" est extrait du projet, le code "Après" est adapté à son ORM/framework (Prisma, SQLAlchemy, ActiveRecord, etc.)
+- Si plusieurs occurrences du même problème existent, les lister toutes
+```
