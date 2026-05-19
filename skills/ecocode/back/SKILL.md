@@ -240,7 +240,6 @@ Solution type :
 
 Pour chaque problème du rapport light, produire une section dans cet ordre :
 
-````markdown
 ### Problème N — [Titre du problème]
 
 **Pratique :** RWEB_XXXX — [intitulé officiel de la fiche Green IT]
@@ -258,7 +257,6 @@ Pour chaque problème du rapport light, produire une section dans cet ordre :
 ```[langage]
 [code exact trouvé dans le projet, avec le chemin en commentaire]
 ```
-````
 
 **Après :**
 
@@ -279,10 +277,8 @@ Pour chaque problème du rapport light, produire une section dans cet ordre :
 
 - `[nom-outil]` — [description en une ligne] : `[commande d'installation ou de config]`
 
-```
-
 **Règles impératives :**
+
 - Les fichiers et numéros de ligne sont ceux réellement trouvés, jamais des exemples génériques
 - Le code "Avant" est extrait du projet, le code "Après" est adapté à son ORM/framework (Prisma, SQLAlchemy, ActiveRecord, etc.)
 - Si plusieurs occurrences du même problème existent, les lister toutes
-```
