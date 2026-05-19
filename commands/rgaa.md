@@ -1,3 +1,16 @@
+---
+name: rgaa
+description: Lance un audit d'accessibilité RGAA 4.2.1 sur une ou plusieurs URLs
+---
+
+Use the `rgaa` skill to perform an RGAA 4.2.1 accessibility audit.
+
+Pass any URLs from `$ARGUMENTS` to the skill.
+
+```
+Use skill: rgaa
+```
+
 # /rgaa
 
 Lance un audit d'accessibilité RGAA 4.2.1 sur une ou plusieurs URLs.
