@@ -26,7 +26,7 @@ Ces données ne sont pas affichées dans le rapport light mais servent à géné
 
 ### 1. Requêtes BDD — efficacité et sur-sélection
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "base de données", "requêtes SQL", "SGBD"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "base de données", "requêtes SQL", "SGBD"
 
 Vérifier :
 
@@ -45,7 +45,7 @@ Vérifier :
 
 ### 2. Cache serveur
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "cache", "mémoire", "Redis"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "cache", "mémoire", "Redis"
 
 Vérifier :
 
@@ -61,7 +61,7 @@ Vérifier :
 
 ### 3. Transferts de données
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "données", "transfert", "API", "payload"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "données", "transfert", "API", "payload"
 
 Vérifier :
 
@@ -79,7 +79,7 @@ Vérifier :
 
 ### 4. Traitements redondants
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "traitement", "calcul", "redondant"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "traitement", "calcul", "redondant"
 
 Vérifier :
 
@@ -93,7 +93,7 @@ Vérifier :
 
 ### 5. Tâches de fond et workers
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "tâche", "worker", "background", "asynchrone"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "tâche", "worker", "background", "asynchrone"
 
 Vérifier :
 
@@ -105,7 +105,7 @@ Vérifier :
 
 ### 6. Architecture et résilience
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "architecture", "technologie", "circuit breaker", "élastique"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "architecture", "technologie", "circuit breaker", "élastique"
 
 Vérifier :
 
@@ -122,7 +122,7 @@ Vérifier :
 
 ### 7. Gestion des ressources
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "ressources", "connexions", "sessions"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "ressources", "connexions", "sessions"
 
 Vérifier :
 
@@ -136,7 +136,7 @@ Vérifier :
 
 ### 8. Infrastructure et hébergement
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "serveur", "hébergement", "infrastructure", "énergie"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "serveur", "hébergement", "infrastructure", "énergie"
 
 Vérifier :
 
@@ -153,7 +153,7 @@ Vérifier :
 
 ### 9. Production, logs et maintenance
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "logs", "maintenance", "production", "sitemap"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "logs", "maintenance", "production", "sitemap"
 
 Vérifier :
 
@@ -167,7 +167,7 @@ Vérifier :
 
 ### 10. Emails et communications
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "email", "communication"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "email", "communication"
 
 Vérifier :
 

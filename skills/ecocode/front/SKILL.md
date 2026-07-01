@@ -34,7 +34,7 @@ Ces données ne sont pas affichées dans le rapport light mais servent à géné
 
 ### 1. Design, UX et conception
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "mobile", "parcours", "design", "fonctionnalités"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "mobile", "parcours", "design", "fonctionnalités"
 
 Vérifier :
 
@@ -49,7 +49,7 @@ Vérifier :
 
 ### 2. Assets images, vidéos, sons et documents
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "images", "vidéo", "son", "médias", "compression"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "images", "vidéo", "son", "médias", "compression"
 
 Vérifier :
 
@@ -74,7 +74,7 @@ Vérifier :
 
 ### 3. Requêtes HTTP et réseau
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "requêtes HTTP", "réseau", "domaines", "redirections"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "requêtes HTTP", "réseau", "domaines", "redirections"
 
 Vérifier :
 
@@ -95,7 +95,7 @@ Vérifier :
 
 ### 4. JavaScript — bundles et exécution
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "JavaScript", "bundle", "dépendances", "bibliothèques"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "JavaScript", "bundle", "dépendances", "bibliothèques"
 
 Vérifier :
 
@@ -114,7 +114,7 @@ Vérifier :
 
 ### 5. Rendu côté client — DOM et re-renders
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "DOM", "rendu", "reflow", "repaint"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "DOM", "rendu", "reflow", "repaint"
 
 Vérifier :
 
@@ -130,7 +130,7 @@ Vérifier :
 
 ### 6. Lazy loading et mise en cache
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "cache", "lazy loading", "Service Worker"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "cache", "lazy loading", "Service Worker"
 
 Vérifier :
 
@@ -146,7 +146,7 @@ Vérifier :
 
 ### 7. CSS
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "CSS", "sélecteurs", "feuilles de style"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "CSS", "sélecteurs", "feuilles de style"
 
 Vérifier :
 
@@ -162,7 +162,7 @@ Vérifier :
 
 ### 8. Build, compression et déploiement
 
-**Consulter :** `mcp-greenit : chercher_fiche` avec "minification", "compression", "build", "CDN"
+**Consulter :** `mcp-greenit : greenit_chercher_fiche` avec "minification", "compression", "build", "CDN"
 
 Vérifier :
 
@@ -227,7 +227,7 @@ Avant toute analyse, détecter et gérer un éventuel mur d'authentification.
 3. Mesurer DOMContentLoaded, Load, LCP, CLS
 4. Capturer le nombre de nœuds DOM
 5. Calculer : total des requêtes HTTP + taille totale transférée en KB
-6. Appeler mcp-greenit : calculer_ecoindex avec {dom_nodes, requests, size_kb, url}
+6. Appeler mcp-greenit : greenit_calculer_ecoindex avec {dom_nodes, requests, size_kb, url}
 7. Lister les scripts tiers et leur poids
 8. Vérifier les headers de cache (Cache-Control, Expires, ETag)
 9. Vérifier le protocole (HTTP/1.1 vs HTTP/2)

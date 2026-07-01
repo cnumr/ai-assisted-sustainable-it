@@ -63,7 +63,7 @@ Pour épingler une version spécifique :
 
 ```json
 {
-  "plugin": ["ia-tools@git+https://github.com/novagaia/ia-tools.git#v1.0.0"]
+  "plugin": ["ia-tools@git+https://github.com/novagaia/ia-tools.git#v1.1.0"]
 }
 ```
 

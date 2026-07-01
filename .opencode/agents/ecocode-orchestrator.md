@@ -48,7 +48,7 @@ Quand tu reçois une demande d'audit :
 2. **Identifie le périmètre** en lisant le projet (fichiers source, package.json, structure des dossiers, URLs fournies). Détermine si l'analyse concerne le front, le back, ou les deux.
 
 3. **Charge le référentiel Green IT** via le MCP `mcp-greenit` :
-   - Appelle `fiches_prioritaires` pour identifier les pratiques à fort impact à prioriser
+   - Appelle `greenit_fiches_prioritaires` pour identifier les pratiques à fort impact à prioriser
    - Garde les IDs des pratiques pour les transmettre aux agents spécialisés
 
 4. **Délègue l'analyse** aux agents spécialisés en leur transmettant :

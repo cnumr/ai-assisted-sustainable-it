@@ -1,6 +1,6 @@
 {
   "name": "ecocode",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Audit d'éco-conception web selon les 115 bonnes pratiques Green IT. Analyse front-end et back-end avec agents spécialisés.",
   "author": {
     "name": "Renaud Heluin",
@@ -24,12 +24,15 @@
     "longDescription": "EcoCode analyse votre projet web selon les 115 bonnes pratiques Green IT du référentiel CNUMR. Il identifie automatiquement le périmètre front-end et back-end, délègue l'analyse à des agents spécialisés, et produit un rapport hiérarchisé avec des recommandations actionnables.",
     "developerName": "Renaud Heluin",
     "category": "Coding",
-    "capabilities": ["Interactive", "Read"],
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
     "defaultPrompt": [
       "Lance un audit éco-conception sur ce projet.",
       "Analyse le front-end de ce projet selon les bonnes pratiques Green IT."
     ],
-      "websiteURL": "https://github.com/novagaia/ia-tools",
+    "websiteURL": "https://github.com/novagaia/ia-tools",
     "brandColor": "#22C55E",
     "composerIcon": "../../../assets/ecocode-small.svg",
     "logo": "../../../assets/app-icon.png",

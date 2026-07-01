@@ -73,7 +73,7 @@ Si Playwright MCP est disponible, utilise-le en complément pour les vérificati
 
 Pour les critères non automatisables, utilise les outils suivants pour affiner le rapport :
 
-- **Contrastes (thème 3)** : `rgaa_chercher_fiche("contraste")` pour les fiches recommandées. Mesurer les ratios via Playwright :
+- **Contrastes (thème 3)** : `rgaa_chercher("contraste")` pour les fiches recommandées. Mesurer les ratios via Playwright :
   1. Extraire les couleurs calculées avec `mcp_plugin_playwright_playwright_browser_evaluate` :
      ```javascript
      () => {

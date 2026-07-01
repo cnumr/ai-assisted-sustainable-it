@@ -36,7 +36,7 @@ Avant toute analyse, appliquer ce protocole :
 Après avoir collecté les métriques réseau via Playwright (ou estimé depuis le code source), appeler **obligatoirement** :
 
 ```
-mcp-greenit : calculer_ecoindex
+mcp-greenit : greenit_calculer_ecoindex
   dom_nodes = <nœuds DOM comptés>
   requests  = <nombre de requêtes HTTP>
   size_kb   = <taille totale transférée en KB>
@@ -48,8 +48,8 @@ Inclure le résultat (score, grade, CO2, eau) en tête du rapport JSON et markdo
 ## Démarche d'analyse
 
 1. **Consulte d'abord le MCP `mcp-greenit`** :
-   - `fiches_prioritaires` → pratiques front à fort impact
-   - `chercher_fiche` avec les termes : "images", "JavaScript", "CSS", "cache", "requêtes HTTP", "fonts"
+   - `greenit_fiches_prioritaires` → pratiques front à fort impact
+   - `greenit_chercher_fiche` avec les termes : "images", "JavaScript", "CSS", "cache", "requêtes HTTP", "fonts"
    - Note les numéros et intitulés des pratiques pertinentes
 
 2. **Analyse les sources** selon ce qui est disponible :

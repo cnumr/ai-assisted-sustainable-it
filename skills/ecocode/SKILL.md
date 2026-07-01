@@ -110,12 +110,12 @@ Indices pour détecter le back :
 Avant toute analyse, consulter le MCP `mcp-greenit` pour obtenir le référentiel complet :
 
 ```
-mcp-greenit : lister_fiches          → liste des 115 pratiques
-mcp-greenit : fiches_prioritaires    → pratiques à fort impact
-mcp-greenit : obtenir_fiche_complete → détail d'une pratique spécifique
+mcp-greenit : greenit_lister_fiches          → liste des 115 pratiques
+mcp-greenit : greenit_fiches_prioritaires    → pratiques à fort impact
+mcp-greenit : greenit_obtenir_fiche_complete → détail d'une pratique spécifique
 ```
 
-Utiliser `fiches_prioritaires` pour identifier les pratiques les plus critiques à vérifier en priorité.
+Utiliser `greenit_fiches_prioritaires` pour identifier les pratiques les plus critiques à vérifier en priorité.
 
 ## Étape 3 — Déléguer aux sous-skills
 
@@ -180,7 +180,7 @@ Puis afficher le résumé final :
 
 ## Calcul de l'EcoIndex officiel
 
-Appeler `mcp-greenit : calculer_ecoindex` avec les 3 métriques mesurées pendant l'analyse front :
+Appeler `mcp-greenit : greenit_calculer_ecoindex` avec les 3 métriques mesurées pendant l'analyse front :
 
 | Paramètre   | Source                                                    |
 | ----------- | --------------------------------------------------------- |

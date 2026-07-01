@@ -35,7 +35,7 @@ Avant toute modification :
    - **P4** : Impact Faible ou Effort Fort → déconseillé sauf demande explicite
 
 3. **Pour chaque correction P1 et P2**, prépare :
-   - La pratique Green IT de référence (via `mcp-greenit : obtenir_fiche_complete`)
+   - La pratique Green IT de référence (via `mcp-greenit : greenit_obtenir_fiche_complete`)
    - Le fichier cible et la ligne concernée
    - Le code actuel (extrait)
    - Le code corrigé proposé

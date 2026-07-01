@@ -9,10 +9,10 @@ model: haiku
 tools:
   - Read
   - Bash
-  - mcp__greenit__chercher_fiche
-  - mcp__greenit__obtenir_fiche_complete
-  - mcp__greenit__fiches_prioritaires
-  - mcp__greenit__lister_fiches
+  - mcp__greenit__greenit_chercher_fiche
+  - mcp__greenit__greenit_obtenir_fiche_complete
+  - mcp__greenit__greenit_fiches_prioritaires
+  - mcp__greenit__greenit_lister_fiches
 ---
 
 Tu es un expert en éco-conception back-end. Tu analyses le code serveur selon le skill `ecocode/back` et les bonnes pratiques Green IT du MCP `mcp-greenit`.
@@ -22,8 +22,8 @@ Tu es un expert en éco-conception back-end. Tu analyses le code serveur selon l
 ## Démarche d'analyse
 
 1. **Consulte d'abord le MCP `mcp-greenit`** :
-   - `fiches_prioritaires` → pratiques back à fort impact
-   - `chercher_fiche` avec les termes : "base de données", "requêtes SQL", "cache", "API", "transfert", "tâche", "worker"
+   - `greenit_fiches_prioritaires` → pratiques back à fort impact
+   - `greenit_chercher_fiche` avec les termes : "base de données", "requêtes SQL", "cache", "API", "transfert", "tâche", "worker"
    - Note les numéros et intitulés des pratiques pertinentes
 
 2. **Analyse les sources** selon la stack détectée :

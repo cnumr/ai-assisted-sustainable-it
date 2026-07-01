@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## 1.1.0 — 2026-07-01
+
 ### Ajouté
 
 - Skill RGAA 4.2.1 complet : flow multi-pages, statuts C/NC/NA/⚠, taux de conformité (fourchette bas/haut), rapport horodaté + checklist manuelle
@@ -18,6 +20,10 @@
 - Skill `ecocode/report-writer` : format des fichiers d'audit (front et back)
 - Skill `ecocode/planner` : format du plan d'action (matrice effort/impact, cases à cocher)
 - Rapport light + guide de correction complet interactif : après chaque audit, une question propose un guide détaillé avec code avant/après, liste précise des éléments trouvés et commandes exactes — généré depuis le contexte existant sans relecture de fichiers
+
+### Corrigé
+
+- Adaptation des noms d'outils MCP renommés : préfixe `greenit_` ajouté aux fonctions `mcp-greenit`, correction de `rgaa_chercher_fiche` → `rgaa_chercher` dans le skill `rgaa`
 
 ## 1.0.0 — 2026-05-18
 

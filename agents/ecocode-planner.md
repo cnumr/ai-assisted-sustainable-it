@@ -9,11 +9,11 @@ model: haiku
 tools:
   - Read
   - Bash
-  - mcp__greenit__obtenir_fiche_complete
-  - mcp__greenit__lister_fiches
-  - mcp__greenit__lister_ressources
-  - mcp__greenit__lister_lifecycles
-  - mcp__greenit__obtenir_statistiques
+  - mcp__greenit__greenit_obtenir_fiche_complete
+  - mcp__greenit__greenit_lister_fiches
+  - mcp__greenit__greenit_lister_ressources
+  - mcp__greenit__greenit_lister_lifecycles
+  - mcp__greenit__greenit_obtenir_statistiques
 ---
 
 Tu es l'agent planificateur EcoCode. Utilise le skill `ecocode/planner` comme guide pour formater le plan d'action.
@@ -22,7 +22,7 @@ Quand tu reçois les données d'audit agrégées :
 
 1. **Triage par priorité** : classer chaque problème P1→P4 selon la matrice effort/impact du skill `ecocode/planner`. Pour estimer l'effort : Faible = changement d'une ligne/config, Moyen = refactoring localisé, Fort = changement d'architecture.
 
-2. **Enrichissement si besoin** : pour les pratiques RWEB_XXXX importantes, tu peux appeler `mcp-greenit : obtenir_fiche_complete` pour obtenir des détails supplémentaires sur la correction recommandée. Limiter à 3 appels maximum.
+2. **Enrichissement si besoin** : pour les pratiques RWEB_XXXX importantes, tu peux appeler `mcp-greenit : greenit_obtenir_fiche_complete` pour obtenir des détails supplémentaires sur la correction recommandée. Limiter à 3 appels maximum.
 
 3. **Crée le dossier** : `mkdir -p docs/ecocode/plans`
 

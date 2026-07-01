@@ -1,6 +1,6 @@
 {
   "name": "rgaa",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Audit d'accessibilité web selon le référentiel RGAA 4.2.1.",
   "author": {
     "name": "Renaud Heluin",
@@ -9,7 +9,12 @@
   "homepage": "https://github.com/your-org/ia-tools",
   "repository": "https://github.com/your-org/ia-tools",
   "license": "MIT",
-  "keywords": ["rgaa", "accessibilite", "a11y", "audit"],
+  "keywords": [
+    "rgaa",
+    "accessibilite",
+    "a11y",
+    "audit"
+  ],
   "skills": "../../../skills/",
   "interface": {
     "displayName": "RGAA — Audit Accessibilité",
@@ -17,7 +22,10 @@
     "longDescription": "Conduit un audit d'accessibilité complet selon le RGAA 4.2.1. Analyse les critères d'accessibilité, identifie les non-conformités et produit un rapport avec recommandations priorisées.",
     "developerName": "Renaud Heluin",
     "category": "Coding",
-    "capabilities": ["Interactive", "Read"],
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
     "defaultPrompt": [
       "Lance un audit accessibilité RGAA sur ce projet.",
       "Analyse l'accessibilité de cette page selon le RGAA 4.2.1."
