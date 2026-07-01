@@ -1,16 +1,30 @@
 # ia-tools
 
-Suite d'outils d'audit pour Claude Code, OpenCode, Cursor, Gemini et Codex.
+Suite d'outils qualité web pour Claude Code, OpenCode, Cursor, Gemini et Codex — audit ponctuel **et** application continue des bonnes pratiques pendant le développement.
 
-- **Éco-conception web** : audit basé sur les [115 bonnes pratiques Green IT](https://github.com/cnumr/best-practices)
+- **Éco-conception web** : audit + application automatique des [115 bonnes pratiques Green IT](https://github.com/cnumr/best-practices) pendant que le code s'écrit
 - **Accessibilité** : audit RGAA 4.2.1
 
 ## Outils disponibles
 
-| Outil     | Description                                             | Statut |
-| --------- | ------------------------------------------------------- | ------ |
-| `ecocode` | Audit éco-conception web, 115 bonnes pratiques Green IT | Stable |
-| `rgaa`    | Audit accessibilité RGAA 4.2.1                          | Beta   |
+| Outil     | Description                                                        | Statut |
+| --------- | ------------------------------------------------------------------ | ------ |
+| `ecocode` | Audit + application continue en dev, 115 bonnes pratiques Green IT | Stable |
+| `rgaa`    | Audit accessibilité RGAA 4.2.1                                     | Beta   |
+
+## Mode développement passif
+
+`ecocode` ne se limite pas à l'audit sur demande. À chaque démarrage de session, il injecte automatiquement un guide compact de 19 règles d'éco-conception. Claude les applique en écrivant du code — sans qu'on ait à appeler `/ecocode`.
+
+Les règles couvrent :
+
+| Couche    | Thèmes                                                                     |
+| --------- | -------------------------------------------------------------------------- |
+| Front-end | Lazy-loading, imports ciblés, CSS > JS, batch DOM, délégation d'événements |
+| Back-end  | Async, cache, batch queries, types DB, TTL données                         |
+| Build     | Cache-Control, minification                                                |
+
+Ce mode est actif par défaut et complémentaire aux audits explicites via `/ecocode`.
 
 ## Prérequis
 
@@ -67,20 +81,6 @@ En début d'audit, le plugin demande le mode souhaité :
 | **interactif** | Demande confirmation avant d'écrire les fichiers d'audit, puis avant de générer le plan d'action.            |
 
 Les deux modes génèrent les mêmes fichiers dans `docs/ecocode/audits/` et `docs/ecocode/plans/`.
-
-### Mode développement passif
-
-À chaque démarrage de session, le plugin injecte automatiquement un guide compact de 19 règles d'éco-conception. Claude les applique en écrivant du code — sans qu'on ait à appeler `/ecocode`.
-
-Les règles couvrent :
-
-| Couche    | Thèmes                                                                     |
-| --------- | -------------------------------------------------------------------------- |
-| Front-end | Lazy-loading, imports ciblés, CSS > JS, batch DOM, délégation d'événements |
-| Back-end  | Async, cache, batch queries, types DB, TTL données                         |
-| Build     | Cache-Control, minification                                                |
-
-Ce mode est actif par défaut. Il est complémentaire aux audits explicites via `/ecocode`.
 
 ### Reprise d'audit
 
