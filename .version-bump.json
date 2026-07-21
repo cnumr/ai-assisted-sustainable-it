@@ -10,13 +10,8 @@
       "path": ".cursor-plugin/plugins/ecocode/plugin.json",
       "field": "version"
     },
-    { "path": ".claude-plugin/plugins/rgaa/plugin.json", "field": "version" },
-    { "path": ".codex-plugin/plugins/rgaa/plugin.json", "field": "version" },
-    { "path": ".cursor-plugin/plugins/rgaa/plugin.json", "field": "version" },
     { "path": ".claude-plugin/marketplace.json", "field": "plugins.0.version" },
-    { "path": ".claude-plugin/marketplace.json", "field": "plugins.1.version" },
     { "path": ".codex-plugin/marketplace.json", "field": "plugins.0.version" },
-    { "path": ".codex-plugin/marketplace.json", "field": "plugins.1.version" },
     { "path": "gemini-extension.json", "field": "version" }
   ],
   "audit": {
@@ -25,8 +20,11 @@
       "README.opencode.md",
       "package-lock.json",
       "test-release-metadata.sh",
+      "test-sustainable-it-structure.sh",
       "node_modules",
       ".git",
+      ".superpowers",
+      "superpowers",
       ".version-bump.json",
       "scripts/bump-version.sh"
     ]

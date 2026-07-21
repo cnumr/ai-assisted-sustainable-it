@@ -1,6 +1,6 @@
 {
-  "name": "ia-tools",
-  "description": "Outils d'audit qualité web : éco-conception et accessibilité",
+  "name": "ai-assisted-sustainable-it",
+  "description": "Outil d'audit et de développement éco-conçus",
   "owner": {
     "name": "Renaud Heluin",
     "email": "renaud.heluin@novagaia.fr"
@@ -10,18 +10,7 @@
       "name": "ecocode",
       "description": "Audit éco-conception web, 115 bonnes pratiques Green IT",
       "source": "./plugins/ecocode",
-      "version": "1.2.0",
-      "category": "development",
-      "author": {
-        "name": "Renaud Heluin",
-        "email": "renaud.heluin@novagaia.fr"
-      }
-    },
-    {
-      "name": "rgaa",
-      "description": "Audit accessibilité RGAA 4.2.1",
-      "source": "./plugins/rgaa",
-      "version": "1.2.0",
+      "version": "2.0.0",
       "category": "development",
       "author": {
         "name": "Renaud Heluin",

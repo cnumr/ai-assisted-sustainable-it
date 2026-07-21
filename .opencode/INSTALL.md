@@ -1,63 +1,29 @@
-# Installing ia-tools for OpenCode
+# Installing ai-assisted-sustainable-it for OpenCode
 
 ## Prerequisites
 
 - [OpenCode.ai](https://opencode.ai) installed
-- `mcp-greenit` MCP server configured (required for ecocode)
-- `mcp-rgaa` MCP server configured (required for rgaa)
-- `playwright` MCP server configured (optional — needed for URL analysis)
+- `mcp-greenit` MCP server configured
+- `playwright` MCP server configured for URL analysis (optional)
 
 ## Installation
 
-Add ia-tools to the `plugin` array in your `opencode.json`:
+Add the plugin to `opencode.json`:
 
 ```json
 {
-  "plugin": ["ia-tools@git+https://github.com/novagaia/ia-tools.git"]
+  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/hrenaud/ai-assisted-sustainable-it.git"]
 }
 ```
 
-Restart OpenCode. The plugin installs through OpenCode's plugin manager and
-registers all skills automatically.
-
-Verify by asking: "Lance un audit ecocode sur ce projet"
-
 ## Usage
 
-Use OpenCode's native `skill` tool:
-
-```
+```text
 use skill tool to load ecocode
 use skill tool to load ecocode/front
 use skill tool to load ecocode/back
-use skill tool to load rgaa
+
+/ecocode              # Full Sustainable IT audit
+/ecocode front        # Front-end analysis
+/ecocode back         # Back-end analysis
 ```
-
-Or use slash commands:
-
-```
-/ecocode              # Audit éco-conception complet
-/ecocode front        # Analyse front-end uniquement
-/ecocode back         # Analyse back-end uniquement
-/rgaa                 # Audit accessibilité RGAA (en développement)
-```
-
-## Agents
-
-The plugin registers the following agents:
-
-| Agent                    | Outil   | Rôle                                                   |
-| ------------------------ | ------- | ------------------------------------------------------ |
-| `ecocode-orchestrator`   | ecocode | Coordonne l'audit éco-conception                       |
-| `ecocode-front-analyzer` | ecocode | Analyse le code client (lecture seule)                 |
-| `ecocode-back-analyzer`  | ecocode | Analyse le code serveur (lecture seule)                |
-| `ecocode-fix-suggester`  | ecocode | Propose et applique les corrections (sur confirmation) |
-| `rgaa-orchestrator`      | rgaa    | Coordonne l'audit RGAA                                 |
-| `rgaa-page-analyzer`     | rgaa    | Analyse une page (statuts C/NC/NA/⚠)                   |
-| `rgaa-reporter`          | rgaa    | Écrit le rapport d'audit horodaté dans docs/           |
-| `rgaa-checklist`         | rgaa    | Génère la checklist manuelle des tests ⚠               |
-
-## MCP Configuration
-
-Ensure `mcp-greenit` is configured in your OpenCode MCP settings to access
-the Green IT reference database (115 best practices).

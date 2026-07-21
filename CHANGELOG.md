@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## 2.0.0 — 2026-07-21
+
+### Changements incompatibles
+
+- Le dépôt devient `ai-assisted-sustainable-it` et ne distribue plus que l'outil d'éco-conception `ecocode`.
+- Les outils d'accessibilité sont désormais disponibles dans [ai-assisted-a11y](https://github.com/hrenaud/ai-assisted-a11y).
+
 ## 1.2.0 — 2026-07-21
 
 ### Ajouté

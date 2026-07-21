@@ -1,6 +1,6 @@
 {
-  "name": "ia-tools",
-  "description": "Outils d'audit qualité web : éco-conception (115 bonnes pratiques Green IT) et accessibilité RGAA 4.2.1",
-  "version": "1.2.0",
+  "name": "ai-assisted-sustainable-it",
+  "description": "Outil d'audit et de développement éco-conçus : 115 bonnes pratiques Green IT",
+  "version": "2.0.0",
   "contextFileName": "GEMINI.md"
 }

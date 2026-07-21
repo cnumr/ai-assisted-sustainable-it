@@ -1,40 +1,21 @@
-# Installing ia-tools for Codex
+# Installing ai-assisted-sustainable-it for Codex
 
 ## Prerequisites
 
 - Codex CLI installed
-- `mcp-greenit` MCP server configured (required for ecocode)
-- `mcp-rgaa` MCP server configured (required for rgaa)
-- `playwright` MCP server configured (optional — needed for URL analysis)
+- `mcp-greenit` MCP server configured
+- `playwright` MCP server configured for URL analysis (optional)
 
 ## Installation
 
-Copy the `.codex-plugin` directory to your Codex config:
-
 ```bash
-mkdir -p ~/.codex/plugins
-cp -r ~/.claude/plugins/ia-tools/.codex-plugin ~/.codex/plugins/ia-tools
+git clone https://github.com/hrenaud/ai-assisted-sustainable-it.git ~/.codex/plugins/ai-assisted-sustainable-it
 ```
 
-Or clone directly:
+## Commands
 
-```bash
-git clone https://github.com/novagaia/ia-tools ~/.codex/plugins/ia-tools
+```text
+/ecocode                      # Full Sustainable IT audit
+/ecocode front                # Front-end analysis
+/ecocode back                 # Back-end analysis
 ```
-
-## Usage
-
-The plugin registers skills and tools via `plugin.json` in `.codex-plugin/plugins/`.
-
-### Commands
-
-```
-/ecocode                      # Audit éco-conception complet
-/ecocode front                # Analyse front-end uniquement
-/ecocode back                 # Analyse back-end uniquement
-/rgaa https://example.com     # Audit accessibilité RGAA
-```
-
-## MCP Configuration
-
-Ensure `mcp-greenit` and `mcp-rgaa` are configured in your Codex MCP settings.
