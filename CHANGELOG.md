@@ -2,11 +2,16 @@
 
 ## [Unreleased]
 
+## 1.2.0 — 2026-07-21
+
+### Ajouté
+
+- Étend le guide proactif `ecocode/dev-guide` à la conception sobre des solutions.
+
 ### Corrigé
 
 - Aligne le test de structure RGAA sur l'agent `rgaa-page-analyzer`.
 - Clarifie que `ecocode` lance les audits sur demande, tandis que `ecocode/dev-guide` applique les règles de codage de manière proactive.
-- Étend le guide proactif `ecocode/dev-guide` à la conception sobre des solutions.
 
 ## 1.1.0 — 2026-07-01
 

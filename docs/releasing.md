@@ -10,7 +10,7 @@
 ./scripts/bump-version.sh --audit
 
 # Bumper tous les manifests en une commande
-./scripts/bump-version.sh 1.2.0
+./scripts/bump-version.sh X.Y.Z
 ```
 
 Le script met à jour automatiquement :

@@ -22,6 +22,9 @@
   "audit": {
     "exclude": [
       "CHANGELOG.md",
+      "README.opencode.md",
+      "package-lock.json",
+      "test-release-metadata.sh",
       "node_modules",
       ".git",
       ".version-bump.json",
