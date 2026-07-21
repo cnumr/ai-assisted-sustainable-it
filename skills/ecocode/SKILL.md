@@ -1,6 +1,6 @@
 ---
 name: ecocode
-description: Use when asked about eco-design, green IT, ecological impact of code, carbon footprint of a web application, or ecocode audit. Orchestrates front/back sub-skills and produces a unified impact report.
+description: Use for explicit web eco-design audits, Green IT, code ecological impact, carbon footprint, or /ecocode requests. Proactive design and coding guidance is injected separately at session start by ecocode/dev-guide.
 license: MIT
 metadata:
   author: Renaud Heluin
@@ -12,6 +12,11 @@ metadata:
 ## Vue d'ensemble
 
 Point d'entrée unique pour tout audit d'éco-conception web. Ce skill identifie le périmètre (front, back, ou les deux), délègue aux sous-skills spécialisés, et produit un rapport synthétique final avec score d'impact et priorités de correction.
+
+## Deux modes complémentaires
+
+- **Conception et développement proactifs :** `ecocode/dev-guide` est injecté au démarrage de session et ses règles compactes s'appliquent automatiquement quand une solution est conçue, écrite ou modifiée.
+- **Audit explicite :** ce skill parent s'utilise seulement quand l'utilisateur demande un audit (par exemple `/ecocode`). Il orchestre alors l'analyse approfondie, les rapports et le plan d'action.
 
 **Référentiel de base :** Les 115 bonnes pratiques Green IT accessibles via le MCP `mcp-greenit`.
 

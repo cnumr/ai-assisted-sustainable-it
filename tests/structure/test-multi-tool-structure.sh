@@ -61,7 +61,7 @@ check "skills/ecocode/SKILL.md"  "skills/ecocode/SKILL.md"
 check "skills/rgaa/SKILL.md"     "skills/rgaa/SKILL.md"
 
 # agents rgaa
-check "agents/rgaa-auditor.md"   "agents/rgaa-auditor.md"
+check "agents/rgaa-page-analyzer.md" "agents/rgaa-page-analyzer.md"
 check "agents/rgaa-reporter.md"  "agents/rgaa-reporter.md"
 
 # commands rgaa
@@ -75,6 +75,14 @@ json_check "Codex ecocode skills path corrigé" \
   ".codex-plugin/plugins/ecocode/plugin.json" ".skills" "../../../skills/"
 json_check "Cursor ecocode skills path corrigé" \
   ".cursor-plugin/plugins/ecocode/plugin.json" ".skills" "../../../skills/"
+
+if grep -qi "explicit web eco-design audits" "$ROOT/skills/ecocode/SKILL.md" \
+  && grep -qi "proactive design and coding guidance" "$ROOT/skills/ecocode/SKILL.md" \
+  && grep -qi "## Conception" "$ROOT/skills/ecocode/dev-guide/SKILL.md"; then
+  echo "✓ Description ecocode : audit explicite et guide conception/code proactif"; PASS=$((PASS + 1))
+else
+  echo "✗ Description ecocode : contrat audit/guide conception-code incomplet"; FAIL=$((FAIL + 1))
+fi
 
 echo ""
 echo "Résultat : $PASS passés, $FAIL échoués"

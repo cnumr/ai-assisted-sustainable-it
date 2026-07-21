@@ -12,14 +12,15 @@ Suite d'outils qualité web pour Claude Code, OpenCode, Cursor, Gemini et Codex 
 | `ecocode` | Audit + application continue en dev, 115 bonnes pratiques Green IT | Stable |
 | `rgaa`    | Audit accessibilité RGAA 4.2.1                                     | Beta   |
 
-## Mode développement passif
+## Mode conception et développement passif
 
-`ecocode` ne se limite pas à l'audit sur demande. À chaque démarrage de session, il injecte automatiquement un guide compact de 19 règles d'éco-conception. Claude les applique en écrivant du code — sans qu'on ait à appeler `/ecocode`.
+`ecocode` ne se limite pas à l'audit sur demande. À chaque démarrage de session, il injecte automatiquement un guide compact de règles d'éco-conception. Claude les applique quand il conçoit, écrit ou modifie une solution — sans qu'on ait à appeler `/ecocode`.
 
 Les règles couvrent :
 
 | Couche    | Thèmes                                                                     |
 | --------- | -------------------------------------------------------------------------- |
+| Conception | Besoin minimal, parcours, données, compatibilité, dépendances             |
 | Front-end | Lazy-loading, imports ciblés, CSS > JS, batch DOM, délégation d'événements |
 | Back-end  | Async, cache, batch queries, types DB, TTL données                         |
 | Build     | Cache-Control, minification                                                |
