@@ -1,21 +1,20 @@
 {
   "name": "ecocode",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Audit d'éco-conception web selon les 115 bonnes pratiques Green IT. Analyse front-end et back-end avec agents spécialisés.",
   "author": {
     "name": "Renaud Heluin",
     "email": "renaud.heluin@novagaia.fr"
   },
-  "homepage": "https://github.com/novagaia/ia-tools",
-  "repository": "https://github.com/novagaia/ia-tools",
+  "homepage": "https://github.com/hrenaud/ai-assisted-sustainable-it",
+  "repository": "https://github.com/hrenaud/ai-assisted-sustainable-it",
   "license": "MIT",
   "keywords": [
     "ecocode",
     "green-it",
     "eco-conception",
     "sustainability",
-    "web-performance",
-    "accessibility"
+    "web-performance"
   ],
   "skills": "../../../skills/",
   "interface": {
@@ -32,7 +31,7 @@
       "Lance un audit éco-conception sur ce projet.",
       "Analyse le front-end de ce projet selon les bonnes pratiques Green IT."
     ],
-    "websiteURL": "https://github.com/novagaia/ia-tools",
+    "websiteURL": "https://github.com/hrenaud/ai-assisted-sustainable-it",
     "brandColor": "#22C55E",
     "composerIcon": "../../../assets/ecocode-small.svg",
     "logo": "../../../assets/app-icon.png",
