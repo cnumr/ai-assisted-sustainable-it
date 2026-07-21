@@ -33,6 +33,7 @@ développement.
 
 ```bash
 /plugin marketplace add hrenaud/ai-assisted-sustainable-it
+/plugin install ecocode@ai-assisted-sustainable-it
 ```
 
 Ou manuellement :
@@ -53,10 +54,20 @@ ln -s ~/.claude/plugins/ai-assisted-sustainable-it/agents/ecocode-*.md ~/.claude
 
 Voir [le guide OpenCode](docs/README.opencode.md) pour les détails.
 
-### Cursor, Gemini et Codex
+### Codex
 
-Les manifestes `.cursor-plugin`, `gemini-extension.json` et `.codex-plugin`
-définissent l'intégration avec ces plateformes.
+```bash
+git clone https://github.com/hrenaud/ai-assisted-sustainable-it.git ~/.codex/plugins/ai-assisted-sustainable-it
+mkdir -p ~/.codex/skills
+ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/ecocode ~/.codex/skills/ecocode
+```
+
+Redémarrez Codex ou ouvrez une nouvelle tâche après l'installation.
+
+### Cursor et Gemini
+
+Les manifestes `.cursor-plugin` et `gemini-extension.json` sont fournis pour
+ces plateformes.
 
 ## Migration depuis ia-tools
 

@@ -8,9 +8,9 @@
 ## Installation
 
 ```bash
-git clone https://github.com/hrenaud/ai-assisted-sustainable-it.git ~/.agents/plugins/ai-assisted-sustainable-it
-mkdir -p ~/.agents/skills
-ln -s ~/.agents/plugins/ai-assisted-sustainable-it/skills/ecocode ~/.agents/skills/ecocode
+git clone https://github.com/hrenaud/ai-assisted-sustainable-it.git ~/.codex/plugins/ai-assisted-sustainable-it
+mkdir -p ~/.codex/skills
+ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/ecocode ~/.codex/skills/ecocode
 ```
 
 ## Usage
