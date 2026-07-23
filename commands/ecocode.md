@@ -15,7 +15,7 @@ Arguments:
 Load the skill and follow its instructions:
 
 ```
-Use skill: ecocode
+Use skill: audits
 ```
 
 Pass any arguments from `$ARGUMENTS` to determine the audit scope.

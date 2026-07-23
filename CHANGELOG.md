@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Modifié
+
+- Réorganise les skills en `design`, `development` et `audits`.
+- Déplace les spécifications et plans Superpowers dans `.superpowers/`.
+
 ## 2.0.0 — 2026-07-21
 
 ### Changements incompatibles

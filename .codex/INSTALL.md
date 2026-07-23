@@ -10,7 +10,7 @@
 ```bash
 git clone https://github.com/hrenaud/ai-assisted-sustainable-it.git ~/.codex/plugins/ai-assisted-sustainable-it
 mkdir -p ~/.codex/skills
-ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/ecocode ~/.codex/skills/ecocode
+ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/audits ~/.codex/skills/audits
 ```
 
 ## Usage

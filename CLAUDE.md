@@ -9,9 +9,16 @@ Outil d'audit et de développement éco-conçus pour Claude Code, OpenCode et Co
 
 ## Skills
 
-- **`ecocode`** — orchestration des audits éco-conception.
-- **`ecocode/front`** — analyse des assets, JS, CSS, HTTP, DOM, cache et build.
-- **`ecocode/back`** — analyse BDD, cache serveur, API, workers et infrastructure.
+- **`design`** — règles d'éco-conception pendant la conception.
+- **`development`** — règles d'éco-conception pendant l'implémentation.
+- **`audits`** — orchestration des audits éco-conception.
+- **`audits/front`** — analyse des assets, JS, CSS, HTTP, DOM, cache et build.
+- **`audits/back`** — analyse BDD, cache serveur, API, workers et infrastructure.
+
+## Fichiers Superpowers
+
+Dans ce projet, créer les spécifications et plans Superpowers exclusivement
+dans `.superpowers/` (`.superpowers/specs/` et `.superpowers/plans/`).
 
 ## Agents
 
@@ -36,6 +43,6 @@ Outil d'audit et de développement éco-conçus pour Claude Code, OpenCode et Co
 ## Installation Claude Code
 
 ```bash
-git clone https://github.com/hrenaud/ai-assisted-sustainable-it.git ~/.claude/plugins/ai-assisted-sustainable-it
-ln -s ~/.claude/plugins/ai-assisted-sustainable-it/skills/ecocode ~/.claude/skills/ecocode
+git clone https://github.com/cnumr/ai-assisted-sustainable-it.git ~/.claude/plugins/ai-assisted-sustainable-it
+ln -s ~/.claude/plugins/ai-assisted-sustainable-it/skills/audits ~/.claude/skills/audits
 ```

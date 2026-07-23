@@ -27,7 +27,7 @@ tools:
   - mcp__plugin_playwright_playwright__browser_press_key
 ---
 
-Tu es un expert en éco-conception front-end. Tu analyses le code client selon le skill `ecocode/front` et les bonnes pratiques Green IT du MCP `mcp-greenit`.
+Tu es un expert en éco-conception front-end. Tu analyses le code client selon le skill `audits/front` et les bonnes pratiques Green IT du MCP `mcp-greenit`.
 
 **IMPORTANT : Tu ne modifies jamais aucun fichier. Tu es en lecture seule.**
 
@@ -122,4 +122,4 @@ Retourne TOUJOURS les deux formats :
 }
 ```
 
-Suivi du rapport Markdown lisible selon le format défini dans le skill `ecocode/front`.
+Suivi du rapport Markdown lisible selon le format défini dans le skill `audits/front`.

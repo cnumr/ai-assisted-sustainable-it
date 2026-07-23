@@ -1,6 +1,6 @@
 ---
-name: ecocode
-description: Use for explicit web eco-design audits, Green IT, code ecological impact, carbon footprint, or /ecocode requests. Proactive design and coding guidance is injected separately at session start by ecocode/dev-guide.
+name: audits
+description: Use for explicit web eco-design audits, Green IT, code ecological impact, carbon footprint, or /ecocode requests. Proactive guidance is injected separately at session start by design and development.
 license: MIT
 metadata:
   author: Renaud Heluin
@@ -15,7 +15,7 @@ Point d'entrée unique pour tout audit d'éco-conception web. Ce skill identifie
 
 ## Deux modes complémentaires
 
-- **Conception et développement proactifs :** `ecocode/dev-guide` est injecté au démarrage de session et ses règles compactes s'appliquent automatiquement quand une solution est conçue, écrite ou modifiée.
+- **Conception et développement proactifs :** `design` et `development` sont injectés au démarrage de session et leurs règles s'appliquent automatiquement quand une solution est conçue, écrite ou modifiée.
 - **Audit explicite :** ce skill parent s'utilise seulement quand l'utilisateur demande un audit (par exemple `/ecocode`). Il orchestre alors l'analyse approfondie, les rapports et le plan d'action.
 
 **Référentiel de base :** Les 115 bonnes pratiques Green IT accessibles via le MCP `mcp-greenit`.
@@ -29,8 +29,8 @@ digraph routing {
     "Lire le projet" [shape=box];
     "Front uniquement ?" [shape=diamond];
     "Back uniquement ?" [shape=diamond];
-    "Déléguer à ecocode/front" [shape=box];
-    "Déléguer à ecocode/back" [shape=box];
+    "Déléguer à audits/front" [shape=box];
+    "Déléguer à audits/back" [shape=box];
     "Déléguer aux deux" [shape=box];
     "Agréger + rapport final" [shape=box];
 
@@ -38,12 +38,12 @@ digraph routing {
     "Périmètre identifié ?" -> "Lire le projet" [label="non"];
     "Périmètre identifié ?" -> "Front uniquement ?" [label="oui"];
     "Lire le projet" -> "Front uniquement ?";
-    "Front uniquement ?" -> "Déléguer à ecocode/front" [label="oui"];
+    "Front uniquement ?" -> "Déléguer à audits/front" [label="oui"];
     "Front uniquement ?" -> "Back uniquement ?" [label="non"];
-    "Back uniquement ?" -> "Déléguer à ecocode/back" [label="oui"];
+    "Back uniquement ?" -> "Déléguer à audits/back" [label="oui"];
     "Back uniquement ?" -> "Déléguer aux deux" [label="non"];
-    "Déléguer à ecocode/front" -> "Agréger + rapport final";
-    "Déléguer à ecocode/back" -> "Agréger + rapport final";
+    "Déléguer à audits/front" -> "Agréger + rapport final";
+    "Déléguer à audits/back" -> "Agréger + rapport final";
     "Déléguer aux deux" -> "Agréger + rapport final";
 }
 ```
@@ -57,7 +57,7 @@ digraph routing {
    ls docs/ecocode/audits/*.md 2>/dev/null | sort -r | head -1
    ```
 2. Si aucun fichier trouvé : signaler qu'aucun audit n'existe et continuer vers l'Étape 0 pour un nouvel audit.
-3. Si un fichier trouvé : extraire le timestamp du nom de fichier (format `YYYY-MM-DDTHH-MM`), trouver tous les fichiers correspondant à ce timestamp, et déléguer à `ecocode/resume` avec :
+3. Si un fichier trouvé : extraire le timestamp du nom de fichier (format `YYYY-MM-DDTHH-MM`), trouver tous les fichiers correspondant à ce timestamp, et déléguer à `audits/resume` avec :
    - `auditPaths` : tous les fichiers de ce timestamp
    - `action` : l'argument reçu
    - `timestamp` : le timestamp extrait
@@ -77,7 +77,7 @@ digraph routing {
    > - **nouvel** — relancer l'analyse complète
    >
    > (reprendre/nouvel)"
-   - Si **reprendre** : déléguer à `ecocode/resume` avec `action: summary`. Terminer.
+   - Si **reprendre** : déléguer à `audits/resume` avec `action: summary`. Terminer.
    - Si **nouvel** : continuer vers l'Étape 0.
 3. Si aucun fichier : continuer vers l'Étape 0.
 
@@ -126,8 +126,8 @@ Utiliser `greenit_fiches_prioritaires` pour identifier les pratiques les plus cr
 
 | Périmètre  | Sous-skill            | Agent dédié              |
 | ---------- | --------------------- | ------------------------ |
-| Front-end  | `ecocode/front`       | `ecocode-front-analyzer` |
-| Back-end   | `ecocode/back`        | `ecocode-back-analyzer`  |
+| Front-end  | `audits/front`        | `ecocode-front-analyzer` |
+| Back-end   | `audits/back`         | `ecocode-back-analyzer`  |
 | Full-stack | les deux en parallèle | les deux agents          |
 
 Pour le front accessible via URL, passer l'URL au sous-skill front.

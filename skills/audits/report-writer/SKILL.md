@@ -9,7 +9,7 @@ description: Use when writing EcoCode audit results to markdown files. Formats f
 
 Ce sous-skill écrit les résultats d'audit éco-conception dans des fichiers markdown séparés par couche. Il reçoit les données de l'orchestrateur et produit deux fichiers horodatés.
 
-**REQUIRED PARENT SKILL:** `ecocode` — ce sous-skill est délégué par l'orchestrateur.
+**REQUIRED PARENT SKILL:** `audits` — ce sous-skill est délégué par l'orchestrateur.
 
 ## Fichiers produits
 

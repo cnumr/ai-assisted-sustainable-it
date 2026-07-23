@@ -9,7 +9,7 @@ description: Use when generating a prioritized action plan from EcoCode audit re
 
 Ce sous-skill génère un plan d'action priorisé à partir des résultats d'audit. Il reçoit les données agrégées de l'orchestrateur et produit un fichier markdown structuré avec des cases à cocher.
 
-**REQUIRED PARENT SKILL:** `ecocode` — ce sous-skill est délégué par l'orchestrateur.
+**REQUIRED PARENT SKILL:** `audits` — ce sous-skill est délégué par l'orchestrateur.
 
 ## Données reçues de l'orchestrateur
 

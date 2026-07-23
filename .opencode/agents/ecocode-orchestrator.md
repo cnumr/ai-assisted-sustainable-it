@@ -19,7 +19,7 @@ Quand tu reçois une demande d'audit :
    **Si la demande contient `plan`, `fix`, ou `fix RWEB_XXX` :**
    - Exécuter : `ls docs/ecocode/audits/*.md 2>/dev/null | sort -r | head -1`
    - Si aucun fichier trouvé : informer qu'aucun audit n'existe et passer à l'étape 1.
-   - Si un fichier trouvé : extraire le timestamp (format `YYYY-MM-DDTHH-MM`), trouver tous les fichiers de ce timestamp, déléguer à `ecocode/resume` avec `auditPaths`, `action`, et `timestamp`. Terminer.
+   - Si un fichier trouvé : extraire le timestamp (format `YYYY-MM-DDTHH-MM`), trouver tous les fichiers de ce timestamp, déléguer à `audits/resume` avec `auditPaths`, `action`, et `timestamp`. Terminer.
 
    **Si la demande est un audit standard (sans argument spécial) :**
    - Exécuter : `ls docs/ecocode/audits/*.md 2>/dev/null | wc -l`
@@ -30,7 +30,7 @@ Quand tu reçois une demande d'audit :
      > - **nouvel** — relancer l'analyse complète
      >
      > (reprendre/nouvel)"
-     - Si **reprendre** : déléguer à `ecocode/resume` avec `action: summary`. Terminer.
+     - Si **reprendre** : déléguer à `audits/resume` avec `action: summary`. Terminer.
      - Si **nouvel** : continuer à l'étape 1.
    - Si aucun fichier : continuer à l'étape 1.
 

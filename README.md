@@ -43,7 +43,7 @@ Ou manuellement :
 
 ```bash
 git clone https://github.com/cnumr/ai-assisted-sustainable-it.git ~/.claude/plugins/ai-assisted-sustainable-it
-ln -s ~/.claude/plugins/ai-assisted-sustainable-it/skills/ecocode ~/.claude/skills/ecocode
+ln -s ~/.claude/plugins/ai-assisted-sustainable-it/skills/audits ~/.claude/skills/audits
 ln -s ~/.claude/plugins/ai-assisted-sustainable-it/agents/ecocode-*.md ~/.claude/agents/
 ```
 
@@ -62,7 +62,7 @@ Voir [le guide OpenCode](docs/README.opencode.md) pour les détails.
 ```bash
 git clone https://github.com/cnumr/ai-assisted-sustainable-it.git ~/.codex/plugins/ai-assisted-sustainable-it
 mkdir -p ~/.codex/skills
-ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/ecocode ~/.codex/skills/ecocode
+ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/audits ~/.codex/skills/audits
 ```
 
 Redémarrez Codex ou ouvrez une nouvelle tâche après l'installation.

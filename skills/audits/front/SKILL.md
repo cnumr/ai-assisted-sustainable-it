@@ -9,7 +9,7 @@ description: Use when analyzing the ecological impact of front-end code: assets 
 
 Sous-skill spécialisé dans l'audit éco-conception front-end. Mappe chaque problème détecté aux bonnes pratiques Green IT correspondantes via le MCP `mcp-greenit`.
 
-**REQUIRED PARENT SKILL:** `ecocode` — ce sous-skill est délégué par le skill parent.
+**REQUIRED PARENT SKILL:** `audits` — ce sous-skill est délégué par le skill parent.
 
 ## Collecte précise (obligatoire pendant l'analyse)
 

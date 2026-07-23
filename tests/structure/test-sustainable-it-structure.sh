@@ -35,7 +35,13 @@ json_check() {
 
 echo "=== Test structure Sustainable IT ==="
 
-check "skill ecocode" "skills/ecocode/SKILL.md"
+check "skill design" "skills/design/SKILL.md"
+check "skill development" "skills/development/SKILL.md"
+check "skill audits" "skills/audits/SKILL.md"
+check "skill audit front" "skills/audits/front/SKILL.md"
+check "skill audit back" "skills/audits/back/SKILL.md"
+check "plans Superpowers" ".superpowers/plans"
+check "spécifications Superpowers" ".superpowers/specs"
 check "commande ecocode" "commands/ecocode.md"
 check "agent ecocode" "agents/ecocode-orchestrator.md"
 check "plugin Claude ecocode" ".claude-plugin/plugins/ecocode/plugin.json"
@@ -44,6 +50,8 @@ check "plugin Cursor ecocode" ".cursor-plugin/plugins/ecocode/plugin.json"
 check "plugin OpenCode ecocode" ".opencode/plugins/ecocode.js"
 
 for path in \
+  "skills/ecocode" \
+  "docs/superpowers" \
   "skills/rgaa" \
   "commands/rgaa.md" \
   "agents/rgaa-orchestrator.md" \
@@ -61,6 +69,18 @@ for path in \
   ".cursor-plugin/plugins/rgaa"; do
   absent "surface RGAA $path" "$path"
 done
+
+if grep -Fq '`.superpowers/`' "$ROOT/AGENTS.md"; then
+  echo "✓ règle locale pour les fichiers Superpowers"; PASS=$((PASS + 1))
+else
+  echo "✗ règle locale pour les fichiers Superpowers — manquante dans AGENTS.md"; FAIL=$((FAIL + 1))
+fi
+
+if grep -Fq 'path.join(ecocodeSkillsDir, "audits", "SKILL.md")' "$ROOT/.opencode/plugins/ecocode.js"; then
+  echo "✓ bootstrap OpenCode charge le skill audits"; PASS=$((PASS + 1))
+else
+  echo "✗ bootstrap OpenCode charge le skill audits — chemin manquant"; FAIL=$((FAIL + 1))
+fi
 
 json_check "package renommé" "package.json" ".name" "ai-assisted-sustainable-it"
 json_check "extension Gemini renommée" "gemini-extension.json" ".name" "ai-assisted-sustainable-it"

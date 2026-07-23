@@ -1,5 +1,5 @@
 ---
-name: ecocode/resume
+name: audits/resume
 description: Use when resuming from an existing EcoCode audit. Reads existing audit files in docs/ecocode/audits/, extracts problems and scores, then routes to plan generation or fix suggestion without re-running the analysis.
 ---
 
@@ -9,7 +9,7 @@ description: Use when resuming from an existing EcoCode audit. Reads existing au
 
 Ce sous-skill lit un ou plusieurs fichiers d'audit existants dans `docs/ecocode/audits/` et permet de continuer le travail sans relancer l'analyse complète. Il est utilisé quand l'utilisateur tape `/ecocode plan`, `/ecocode fix`, ou choisit "reprendre" lors de la détection automatique d'un audit existant.
 
-**REQUIRED PARENT SKILL:** `ecocode` — ce sous-skill est invoqué par l'orchestrateur.
+**REQUIRED PARENT SKILL:** `audits` — ce sous-skill est invoqué par l'orchestrateur.
 
 ## Données en entrée
 

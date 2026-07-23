@@ -1,1 +1,1 @@
-@./skills/ecocode/SKILL.md
+@./skills/audits/SKILL.md

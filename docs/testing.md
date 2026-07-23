@@ -22,7 +22,8 @@ bash tests/structure/test-release-metadata.sh
 CLAUDE_PLUGIN_ROOT="$(pwd)" bash hooks/session-start
 ```
 
-La sortie est un JSON contenant le guide `skills/ecocode/dev-guide/SKILL.md`.
+La sortie est un JSON contenant les guides `skills/design/SKILL.md` et
+`skills/development/SKILL.md`.
 
 ## Test OpenCode
 

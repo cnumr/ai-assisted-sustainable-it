@@ -1,19 +1,11 @@
 ---
-name: dev-guide
-description: Passive eco-design design and coding guidelines. Always apply these rules when designing, writing, or modifying a solution — front-end and back-end. Loaded automatically at session start.
+name: development
+description: Passive eco-design implementation guidelines. Apply them when writing or modifying front-end, back-end, build, or cache configuration. Loaded automatically at session start.
 ---
 
-# Éco-conception — Règles de conception et de codage actives
+# Éco-conception — Règles de développement actives
 
-Applique ces règles **automatiquement** quand tu conçois, écris ou modifies une solution. Pas besoin qu'on te le demande.
-
-## Conception
-
-- **Besoin minimal :** privilégie la solution la plus simple qui couvre le besoin ; ne crée pas de fonctionnalité, écran ou donnée sans usage identifié (`RWEB_0001`, `RWEB_0003`).
-- **Parcours sobre :** réduis les étapes, rechargements et contenus inutiles ; préfère la pagination au défilement infini (`RWEB_0005`, `RWEB_0013`).
-- **Données minimales :** collecte, transfère et conserve seulement les données nécessaires, avec une durée de rétention définie (`RWEB_0017`, `RWEB_0023`, `RWEB_0079`).
-- **Compatibilité durable :** conçois d'abord pour les appareils modestes, les réseaux limités et les navigateurs encore utilisés (`RWEB_0004`, `RWEB_0058`).
-- **Dépendances justifiées :** évalue le coût d'un service tiers ou d'une bibliothèque avant de l'ajouter ; préfère les capacités natives quand elles suffisent (`RWEB_0015`, `RWEB_0047`).
+Applique ces règles **automatiquement** quand tu écris ou modifies une solution. Pas besoin qu'on te le demande.
 
 ## Front-end
 

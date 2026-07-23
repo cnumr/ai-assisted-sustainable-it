@@ -43,7 +43,7 @@ export const EcocodePlugin = async ({ client, directory }) => {
   const getBootstrapContent = () => {
     if (_bootstrapCache !== undefined) return _bootstrapCache;
 
-    const skillPath = path.join(ecocodeSkillsDir, "ecocode", "SKILL.md");
+    const skillPath = path.join(ecocodeSkillsDir, "audits", "SKILL.md");
     if (!fs.existsSync(skillPath)) {
       _bootstrapCache = null;
       return null;
@@ -58,12 +58,12 @@ When skills reference tools you don't have, substitute OpenCode equivalents:
 - \`Task\` tool with subagents → Use OpenCode's subagent system (@mention)
 - \`Read\`, \`Write\`, \`Edit\`, \`Bash\` → Your native tools
 
-Use OpenCode's native \`skill\` tool to load ecocode/front or ecocode/back sub-skills.`;
+Use OpenCode's native \`skill\` tool to load audits/front or audits/back sub-skills.`;
 
     _bootstrapCache = `<EXTREMELY_IMPORTANT>
 You have the ecocode plugin loaded.
 
-**IMPORTANT: The ecocode skill content is included below. It is ALREADY LOADED. Do NOT use the skill tool to load "ecocode" again — that would be redundant. For sub-skills (ecocode/front, ecocode/back), use the skill tool.**
+**IMPORTANT: The audits skill content is included below. It is ALREADY LOADED. Do NOT use the skill tool to load "audits" again — that would be redundant. For sub-skills (audits/front, audits/back), use the skill tool.**
 
 ${content}
 

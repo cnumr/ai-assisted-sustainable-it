@@ -19,9 +19,9 @@ Add the plugin to `opencode.json`:
 ## Usage
 
 ```text
-use skill tool to load ecocode
-use skill tool to load ecocode/front
-use skill tool to load ecocode/back
+use skill tool to load audits
+use skill tool to load audits/front
+use skill tool to load audits/back
 
 /ecocode              # Full Sustainable IT audit
 /ecocode front        # Front-end analysis
