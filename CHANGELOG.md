@@ -2,18 +2,18 @@
 
 ## [Unreleased]
 
-### Modifié
-
-- Réorganise les skills en `design`, `development` et `audits`.
-- Déplace les spécifications et plans Superpowers dans `.superpowers/`.
-- Aligne les guides d'installation et les métadonnées des plugins sur `cnumr`.
-
-## 2.0.0 — 2026-07-21
+## 2.0.0 — 2026-07-23
 
 ### Changements incompatibles
 
 - Le dépôt devient `ai-assisted-sustainable-it` et ne distribue plus que l'outil d'éco-conception `ecocode`.
 - Les outils d'accessibilité sont désormais disponibles dans [ai-assisted-a11y](https://github.com/hrenaud/ai-assisted-a11y).
+
+### Modifié
+
+- Réorganise les skills en `design`, `development` et `audits`.
+- Déplace les spécifications et plans Superpowers dans `.superpowers/`.
+- Aligne les guides d'installation et les métadonnées des plugins sur `cnumr`.
 
 ## 1.2.0 — 2026-07-21
 

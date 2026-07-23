@@ -20,6 +20,12 @@ Outil d'audit et de développement éco-conçus pour Claude Code, OpenCode et Co
 Dans ce projet, créer les spécifications et plans Superpowers exclusivement
 dans `.superpowers/` (`.superpowers/specs/` et `.superpowers/plans/`).
 
+## Releases
+
+Suivre le processus documenté dans `docs/releasing.md`. Une release est créée
+uniquement depuis `main`, après synchronisation des versions, mise à jour du
+changelog et exécution des vérifications requises.
+
 ## Agents
 
 | Agent                    | Rôle                                | Permissions               |

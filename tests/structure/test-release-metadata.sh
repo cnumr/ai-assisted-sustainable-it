@@ -21,7 +21,7 @@ check() {
 check "Les manifests sont synchronisés en 2.0.0" \
   bash -c "'$ROOT/scripts/bump-version.sh' --check | grep -q 'Tous les fichiers sont synchronisés à 2.0.0'"
 check "Le changelog contient la release 2.0.0" \
-  grep -q '^## 2.0.0 — 2026-07-21$' "$ROOT/CHANGELOG.md"
+  grep -q '^## 2.0.0 — 2026-07-23$' "$ROOT/CHANGELOG.md"
 check "Le guide OpenCode référence v2.0.0" \
   grep -q '#v2.0.0' "$ROOT/docs/README.opencode.md"
 check "L'audit de version ne remonte aucun fichier non déclaré" \
