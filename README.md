@@ -35,7 +35,7 @@ Green IT](https://github.com/cnumr/best-practices).
 ### Claude Code
 
 ```bash
-/plugin marketplace add hrenaud/ai-assisted-sustainable-it
+/plugin marketplace add cnumr/ai-assisted-sustainable-it
 /plugin install ecocode@ai-assisted-sustainable-it
 ```
 

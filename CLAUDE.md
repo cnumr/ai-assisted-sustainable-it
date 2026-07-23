@@ -45,4 +45,6 @@ dans `.superpowers/` (`.superpowers/specs/` et `.superpowers/plans/`).
 ```bash
 git clone https://github.com/cnumr/ai-assisted-sustainable-it.git ~/.claude/plugins/ai-assisted-sustainable-it
 ln -s ~/.claude/plugins/ai-assisted-sustainable-it/skills/audits ~/.claude/skills/audits
+ln -s ~/.claude/plugins/ai-assisted-sustainable-it/skills/design ~/.claude/skills/design
+ln -s ~/.claude/plugins/ai-assisted-sustainable-it/skills/development ~/.claude/skills/development
 ```

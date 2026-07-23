@@ -9,7 +9,11 @@
 ## Installation
 
 ```bash
-git clone https://github.com/hrenaud/ai-assisted-sustainable-it.git ~/.codex/plugins/ai-assisted-sustainable-it
+git clone https://github.com/cnumr/ai-assisted-sustainable-it.git ~/.codex/plugins/ai-assisted-sustainable-it
+mkdir -p ~/.codex/skills
+ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/audits ~/.codex/skills/audits
+ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/design ~/.codex/skills/design
+ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/development ~/.codex/skills/development
 ```
 
 ## Commands

@@ -12,7 +12,7 @@ Add the plugin to `opencode.json`:
 
 ```json
 {
-  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/hrenaud/ai-assisted-sustainable-it.git"]
+  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/cnumr/ai-assisted-sustainable-it.git"]
 }
 ```
 

@@ -6,7 +6,7 @@ Ajouter le plugin dans `opencode.json` :
 
 ```json
 {
-  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/hrenaud/ai-assisted-sustainable-it.git"]
+  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/cnumr/ai-assisted-sustainable-it.git"]
 }
 ```
 
@@ -28,11 +28,11 @@ Pour épingler la version 2.0.0 :
 
 ```json
 {
-  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/hrenaud/ai-assisted-sustainable-it.git#v2.0.0"]
+  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/cnumr/ai-assisted-sustainable-it.git#v2.0.0"]
 }
 ```
 
 ## Aide
 
-- Signaler un problème : https://github.com/hrenaud/ai-assisted-sustainable-it/issues
-- Documentation : https://github.com/hrenaud/ai-assisted-sustainable-it
+- Signaler un problème : https://github.com/cnumr/ai-assisted-sustainable-it/issues
+- Documentation : https://github.com/cnumr/ai-assisted-sustainable-it
