@@ -3,7 +3,7 @@ name: ecocode
 description: Lance un audit éco-conception web selon les 115 bonnes pratiques Green IT
 ---
 
-Use the `ecocode` skill to perform an eco-design audit.
+Use the `audits` skill to perform an eco-design audit.
 
 Arguments:
 

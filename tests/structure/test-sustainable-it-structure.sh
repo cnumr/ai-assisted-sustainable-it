@@ -82,6 +82,23 @@ else
   echo "✗ bootstrap OpenCode charge le skill audits — chemin manquant"; FAIL=$((FAIL + 1))
 fi
 
+for spec in \
+  "commands/ecocode.md:Use the \`audits\` skill" \
+  "agents/ecocode-orchestrator.md:skill \`audits\`" \
+  ".opencode/agents/ecocode-orchestrator.md:skill \`audits\`" \
+  "README.md:skills/design ~/.codex/skills/design" \
+  "README.md:skills/development ~/.codex/skills/development" \
+  ".codex/INSTALL.md:skills/design ~/.codex/skills/design" \
+  ".codex/INSTALL.md:skills/development ~/.codex/skills/development"; do
+  path="${spec%%:*}"
+  pattern="${spec#*:}"
+  if grep -Fq "$pattern" "$ROOT/$path"; then
+    echo "✓ référence $path"; PASS=$((PASS + 1))
+  else
+    echo "✗ référence $path — motif manquant : $pattern"; FAIL=$((FAIL + 1))
+  fi
+done
+
 json_check "package renommé" "package.json" ".name" "ai-assisted-sustainable-it"
 json_check "extension Gemini renommée" "gemini-extension.json" ".name" "ai-assisted-sustainable-it"
 json_check "marketplace Claude : un plugin" ".claude-plugin/marketplace.json" ".plugins | length" "1"

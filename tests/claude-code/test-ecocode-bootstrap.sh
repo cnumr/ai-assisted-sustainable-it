@@ -34,4 +34,11 @@ else
     exit 1
 fi
 
+if echo "$output" | python3 -c "import sys,json; d=json.load(sys.stdin); ctx=d['hookSpecificOutput']['additionalContext']; assert 'RWEB_0001' in ctx and 'RWEB_0051' in ctx" 2>/dev/null; then
+    echo "  [PASS] Contenu des guides design et development présent dans le bootstrap"
+else
+    echo "  [FAIL] Guides design et development incomplets dans le bootstrap"
+    exit 1
+fi
+
 echo "=== Tous les tests passés ==="
