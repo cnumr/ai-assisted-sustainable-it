@@ -13,6 +13,11 @@ metadata:
 
 Point d'entrée unique pour tout audit d'éco-conception web. Ce skill identifie le périmètre (front, back, ou les deux), délègue aux sous-skills spécialisés, et produit un rapport synthétique final avec score d'impact et priorités de correction.
 
+L'audit est piloté par `ecocode-orchestrator`. Les six rôles partagent les
+mêmes noms dans Claude Code, OpenCode et Codex : `ecocode-orchestrator`,
+`ecocode-front-analyzer`, `ecocode-back-analyzer`, `ecocode-report-writer`,
+`ecocode-planner` et `ecocode-fix-suggester`.
+
 ## Deux modes complémentaires
 
 - **Conception et développement proactifs :** `design` et `development` sont injectés au démarrage de session et leurs règles s'appliquent automatiquement quand une solution est conçue, écrite ou modifiée.
@@ -129,6 +134,10 @@ Utiliser `greenit_fiches_prioritaires` pour identifier les pratiques les plus cr
 | Front-end  | `audits/front`        | `ecocode-front-analyzer` |
 | Back-end   | `audits/back`         | `ecocode-back-analyzer`  |
 | Full-stack | les deux en parallèle | les deux agents          |
+
+Pour un audit complet, lancer `ecocode-front-analyzer` et
+`ecocode-back-analyzer` en parallèle, puis attendre leurs résultats avant de
+déléguer au rédacteur et au planificateur.
 
 Pour le front accessible via URL, passer l'URL au sous-skill front.
 

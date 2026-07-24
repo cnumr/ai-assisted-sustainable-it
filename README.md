@@ -12,6 +12,16 @@ Green IT](https://github.com/cnumr/best-practices).
 - Skills d'audit éco-conception complet du front-end et du back-end.
 - Rapports, plans d'action et corrections guidées pour améliorer les produits
   audités.
+- Routage commun Claude Code, OpenCode et Codex : `/ecocode` déclenche
+  `ecocode-orchestrator`, qui lance les analyseurs front et back en parallèle
+  pour un audit complet.
+
+Les guides `design` et `development` se déclenchent automatiquement au début
+d'une session. Les audits restent explicites : lancez `/ecocode` pour
+déclencher l'orchestrateur.
+
+Dans Codex, l'orchestrateur et le correcteur utilisent `gpt-5.6-sol`, tandis
+que les analyseurs, le rédacteur et le planificateur utilisent `gpt-5.6-terra`.
 
 ## Utilisation
 

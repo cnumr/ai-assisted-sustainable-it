@@ -5,6 +5,8 @@ description: Lance un audit éco-conception web selon les 115 bonnes pratiques G
 
 Use the `audits` skill to perform an eco-design audit.
 
+/ecocode délègue à `ecocode-orchestrator`. Cet orchestrateur choisit les analyseurs selon l'argument, puis coordonne le rapport et le plan d'action.
+
 Arguments:
 
 - (none) — full audit of the current project

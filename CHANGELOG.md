@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Modifié
+
+- Documente le routage d'audit commun à Claude Code, OpenCode et Codex, avec
+  exécution parallèle des analyses front-end et back-end pour `/ecocode`.
+- Documente les modèles Codex : `gpt-5.6-sol` pour l'orchestrateur et le
+  correcteur, `gpt-5.6-terra` pour les analyses, rapports et plans.
+
 ## 2.0.0 — 2026-07-23
 
 ### Changements incompatibles
