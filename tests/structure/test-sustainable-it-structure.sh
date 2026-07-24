@@ -49,6 +49,30 @@ check "plugin Codex ecocode" ".codex-plugin/plugins/ecocode/plugin.json"
 check "plugin Cursor ecocode" ".cursor-plugin/plugins/ecocode/plugin.json"
 check "plugin OpenCode ecocode" ".opencode/plugins/ecocode.js"
 
+for agent in \
+  "ecocode-orchestrator" \
+  "ecocode-front-analyzer" \
+  "ecocode-back-analyzer" \
+  "ecocode-report-writer" \
+  "ecocode-planner" \
+  "ecocode-fix-suggester"; do
+  check "adaptateur Codex $agent" ".codex/agents/$agent.toml"
+done
+
+for analyzer in "ecocode-front-analyzer" "ecocode-back-analyzer"; do
+  if [ -f "$ROOT/.codex/agents/$analyzer.toml" ] && grep -Fq 'sandbox_mode = "read-only"' "$ROOT/.codex/agents/$analyzer.toml"; then
+    echo "✓ analyseur Codex $analyzer en lecture seule"; PASS=$((PASS + 1))
+  else
+    echo "✗ analyseur Codex $analyzer en lecture seule — configuration manquante"; FAIL=$((FAIL + 1))
+  fi
+
+  if [ -f "$ROOT/.codex/agents/$analyzer.toml" ] && grep -Fq 'model = "gpt-5.6-terra"' "$ROOT/.codex/agents/$analyzer.toml"; then
+    echo "✓ analyseur Codex $analyzer utilise gpt-5.6-terra"; PASS=$((PASS + 1))
+  else
+    echo "✗ analyseur Codex $analyzer utilise gpt-5.6-terra — configuration manquante"; FAIL=$((FAIL + 1))
+  fi
+done
+
 for path in \
   "skills/ecocode" \
   "docs/superpowers" \
@@ -84,6 +108,7 @@ fi
 
 for spec in \
   "commands/ecocode.md:Use the \`audits\` skill" \
+  "commands/ecocode.md:/ecocode délègue à \`ecocode-orchestrator\`" \
   "agents/ecocode-orchestrator.md:skill \`audits\`" \
   ".opencode/agents/ecocode-orchestrator.md:skill \`audits\`" \
   "README.md:skills/design ~/.codex/skills/design" \
