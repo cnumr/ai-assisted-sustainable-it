@@ -36,7 +36,7 @@ json_check() {
 toml_check() {
   local desc="$1" path="$2" key="$3" expected="$4"
   local actual
-  actual=$(python3 - "$ROOT/$path" "$key" <<'PY' 2>/dev/null || echo "ERROR"
+  actual=$(python3.11 - "$ROOT/$path" "$key" <<'PY' 2>/dev/null || echo "ERROR"
 import sys
 import tomllib
 
