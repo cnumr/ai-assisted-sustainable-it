@@ -7,10 +7,10 @@ source "$SCRIPT_DIR/test-helpers.sh"
 
 echo "=== Test : skill ecocode ==="
 
-output=$(run_claude "/ecocode front : lance un audit et décris brièvement les agents utilisés." 60)
+output=$(run_claude "/ecocode front : explique uniquement, sans lancer d'audit ni modifier de fichier, comment cette commande est routée." 60)
 
 assert_contains "$output" -i "éco\|eco\|green\|vert" "Mentionne le contexte Green IT"
 assert_contains "$output" -i "front\|back\|analyse\|audit" "Mentionne les domaines d'analyse"
-assert_contains "$output" -i "ecocode-orchestrator\|orchestrat" "Route /ecocode vers l'orchestrateur"
+assert_contains "$output" "ecocode-orchestrator" "Route /ecocode vers ecocode-orchestrator"
 
 echo "=== Tous les tests passés ==="

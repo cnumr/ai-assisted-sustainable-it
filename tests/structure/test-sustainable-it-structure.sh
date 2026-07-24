@@ -33,6 +33,33 @@ json_check() {
   fi
 }
 
+toml_check() {
+  local desc="$1" path="$2" key="$3" expected="$4"
+  local actual
+  actual=$(python3 - "$ROOT/$path" "$key" <<'PY' 2>/dev/null || echo "ERROR"
+import sys
+import tomllib
+
+with open(sys.argv[1], "rb") as file:
+    config = tomllib.load(file)
+
+value = config
+for part in sys.argv[2].split("."):
+    value = value[part]
+
+if not isinstance(value, str):
+    raise TypeError(f"{sys.argv[2]} must be a string")
+
+print(value)
+PY
+)
+  if [ "$actual" = "$expected" ]; then
+    echo "✓ $desc"; PASS=$((PASS + 1))
+  else
+    echo "✗ $desc — attendu '$expected', obtenu '$actual'"; FAIL=$((FAIL + 1))
+  fi
+}
+
 echo "=== Test structure Sustainable IT ==="
 
 check "skill design" "skills/design/SKILL.md"
@@ -60,17 +87,8 @@ for agent in \
 done
 
 for analyzer in "ecocode-front-analyzer" "ecocode-back-analyzer"; do
-  if [ -f "$ROOT/.codex/agents/$analyzer.toml" ] && grep -Fq 'sandbox_mode = "read-only"' "$ROOT/.codex/agents/$analyzer.toml"; then
-    echo "✓ analyseur Codex $analyzer en lecture seule"; PASS=$((PASS + 1))
-  else
-    echo "✗ analyseur Codex $analyzer en lecture seule — configuration manquante"; FAIL=$((FAIL + 1))
-  fi
-
-  if [ -f "$ROOT/.codex/agents/$analyzer.toml" ] && grep -Fq 'model = "gpt-5.6-terra"' "$ROOT/.codex/agents/$analyzer.toml"; then
-    echo "✓ analyseur Codex $analyzer utilise gpt-5.6-terra"; PASS=$((PASS + 1))
-  else
-    echo "✗ analyseur Codex $analyzer utilise gpt-5.6-terra — configuration manquante"; FAIL=$((FAIL + 1))
-  fi
+  toml_check "analyseur Codex $analyzer en lecture seule" ".codex/agents/$analyzer.toml" "sandbox_mode" "read-only"
+  toml_check "analyseur Codex $analyzer utilise gpt-5.6-terra" ".codex/agents/$analyzer.toml" "model" "gpt-5.6-terra"
 done
 
 for path in \
