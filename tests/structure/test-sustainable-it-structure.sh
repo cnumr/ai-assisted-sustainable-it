@@ -179,7 +179,7 @@ for spec in \
   ".codex-plugin/marketplace.json:.plugins[0].version"; do
   path="${spec%%:*}"
   jq_expr="${spec#*:}"
-  json_check "version 2.0.0 dans $path ($jq_expr)" "$path" "$jq_expr" "2.0.0"
+  json_check "version 2.1.0 dans $path ($jq_expr)" "$path" "$jq_expr" "2.1.0"
 done
 
 echo

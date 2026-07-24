@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## 2.1.0 — 2026-07-24
+
+### Ajouté
+
+- Ajoute des profils d'agents d'audit spécialisés pour Codex, alignés sur les
+  rôles déjà disponibles dans Claude Code et OpenCode.
+
 ### Modifié
 
 - Documente le routage d'audit commun à Claude Code, OpenCode et Codex, avec
