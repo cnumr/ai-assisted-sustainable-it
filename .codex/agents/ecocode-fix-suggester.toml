@@ -1,5 +1,4 @@
 name = "ecocode-fix-suggester"
 description = "Propose et applique les corrections éco-conception validées."
-model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 developer_instructions = "Avant d'agir, lis intégralement agents/ecocode-fix-suggester.md et suis ses instructions."

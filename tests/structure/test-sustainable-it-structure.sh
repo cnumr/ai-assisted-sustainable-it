@@ -88,7 +88,27 @@ done
 
 for analyzer in "ecocode-front-analyzer" "ecocode-back-analyzer"; do
   toml_check "analyseur Codex $analyzer en lecture seule" ".codex/agents/$analyzer.toml" "sandbox_mode" "read-only"
-  toml_check "analyseur Codex $analyzer utilise gpt-5.6-terra" ".codex/agents/$analyzer.toml" "model" "gpt-5.6-terra"
+done
+
+for agent in \
+  "ecocode-orchestrator" \
+  "ecocode-front-analyzer" \
+  "ecocode-back-analyzer" \
+  "ecocode-report-writer" \
+  "ecocode-planner" \
+  "ecocode-fix-suggester"; do
+  if python3.11 - "$ROOT/.codex/agents/$agent.toml" <<'PY' 2>/dev/null
+import sys
+import tomllib
+
+with open(sys.argv[1], "rb") as stream:
+    assert "model" not in tomllib.load(stream)
+PY
+  then
+    echo "✓ adaptateur Codex $agent sans modèle figé"; PASS=$((PASS + 1))
+  else
+    echo "✗ adaptateur Codex $agent contient un modèle figé"; FAIL=$((FAIL + 1))
+  fi
 done
 
 for path in \

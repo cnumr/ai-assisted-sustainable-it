@@ -20,8 +20,8 @@ Les guides `design` et `development` se déclenchent automatiquement au début
 d'une session. Les audits restent explicites : lancez `/ecocode` pour
 déclencher l'orchestrateur.
 
-Dans Codex, l'orchestrateur et le correcteur utilisent `gpt-5.6-sol`, tandis
-que les analyseurs, le rédacteur et le planificateur utilisent `gpt-5.6-terra`.
+Dans Codex, chaque profil conserve son niveau de raisonnement et laisse Codex
+choisir un modèle disponible adapté à sa tâche.
 
 ## Utilisation
 

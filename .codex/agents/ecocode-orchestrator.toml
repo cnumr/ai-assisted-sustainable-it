@@ -1,5 +1,4 @@
 name = "ecocode-orchestrator"
 description = "Coordonne les audits d'éco-conception EcoCode."
-model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 developer_instructions = "Avant d'agir, lis intégralement agents/ecocode-orchestrator.md et suis ses instructions."

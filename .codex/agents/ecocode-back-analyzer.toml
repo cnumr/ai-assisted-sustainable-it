@@ -1,6 +1,5 @@
 name = "ecocode-back-analyzer"
 description = "Analyse l'éco-conception du code back-end sans le modifier."
-model = "gpt-5.6-terra"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 developer_instructions = "Avant d'agir, lis intégralement agents/ecocode-back-analyzer.md et suis ses instructions."
