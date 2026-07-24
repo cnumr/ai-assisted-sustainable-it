@@ -1,0 +1,5 @@
+name = "ecocode-report-writer"
+description = "Écrit les rapports d'audit EcoCode."
+model = "gpt-5.6-terra"
+model_reasoning_effort = "medium"
+developer_instructions = "Avant d'agir, lis intégralement agents/ecocode-report-writer.md et suis ses instructions."
