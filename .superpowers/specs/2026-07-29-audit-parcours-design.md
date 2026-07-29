@@ -93,6 +93,46 @@ l'utilisateur au moment de l'exécution. Elles ne sont ni affichées dans le
 rapport, ni enregistrées dans les captures, ni demandées à nouveau si elles
 sont déjà disponibles.
 
+### Contexte authentifié et en-têtes
+
+Un scénario peut définir des en-têtes à propager à l'ensemble des requêtes du
+contexte Playwright. Les secrets restent des références à des variables
+d'environnement : aucune valeur sensible n'est écrite dans le JSON, les logs,
+les captures ou le rapport.
+
+```json
+{
+  "contexte": {
+    "headers": {
+      "Authorization": "Bearer ${AUDIT_TOKEN}",
+      "X-Tenant-Id": "${AUDIT_TENANT_ID}"
+    }
+  },
+  "parcours": [
+    {
+      "nom": "espace-client",
+      "etapes": [
+        { "action": "goto", "url": "https://example.com/connexion" },
+        { "action": "fill", "label": "Adresse e-mail", "value": "${AUDIT_EMAIL}" },
+        { "action": "fill", "label": "Mot de passe", "value": "${AUDIT_PASSWORD}" },
+        { "action": "click", "role": "button", "name": "Se connecter" },
+        { "action": "waitFor", "url": "**/tableau-de-bord" },
+        { "action": "audit", "nom": "tableau-de-bord-authentifie" }
+      ]
+    }
+  ]
+}
+```
+
+Le même contexte navigateur est conservé pendant un parcours afin de propager
+cookies et état de session après connexion. Il est isolé des autres exécutions
+et n'est pas persisté sur disque. Lorsqu'un écran de 2FA apparaît, l'agent
+demande le code temporaire ou l'approbation à l'utilisateur, puis poursuit
+après confirmation. Il ne stocke jamais ce code. Une clé physique/WebAuthn,
+un CAPTCHA ou tout mécanisme qui exige une action humaine non accessible à
+Playwright est signalé comme bloquant pour le parcours concerné, sans tentative
+de contournement.
+
 #### Mélange de pages directes et d'étapes interactives
 
 ```json
@@ -210,7 +250,8 @@ projet.
 ## Vérification
 
 Étendre les tests structurels pour le mode `parcours`, le schéma JSON, les trois
-exemples, l'assistance `parcours init`, le rapport de parcours, la règle
-SVG/Shadow DOM, les sections non GreenIT et les copies OpenCode. Étendre le test
-de routage Claude Code ou ajouter un test dédié.
+exemples, les variables d'environnement, la propagation d'en-têtes, le 2FA,
+l'assistance `parcours init`, le rapport de parcours, la règle SVG/Shadow DOM,
+les sections non GreenIT et les copies OpenCode. Étendre le test de routage
+Claude Code ou ajouter un test dédié.
 Les tests runtime Playwright/MCP restent hors du harness actuel.
