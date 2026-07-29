@@ -73,11 +73,10 @@ des agents et suffit aux cas rares d'interaction.
     {
       "nom": "commande",
       "etapes": [
-        { "action": "goto", "url": "https://example.com/connexion" },
-        { "action": "fill", "label": "Adresse e-mail", "value": "audit@example.test" },
-        { "action": "fill", "label": "Mot de passe", "value": "${AUDIT_PASSWORD}" },
-        { "action": "click", "role": "button", "name": "Se connecter" },
-        { "action": "waitFor", "url": "**/compte" },
+        { "action": "goto", "url": "https://example.com/recherche" },
+        { "action": "fill", "label": "Rechercher", "value": "ordinateur" },
+        { "action": "press", "key": "Enter" },
+        { "action": "waitFor", "url": "**/recherche?*" },
         { "action": "audit", "nom": "compte-connecte" },
         { "action": "goto", "url": "https://example.com/panier", "audit": true },
         { "action": "click", "role": "button", "name": "Passer la commande" },
@@ -95,36 +94,27 @@ sont déjà disponibles.
 
 ### Contexte authentifié et en-têtes
 
-Un scénario peut définir des en-têtes à propager à l'ensemble des requêtes du
-contexte Playwright. Les secrets restent des références à des variables
-d'environnement : aucune valeur sensible n'est écrite dans le JSON, les logs,
-les captures ou le rapport.
+Un scénario peut sélectionner un profil d'authentification et d'en-têtes
+opaque. Les secrets et en-têtes sensibles appartiennent à un courtier de
+secrets local ou distant ; aucune valeur sensible n'est écrite dans le JSON,
+les prompts, les appels Playwright, les logs, les captures ou le rapport.
+
+Le courtier expose une unique opération de préparation de contexte, prenant le
+nom de profil et les origines autorisées. Il crée ou applique la session sans
+renvoyer de secret à l'agent. Le mode automatisé n'est disponible que lorsque
+ce courtier est installé et que le profil existe; le mode manuel reste la valeur
+par défaut et le repli obligatoire.
 
 ```json
 {
   "contexte": {
-    "headers": {
-      "Authorization": "Bearer ${AUDIT_TOKEN}",
-      "X-Tenant-Id": "${AUDIT_TENANT_ID}"
-    },
-    "auth": {
-      "totp": {
-        "secretEnv": "AUDIT_TOTP_SECRET",
-        "algorithm": "SHA-1",
-        "digits": 6,
-        "period": 30
-      }
-    }
+    "authProfile": "preproduction-admin"
   },
   "parcours": [
     {
       "nom": "espace-client",
       "etapes": [
-        { "action": "goto", "url": "https://example.com/connexion" },
-        { "action": "fill", "label": "Adresse e-mail", "value": "${AUDIT_EMAIL}" },
-        { "action": "fill", "label": "Mot de passe", "value": "${AUDIT_PASSWORD}" },
-        { "action": "click", "role": "button", "name": "Se connecter" },
-        { "action": "waitFor", "url": "**/tableau-de-bord" },
+        { "action": "goto", "url": "https://example.com/tableau-de-bord" },
         { "action": "audit", "nom": "tableau-de-bord-authentifie" }
       ]
     }
@@ -132,18 +122,27 @@ les captures ou le rapport.
 }
 ```
 
-Le même contexte navigateur est conservé pendant un parcours afin de propager
-cookies et état de session après connexion. Il est isolé des autres exécutions
-et n'est pas persisté sur disque. Si `auth.totp` est configuré, l'agent génère
-le code TOTP courant en mémoire, le saisit dans l'écran 2FA détecté et l'oublie
-immédiatement. La graine TOTP, le code produit et les valeurs d'en-tête ne sont
-jamais journalisés, affichés, capturés ou inclus dans le rapport.
+Le courtier applique l'authentification, les cookies, les en-têtes et le TOTP
+directement au contexte navigateur, puis retourne seulement un contexte prêt ou
+un échec à l'agent. Il ne retourne jamais le mot de passe, le token, la graine
+TOTP ni le code temporaire. Les en-têtes sensibles sont limités aux origines
+explicitement autorisées et retirés lors d'une redirection vers une autre
+origine. Les traces réseau sont désactivées ou redigées pour ces valeurs, et
+aucune capture n'est prise sur une page d'authentification.
 
-Sans configuration TOTP, l'agent demande le code temporaire ou l'approbation
-à l'utilisateur, puis poursuit après confirmation. Une clé physique/WebAuthn,
-un CAPTCHA ou tout mécanisme qui exige une action humaine non accessible à
-Playwright est signalé comme bloquant pour le parcours concerné, sans tentative
+Sans courtier compatible, l'agent s'arrête au login et demande à l'utilisateur
+de s'authentifier lui-même dans le navigateur avant de reprendre l'audit. Il ne
+demande, ne reçoit ni ne saisit jamais un mot de passe, une graine TOTP ou un
+code 2FA. Une clé physique/WebAuthn, un CAPTCHA ou tout mécanisme qui exige une
+action humaine reste donc un point de reprise utilisateur, jamais une tentative
 de contournement.
+
+Les profils utilisent des comptes de test dédiés, à privilèges minimaux, avec
+durée de vie courte et rotation. Leur accès est journalisé côté courtier sans
+enregistrer les secrets. Un fichier `storageState` éventuellement fourni par
+Playwright est également sensible (cookies et en-têtes peuvent permettre une
+usurpation) : il est hors dépôt, chiffré ou protégé par les contrôles d'accès
+du système de secrets, et référencé comme un profil opaque.
 
 #### Mélange de pages directes et d'étapes interactives
 
@@ -262,8 +261,8 @@ projet.
 ## Vérification
 
 Étendre les tests structurels pour le mode `parcours`, le schéma JSON, les trois
-exemples, les variables d'environnement, la propagation d'en-têtes, le TOTP,
-le 2FA,
+exemples, le profil opaque, la propagation d'en-têtes par origine, le TOTP via
+courtier, le 2FA,
 l'assistance `parcours init`, le rapport de parcours, la règle SVG/Shadow DOM,
 les sections non GreenIT et les copies OpenCode. Étendre le test de routage
 Claude Code ou ajouter un test dédié.
