@@ -17,6 +17,7 @@ Redémarrer OpenCode, puis demander un audit éco-conception.
 ```text
 Lance un audit éco-conception sur ce projet.
 Analyse uniquement le front-end de ce projet.
+Analyse les parcours front-end runtime avec `/ecocode frontend` (MCP `playwright` requis).
 Analyse l'URL https://example.com selon les bonnes pratiques Green IT.
 ```
 

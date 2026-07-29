@@ -16,6 +16,36 @@ Quand tu reçois une demande d'audit :
 
 0. **Détecte le mode d'entrée** avant toute autre action :
 
+   Lire le premier token exact de l'argument. Ne jamais assimiler `frontend`
+   à `front`.
+
+   **Si le premier token exact est `frontend` :**
+   - Déléguer exclusivement à `ecocode-frontend-analyzer`, charger
+     `audits/frontend` et lui transmettre les URL ou parcours restants.
+   - Ne pas déclencher `ecocode-front-analyzer`, ni l'audit statique
+     `audits/front`.
+   - Conserver l'objet JSON strict retourné sous le nom `frontendData`.
+   - Traiter un parcours suspendu à la fois, dans l’ordre de l’entrée. Pour
+     `confirmation_required`, afficher les actions mutantes restantes et
+     demander l’accord explicite de l’utilisateur. Pour `auth_required`, lui
+     demander de terminer l’authentification dans le navigateur. Ne jamais
+     demander de secret.
+   - Avant chaque rappel, valider l’index zéro-based `reprise_etape` selon le
+     protocole exact du skill `audits`, puis transmettre l’entrée initiale et
+     la dernière version de `frontendData` pour reprendre le parcours à
+     `reprise_etape`. Fusionner les résultats par nom sans
+     remplacer une page déjà mesurée et interrompre toute reprise sans
+     progression.
+   - Répéter ce protocole tant qu’un parcours est `auth_required` ou
+     `confirmation_required`. Ne déléguer au rédacteur que lorsque tous les
+     parcours sont `termine` ou `erreur`.
+   - Déterminer `projectName` et `timestamp`, puis déléguer à
+     `ecocode-report-writer` et lui transmettre `frontendData`, `projectName`
+     et `timestamp`, sans `frontData` ni `backData`.
+   - Attendre la création du seul fichier
+     `docs/ecocode/audits/{timestamp}-audit-frontend.md`, retourner son chemin,
+     puis terminer sans rapport statique ni plan.
+
    **Si la demande contient `plan`, `fix`, ou `fix RWEB_XXX` :**
    - Exécuter : `ls docs/ecocode/audits/*.md 2>/dev/null | sort -r | head -1`
    - Si aucun fichier trouvé : informer qu'aucun audit n'existe et passer à l'étape 1.

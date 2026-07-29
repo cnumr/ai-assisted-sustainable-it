@@ -66,11 +66,14 @@ check "skill design" "skills/design/SKILL.md"
 check "skill development" "skills/development/SKILL.md"
 check "skill audits" "skills/audits/SKILL.md"
 check "skill audit front" "skills/audits/front/SKILL.md"
+check "skill audit frontend" "skills/audits/frontend/SKILL.md"
 check "skill audit back" "skills/audits/back/SKILL.md"
 check "plans Superpowers" ".superpowers/plans"
 check "spécifications Superpowers" ".superpowers/specs"
 check "commande ecocode" "commands/ecocode.md"
 check "agent ecocode" "agents/ecocode-orchestrator.md"
+check "agent audit frontend" "agents/ecocode-frontend-analyzer.md"
+check "agent OpenCode audit frontend" ".opencode/agents/ecocode-frontend-analyzer.md"
 check "plugin Claude ecocode" ".claude-plugin/plugins/ecocode/plugin.json"
 check "plugin Codex ecocode" ".codex-plugin/plugins/ecocode/plugin.json"
 check "plugin Cursor ecocode" ".cursor-plugin/plugins/ecocode/plugin.json"
@@ -79,6 +82,7 @@ check "plugin OpenCode ecocode" ".opencode/plugins/ecocode.js"
 for agent in \
   "ecocode-orchestrator" \
   "ecocode-front-analyzer" \
+  "ecocode-frontend-analyzer" \
   "ecocode-back-analyzer" \
   "ecocode-report-writer" \
   "ecocode-planner" \
@@ -86,13 +90,14 @@ for agent in \
   check "adaptateur Codex $agent" ".codex/agents/$agent.toml"
 done
 
-for analyzer in "ecocode-front-analyzer" "ecocode-back-analyzer"; do
+for analyzer in "ecocode-front-analyzer" "ecocode-frontend-analyzer" "ecocode-back-analyzer"; do
   toml_check "analyseur Codex $analyzer en lecture seule" ".codex/agents/$analyzer.toml" "sandbox_mode" "read-only"
 done
 
 for agent in \
   "ecocode-orchestrator" \
   "ecocode-front-analyzer" \
+  "ecocode-frontend-analyzer" \
   "ecocode-back-analyzer" \
   "ecocode-report-writer" \
   "ecocode-planner" \
@@ -147,8 +152,16 @@ fi
 for spec in \
   "commands/ecocode.md:Use the \`audits\` skill" \
   "commands/ecocode.md:/ecocode délègue à \`ecocode-orchestrator\`" \
+  "commands/ecocode.md:\`frontend\` — audit runtime des parcours front-end uniquement" \
+  "skills/audits/SKILL.md:premier token exact" \
+  "skills/audits/SKILL.md:docs/ecocode/audits/{timestamp}-audit-frontend.md" \
   "agents/ecocode-orchestrator.md:skill \`audits\`" \
+  "agents/ecocode-orchestrator.md:premier token exact" \
+  "agents/ecocode-orchestrator.md:docs/ecocode/audits/{timestamp}-audit-frontend.md" \
   ".opencode/agents/ecocode-orchestrator.md:skill \`audits\`" \
+  ".opencode/commands/ecocode.md:\`frontend\` — audit runtime des parcours front-end uniquement" \
+  ".opencode/agents/ecocode-orchestrator.md:premier token exact" \
+  ".opencode/agents/ecocode-orchestrator.md:docs/ecocode/audits/{timestamp}-audit-frontend.md" \
   "README.md:skills/design ~/.codex/skills/design" \
   "README.md:skills/development ~/.codex/skills/development" \
   ".codex/INSTALL.md:skills/design ~/.codex/skills/design" \

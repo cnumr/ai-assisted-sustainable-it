@@ -1,0 +1,5 @@
+name = "ecocode-frontend-analyzer"
+description = "Analyse les parcours front-end en lecture seule avec Playwright."
+model_reasoning_effort = "medium"
+sandbox_mode = "read-only"
+developer_instructions = "Avant d'agir, lis intégralement ~/.codex/plugins/ai-assisted-sustainable-it/agents/ecocode-frontend-analyzer.md et suis ses instructions."

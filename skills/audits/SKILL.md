@@ -13,10 +13,11 @@ metadata:
 
 Point d'entrée unique pour tout audit d'éco-conception web. Ce skill identifie le périmètre (front, back, ou les deux), délègue aux sous-skills spécialisés, et produit un rapport synthétique final avec score d'impact et priorités de correction.
 
-L'audit est piloté par `ecocode-orchestrator`. Les six rôles partagent les
+L'audit est piloté par `ecocode-orchestrator`. Les sept rôles partagent les
 mêmes noms dans Claude Code, OpenCode et Codex : `ecocode-orchestrator`,
-`ecocode-front-analyzer`, `ecocode-back-analyzer`, `ecocode-report-writer`,
-`ecocode-planner` et `ecocode-fix-suggester`.
+`ecocode-front-analyzer`, `ecocode-frontend-analyzer`,
+`ecocode-back-analyzer`, `ecocode-report-writer`, `ecocode-planner` et
+`ecocode-fix-suggester`.
 
 ## Deux modes complémentaires
 
@@ -54,6 +55,51 @@ digraph routing {
 ```
 
 ## Étape −1 — Détecter le mode d'entrée
+
+Lire le premier token exact de l'argument avant tout autre routage. Ne jamais
+assimiler `frontend` à `front`.
+
+**Si le premier token exact est `frontend` :**
+
+1. Déléguer exclusivement à `ecocode-frontend-analyzer`, en chargeant
+   `audits/frontend` et en lui transmettant les URL ou parcours restants.
+   Ne pas déclencher `ecocode-front-analyzer`, ni l'audit statique
+   `audits/front`.
+2. Conserver l'objet JSON strict retourné sous le nom `frontendData`.
+3. Traiter un seul parcours suspendu à la fois, dans l’ordre de l’entrée :
+   - pour `confirmation_required`, afficher les actions potentiellement
+     mutantes restantes et demander une confirmation explicite ; après accord,
+     rappeler l’analyseur avec le nom du parcours autorisé, sinon marquer ce
+     parcours `erreur` sans exécuter l’action ;
+   - pour `auth_required`, demander à l'utilisateur de terminer
+     l'authentification dans le navigateur, sans jamais demander de secret ;
+   - dans les deux cas, rappeler l'analyseur avec l'entrée initiale et la
+     dernière version de `frontendData` pour reprendre le parcours à
+     `reprise_etape`.
+4. À chaque reprise, `reprise_etape` est un index basé à zéro. Vérifier
+   `0 <= reprise_etape < nombre d’étapes` avant la délégation. Conserver, pour
+   chaque parcours, l’ensemble des triplets déjà rencontrés
+   `parcours`/`reprise_etape`/`url_cible` et un compteur. Avant un rappel, si le
+   triplet existe déjà ou si le maximum de 5 rappels par parcours est atteint,
+   marquer ce parcours `erreur` au lieu de rappeler l’analyseur. Sinon,
+   mémoriser le triplet et incrémenter le compteur. Après le retour,
+   fusionner par `parcours.nom`, puis par `pages.nom` : ne jamais remplacer ni
+   supprimer une page déjà mesurée ; accepter sa répétition seulement si
+   l’objet est strictement identique, ajouter les nouvelles pages, dédupliquer
+   les erreurs sur le triplet `etape`/`action`/`message`, puis mettre à jour le
+   statut du parcours. Fusionner aussi `limites_globales` sur le triplet
+   `code`/`scope`/`message`. Tout triplet parcours/index/URL sans progression
+   sera ainsi refusé lors du rappel suivant, y compris après une alternance
+   entre plusieurs états.
+5. Répéter les étapes 3 et 4 tant qu’au moins un parcours est
+   `auth_required` ou `confirmation_required`. Ne continuer que lorsque tous
+   sont `termine` ou `erreur`.
+6. Une fois tous les parcours `termine` ou `erreur`, déterminer `projectName`
+   et `timestamp`, puis déléguer à `ecocode-report-writer` et transmettre `frontendData`,
+   `projectName` et `timestamp`, sans `frontData` ni `backData`.
+7. Attendre la création du seul fichier
+   `docs/ecocode/audits/{timestamp}-audit-frontend.md`, retourner son chemin,
+   puis terminer sans générer de rapport statique ni de plan.
 
 **Si l'argument est `plan`, `fix`, ou `fix RWEB_XXX` :**
 

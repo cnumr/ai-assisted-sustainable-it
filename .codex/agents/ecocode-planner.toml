@@ -1,4 +1,4 @@
 name = "ecocode-planner"
 description = "Génère les plans d'action éco-conception EcoCode."
 model_reasoning_effort = "medium"
-developer_instructions = "Avant d'agir, lis intégralement agents/ecocode-planner.md et suis ses instructions."
+developer_instructions = "Avant d'agir, lis intégralement ~/.codex/plugins/ai-assisted-sustainable-it/agents/ecocode-planner.md et suis ses instructions."

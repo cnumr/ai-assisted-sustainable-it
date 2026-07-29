@@ -58,12 +58,12 @@ When skills reference tools you don't have, substitute OpenCode equivalents:
 - \`Task\` tool with subagents → Use OpenCode's subagent system (@mention)
 - \`Read\`, \`Write\`, \`Edit\`, \`Bash\` → Your native tools
 
-Use OpenCode's native \`skill\` tool to load audits/front or audits/back sub-skills.`;
+Use OpenCode's native \`skill\` tool to load audits/front, audits/frontend or audits/back sub-skills.`;
 
     _bootstrapCache = `<EXTREMELY_IMPORTANT>
 You have the ecocode plugin loaded.
 
-**IMPORTANT: The audits skill content is included below. It is ALREADY LOADED. Do NOT use the skill tool to load "audits" again — that would be redundant. For sub-skills (audits/front, audits/back), use the skill tool.**
+**IMPORTANT: The audits skill content is included below. It is ALREADY LOADED. Do NOT use the skill tool to load "audits" again — that would be redundant. For sub-skills (audits/front, audits/frontend, audits/back), use the skill tool.**
 
 ${content}
 

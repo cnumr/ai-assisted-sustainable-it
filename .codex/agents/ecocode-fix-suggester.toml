@@ -1,4 +1,4 @@
 name = "ecocode-fix-suggester"
 description = "Propose et applique les corrections éco-conception validées."
 model_reasoning_effort = "high"
-developer_instructions = "Avant d'agir, lis intégralement agents/ecocode-fix-suggester.md et suis ses instructions."
+developer_instructions = "Avant d'agir, lis intégralement ~/.codex/plugins/ai-assisted-sustainable-it/agents/ecocode-fix-suggester.md et suis ses instructions."

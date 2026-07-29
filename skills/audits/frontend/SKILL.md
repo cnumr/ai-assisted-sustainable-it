@@ -1,0 +1,282 @@
+---
+name: ecocode-frontend
+description: Audit runtime d’URL et de parcours web avec Playwright et mcp-greenit.
+---
+
+# EcoCode Frontend — audit runtime de parcours
+
+Ce skill est réservé à `/ecocode frontend`, jamais `audits/front` ni
+`ecocode-front-analyzer`, qui restent l’audit statique du code client.
+
+**REQUIRED PARENT SKILL:** `audits`.
+
+## Entrées
+
+Accepter :
+
+- une ou plusieurs URL, regroupées dans un parcours implicite `parcours` ;
+- un fichier JSON strict décrivant un ou plusieurs parcours.
+- `init`, qui lance une assistance textuelle et produit un fichier conforme au
+  schéma ci-dessous sans l’exécuter.
+
+Une URL passée directement ou dans `goto.url` doit être une URL absolue
+`http://` ou `https://`. Refuser `file:`, `data:`, `javascript:` et `ftp:`,
+ainsi que toute redirection vers un protocole autre que HTTP(S), avant d’y
+envoyer des en-têtes ou d’y poursuivre le parcours. Refuser aussi toute URL
+dont `username` ou `password` non vide, y compris une entrée directe, un
+`goto.url`, une redirection ou une `url_cible`.
+
+### Assistance `init`
+
+Pour `/ecocode frontend init`, demander une information à la fois : chemin du
+fichier à créer, nom unique du parcours, URL HTTP(S) de départ, points d’audit,
+puis éventuelles interactions. Afficher le JSON final et demander confirmation
+avant de l’écrire. Ne jamais naviguer ni lancer l’audit dans ce mode.
+
+## Schéma d’entrée strict
+
+JSON strict signifie : objet racine, clés et types documentés uniquement,
+champs obligatoires présents et aucune action inconnue. Toute clé non listée
+est interdite. Un `string` requis est non vide.
+
+| Objet | Clés autorisées | Clés requises | Types exacts |
+| --- | --- | --- | --- |
+| racine | `contexte`, `parcours` | `parcours` | `contexte`: object ; `parcours`: array non vide |
+| `contexte` | `originesHeaders`, `headers` | aucune | deux arrays ; si `headers` est non vide, `originesHeaders` l’est aussi |
+| origine | aucune sous-clé | — | string, origine HTTPS sans chemin, requête, fragment ni identifiants |
+| header | `nom`, `valeur` | `nom`, `valeur` | deux strings |
+| parcours | `nom`, `etapes` | `nom`, `etapes` | `nom`: string unique ; `etapes`: array non vide |
+| étape `goto` | `action`, `url`, `audit`, `nom` | `action`, `url` | `action`: `"goto"` ; `url`: string HTTP(S) absolue ; `audit`: boolean ; `nom`: string |
+| étape `click` | `action` et un repère | `action` et un repère | `action`: `"click"` ; repère: strings |
+| étape `fill` | `action`, un repère, `value` | les trois | `action`: `"fill"` ; repère et `value`: strings |
+| étape `select` | `action`, un repère, `value` | les trois | `action`: `"select"` ; repère et `value`: strings |
+| étape `check` | `action` et un repère | `action` et un repère | `action`: `"check"` ; repère: strings |
+| étape `press` | `action`, `key` | `action`, `key` | `action`: `"press"` ; `key`: string |
+| étape `waitFor` | `action` et une attente | `action` et une attente | `action`: `"waitFor"` ; attente: string |
+| étape `audit` | `action`, `nom` | `action`, `nom` | `action`: `"audit"` ; `nom`: string unique dans le parcours |
+
+Un repère est exactement l’une de ces formes : `role` + `name`, `label`, ou
+`text`. Les clés de repère autorisées sont donc `role`, `name`, `label` et
+`text`, toutes de type string. Une attente est exactement une clé `url` ou
+`text`, de type string. Les seules valeurs d’`action` sont `goto`, `click`,
+`fill`, `select`, `check`, `press`, `waitFor` et `audit`.
+
+La première étape de chaque parcours est obligatoirement un `goto`, afin de
+définir la cible HTTP(S) avant toute interaction ou confirmation.
+
+Pour un `goto` avec `audit: true`, `nom` est facultatif ; s’il manque, le nom
+de page stable est `etape-{index}`, où `index` est l’index zéro-based de cette
+étape. Les noms produits par les `goto` et les actions `audit` doivent être
+uniques dans le parcours. Pour une liste d’URL directe, utiliser `url-{index}`
+avec un index zéro-based.
+
+Refuser le document avant navigation si son JSON est invalide, si une clé ou
+action est inconnue, si un type est incorrect, si un champ requis manque ou si
+une interaction contient un secret. Ne jamais exécuter de JavaScript fourni
+dans l’entrée.
+
+## Session utilisateur et en-têtes
+
+L’utilisateur se connecte lui-même dans le navigateur contrôlé. Ne jamais
+demander, lire, saisir, journaliser ou restituer identifiant, mot de passe,
+jeton, code 2FA, graine TOTP, CAPTCHA, donnée WebAuthn ou clé physique. Ne jamais
+lire, créer ni persister de fichier `storageState`.
+
+Si la page cible redirige vers une authentification :
+
+1. suspendre le parcours avant toute capture ou mesure de cet écran ;
+2. retourner immédiatement au skill parent le statut `auth_required`, l'URL
+   cible et l'index `reprise_etape` de la dernière étape non exécutée ;
+3. laisser le parent demander à l’utilisateur de terminer la connexion dans le
+   navigateur ;
+4. lorsque le parent rappelle l'analyseur, vérifier que l’URL cible est de
+   nouveau accessible et reprendre à `reprise_etape`.
+
+Le sous-agent ne dialogue jamais directement avec l'utilisateur. Le parent
+conserve les pages déjà mesurées dans `frontendData` pendant cette reprise.
+
+`reprise_etape` est un index basé à zéro et désigne toujours la prochaine étape
+non exécutée. Lors d’une reprise, vérifier
+`0 <= reprise_etape < nombre d’étapes`, que le nom du parcours existe une seule
+fois dans l’entrée initiale et que l’étape précédente est déjà reflétée dans
+`frontendData` lorsqu’elle produisait une mesure.
+
+Les en-têtes de `contexte.headers` sont facultatifs et non sensibles. Avant de
+les appliquer :
+
+- exiger des origines HTTPS explicites dans `originesHeaders` ;
+- vérifier que la cible est dans cette liste ;
+- limiter les en-têtes à ces origines, y compris après redirection ;
+- refuser `Authorization`, `Cookie`, `Proxy-Authorization`, `Set-Cookie` et
+  toute valeur ressemblant à un jeton, mot de passe ou clé.
+
+Si Playwright ne permet pas ce cloisonnement par origine, refuser le parcours
+avec ses en-têtes. Ne jamais les appliquer globalement au contexte navigateur.
+
+## Lecture seule et confirmation distante
+
+L’audit est en lecture seule par défaut : `goto`, `waitFor` et `audit`
+n’autorisent aucune écriture locale, aucun appel HTTP construit manuellement et
+aucune exécution de JavaScript fourni. Les actions `click`, `fill`, `select`,
+`check` et `press` peuvent modifier l’état distant.
+
+Une capture effectuée par l’outil Playwright, explicitement utile comme preuve,
+est la seule exception d’écriture locale : conserver uniquement son chemin
+relatif PNG dans `capture`. Ne créer aucun autre fichier pendant l’analyse.
+
+Une URL saisie directement dans la commande autorise uniquement la navigation
+HTTP(S) exacte demandée et son audit ; elle n’autorise aucune interaction
+supplémentaire. Un fichier JSON ne peut jamais autoriser ses propres actions.
+Avant sa première étape, retourner `confirmation_required` avec l’index `0`
+dans `reprise_etape` et la première URL `goto` dans `url_cible`, sans naviguer.
+
+Le parent affiche le parcours complet, les index, les URL, les actions et leurs
+repères, en signalant que `goto`, `click`, `fill`, `select`, `check` et `press`
+peuvent produire un effet distant, puis demande une confirmation explicite.
+Après accord, il rappelle l’analyseur avec le nom du parcours confirmé ; cette
+autorisation expire à la fin du parcours et devient invalide si l’entrée change.
+Sans accord, marquer seulement ce parcours `erreur`. Ne jamais confirmer à la
+place de l’utilisateur.
+
+## Exécution Playwright
+
+Pour chaque parcours :
+
+1. consulter d’abord les fiches pertinentes de `mcp-greenit` ;
+2. prendre un snapshot avant chaque interaction afin de résoudre son repère
+   accessible ;
+3. exécuter les étapes dans l’ordre ;
+4. collecter chaque point marqué par `goto.audit` ou `audit` ;
+5. conserver les mesures déjà acquises si une étape suivante échoue.
+
+Utiliser un contexte réseau neuf lorsque cela ne détruit pas la session ouverte
+par l’utilisateur. À défaut, isoler explicitement la fenêtre de collecte entre
+deux points d’audit et signaler la limite.
+
+### Métriques runtime
+
+À chaque point d’audit, collecter sans estimation :
+
+- `url` : URL finale réellement affichée ;
+- `dom_nodes` : nombre de nœuds DOM selon l’algorithme ci-dessous ;
+- `requests` : nombre de requêtes HTTP de la fenêtre de collecte ;
+- `size_kb` : octets réellement transférés pendant cette fenêtre, convertis en
+  kilo-octets.
+
+Conserver aussi, lorsqu’elles sont effectivement observables, les ressources,
+domaines, protocoles, redirections, statuts, en-têtes de cache, scripts tiers,
+timings et erreurs console nécessaires aux preuves. Ne jamais inclure les
+valeurs de cookies ou d’en-têtes sensibles.
+
+Appeler obligatoirement `greenit_calculer_ecoindex` pour chaque page avec
+`dom_nodes`, `requests`, `size_kb` et l’`url` finale. Reprendre tels quels le
+score EcoIndex, le grade, les GES et l’eau retournés par `mcp-greenit`. Ne pas
+les recalculer localement.
+
+### Comptage DOM, Shadow DOM et SVG
+
+Compter les Shadow DOM ouverts. Ne pas utiliser
+`document.querySelectorAll('*')`. Parcourir récursivement les
+enfants d’un `Document`, d’un `Element` ou d’une `ShadowRoot` :
+
+1. compter chaque élément rencontré ;
+2. parcourir ses enfants du DOM léger ;
+3. parcourir aussi sa `shadowRoot` lorsqu’elle est ouverte ;
+4. compter un élément `<svg>`, mais ignorer tous les descendants de `<svg>`,
+   y compris ceux d’une Shadow Root placée sous ce SVG.
+
+Les Shadow DOM fermés ne sont pas accessibles. Mentionner cette limite
+lorsqu’elle est identifiable, sans prétendre les avoir comptés.
+
+## Qualification des constats
+
+Un écart GreenIT n’existe que si `mcp-greenit` a réellement retourné une fiche
+correspondante. Conserver son identifiant et son intitulé exacts. Ne jamais
+inventer un identifiant RWEB.
+
+Classer séparément :
+
+### Écarts GreenIT
+
+Observations reliées à une fiche retournée par le MCP, avec preuve, impact,
+localisation et, si le code est disponible, extrait observé et correction
+adaptée au projet.
+
+### Performance
+
+Alertes runtime mesurées qui n’ont pas de fiche GreenIT vérifiée.
+
+### Développement web
+
+Erreurs de console, HTML, API ou qualité de code observées qui n’ont pas de
+fiche GreenIT vérifiée.
+
+## Erreurs et déduplication
+
+Un JSON invalide empêche son exécution. Une action inconnue, un élément
+introuvable, une navigation ou une mesure impossible arrête seulement le parcours concerné.
+Conserver ses pages déjà mesurées et ajouter une erreur structurée avec
+parcours, étape, action et message. Aucune mesure n’est inventée pour une étape
+échouée. Une redirection vers une authentification
+n'est pas une erreur : elle produit `auth_required` et confie la reprise au
+parent comme décrit plus haut.
+
+Dédupliquer globalement sur tous les parcours les problèmes de composant,
+en-tête, pied de page, script, police ou asset partagé. Détailler la première
+occurrence avec une clé stable ; aux suivantes, retourner une référence vers
+cette clé. Ne jamais dédupliquer les métriques de chaque page, son EcoIndex,
+ses GES, son eau ni ses erreurs propres.
+
+## Schéma de sortie strict
+
+Retourner un objet JSON strict conforme aux clés et types ci-dessous ainsi qu’à
+l’exemple de `ecocode-frontend-analyzer`. La sortie interdit toute clé
+supplémentaire. Utiliser `null` et des tableaux vides pour les valeurs absentes ;
+ne jamais omettre une clé.
+
+| Objet | Clés exactes | Types exacts |
+| --- | --- | --- |
+| racine | `scope`, `rapport`, `parcours`, `limites_globales` | deux strings constantes, deux arrays |
+| parcours | `nom`, `statut`, `reprise_etape`, `url_cible`, `pages`, `erreurs_execution` | string ; enum ; integer ou null ; string HTTP(S) ou null ; deux arrays |
+| page | `nom`, `url`, `metriques`, `ecoindex`, `ecarts_greenit`, `performance`, `developpement_web`, `deduplication`, `capture`, `limites` | deux strings ; deux objects ; cinq arrays ; string ou null |
+| métriques | `dom_nodes`, `requests`, `size_kb` | trois numbers finis >= 0 |
+| EcoIndex | `score`, `grade`, `ges`, `eau` | number, string, number, number |
+| écart GreenIT | `deduplication_key`, `practice_id`, `practice_title`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `code_observe`, `correction` | huit strings, puis deux strings ou null |
+| performance | `categorie`, `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `correction` | sept strings, puis string ou null |
+| développement web | `categorie`, `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `code_observe`, `correction` | sept strings, puis deux strings ou null |
+| déduplication | `deduplication_key`, `premiere_occurrence` | deux strings |
+| limite | `code`, `scope`, `message` | trois strings |
+| erreur d’exécution | `etape`, `action`, `message` | integer >= 0 et deux strings |
+
+`scope` vaut `"frontend"` et `rapport` vaut `"audit-frontend"`. `statut` vaut
+`termine`, `erreur`, `auth_required` ou `confirmation_required`. Pour les deux
+statuts `*_required`, `reprise_etape` et `url_cible` sont non nuls ; pour les
+autres statuts, ils valent `null`. `categorie` vaut respectivement
+`"performance"` ou `"developpement_web"`.
+
+`capture` non nul est un string contenant le chemin relatif d’un fichier PNG
+créé comme preuve, jamais une image en base64. `code_observe` non nul est un
+string contenant un extrait textuel observé, expurgé de toute donnée sensible.
+`correction` non nulle est un string contenant la correction proposée, sans
+l’appliquer. Ces trois champs ne sont jamais des objets ou des arrays.
+
+## Contrat transmis au rédacteur
+
+Le rédacteur reçoit cette sortie seulement lorsque tous les parcours sont
+`termine` ou `erreur`. Il crée un seul fichier :
+
+`docs/ecocode/audits/{timestamp}-audit-frontend.md`
+
+Le rapport contient, dans cet ordre :
+
+1. les parcours exécutés et le sommaire des scores ;
+2. une section par parcours puis par point d’audit avec URL finale, métriques
+   brutes, EcoIndex, grade, GES et eau ;
+3. `### Écarts GreenIT`, avec identifiants et intitulés MCP exacts ;
+4. les extraits et corrections disponibles pour les écarts non dédupliqués ;
+5. `### Performance` ;
+6. `### Développement web` ;
+7. les erreurs d’exécution et limites de mesure.
+
+Ajouter une capture uniquement lorsqu’elle constitue une preuve utile. Ne
+jamais capturer un écran de connexion ou une donnée sensible.
