@@ -1,0 +1,38 @@
+{
+  "name": "ecocode",
+  "version": "2.1.0",
+  "description": "Audit d'éco-conception web statique et runtime selon les bonnes pratiques Green IT.",
+  "author": {
+    "name": "Renaud Heluin",
+    "email": "renaud.heluin@novagaia.fr"
+  },
+  "homepage": "https://github.com/cnumr/ai-assisted-sustainable-it",
+  "repository": "https://github.com/cnumr/ai-assisted-sustainable-it",
+  "license": "MIT",
+  "keywords": [
+    "ecocode",
+    "green-it",
+    "eco-conception",
+    "sustainability",
+    "web-performance"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "EcoCode — Audit Green IT",
+    "shortDescription": "Audite l'éco-conception statique et runtime",
+    "longDescription": "EcoCode analyse les projets et parcours web avec le référentiel Green IT, des agents spécialisés et des rapports actionnables.",
+    "developerName": "Renaud Heluin",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "defaultPrompt": [
+      "Lance un audit éco-conception sur ce projet.",
+      "Audite le parcours front-end https://example.com."
+    ],
+    "websiteURL": "https://github.com/cnumr/ai-assisted-sustainable-it",
+    "brandColor": "#22C55E",
+    "screenshots": []
+  }
+}

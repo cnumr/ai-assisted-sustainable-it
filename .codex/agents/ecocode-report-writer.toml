@@ -1,4 +1,4 @@
 name = "ecocode-report-writer"
 description = "Écrit les rapports d'audit EcoCode."
 model_reasoning_effort = "medium"
-developer_instructions = "Avant d'agir, lis intégralement agents/ecocode-report-writer.md et suis ses instructions."
+developer_instructions = "Avant d'agir, lis intégralement ~/.codex/plugins/ai-assisted-sustainable-it/agents/ecocode-report-writer.md et suis ses instructions."

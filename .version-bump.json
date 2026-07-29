@@ -5,6 +5,7 @@
       "path": ".claude-plugin/plugins/ecocode/plugin.json",
       "field": "version"
     },
+    { "path": ".codex-plugin/plugin.json", "field": "version" },
     { "path": ".codex-plugin/plugins/ecocode/plugin.json", "field": "version" },
     {
       "path": ".cursor-plugin/plugins/ecocode/plugin.json",

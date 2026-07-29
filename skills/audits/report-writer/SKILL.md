@@ -118,6 +118,11 @@ L'agent reçoit les données suivantes :
 `frontendData`. Ne jamais mélanger ces résultats avec `audit-front.md`, qui
 reste le rapport de l'audit statique.
 
+Interpréter les champs optionnels selon le schéma strict de
+`audits/frontend` : `capture` est `null` ou un chemin relatif PNG ;
+`code_observe` et `correction` sont `null` ou des strings. Refuser un autre
+type au lieu de le convertir ou de l’inventer.
+
 ```markdown
 # Audit runtime front-end — [Nom du projet]
 

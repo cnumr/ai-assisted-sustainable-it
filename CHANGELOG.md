@@ -10,6 +10,16 @@
 - Ajoute l'analyseur Codex dédié, la reprise d'un parcours après
   authentification utilisateur et les schémas structurés des observations
   runtime.
+- Documente les entrées URL, JSON et l’assistance
+  `/ecocode frontend init`.
+
+### Corrigé
+
+- Rend le plugin et ses profils d’agents découvrables par Codex après
+  installation manuelle.
+- Ferme les schémas JSON d’entrée et de sortie, sécurise la fusion des reprises
+  d’authentification et exige une confirmation avant les actions susceptibles
+  de modifier un état distant.
 
 ## 2.1.0 — 2026-07-24
 

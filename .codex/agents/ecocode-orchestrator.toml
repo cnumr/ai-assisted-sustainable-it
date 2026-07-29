@@ -1,4 +1,4 @@
 name = "ecocode-orchestrator"
 description = "Coordonne les audits d'éco-conception EcoCode."
 model_reasoning_effort = "high"
-developer_instructions = "Avant d'agir, lis intégralement agents/ecocode-orchestrator.md et suis ses instructions."
+developer_instructions = "Avant d'agir, lis intégralement ~/.codex/plugins/ai-assisted-sustainable-it/agents/ecocode-orchestrator.md et suis ses instructions."

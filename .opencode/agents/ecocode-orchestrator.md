@@ -25,10 +25,20 @@ Quand tu reçois une demande d'audit :
    - Ne pas déclencher `ecocode-front-analyzer`, ni l'audit statique
      `audits/front`.
    - Conserver l'objet JSON strict retourné sous le nom `frontendData`.
-   - Si un parcours a le statut `auth_required`, demander à l'utilisateur de
-     terminer l'authentification dans le navigateur, puis rappeler l'analyseur
-     avec l'entrée initiale et `frontendData` pour reprendre le parcours à `reprise_etape`.
-     Ne jamais demander de secret.
+   - Traiter un parcours suspendu à la fois, dans l’ordre de l’entrée. Pour
+     `confirmation_required`, afficher les actions mutantes restantes et
+     demander l’accord explicite de l’utilisateur. Pour `auth_required`, lui
+     demander de terminer l’authentification dans le navigateur. Ne jamais
+     demander de secret.
+   - Avant chaque rappel, valider l’index zéro-based `reprise_etape` selon le
+     protocole exact du skill `audits`, puis transmettre l’entrée initiale et
+     la dernière version de `frontendData` pour reprendre le parcours à
+     `reprise_etape`. Fusionner les résultats par nom sans
+     remplacer une page déjà mesurée et interrompre toute reprise sans
+     progression.
+   - Répéter ce protocole tant qu’un parcours est `auth_required` ou
+     `confirmation_required`. Ne déléguer au rédacteur que lorsque tous les
+     parcours sont `termine` ou `erreur`.
    - Déterminer `projectName` et `timestamp`, puis déléguer à
      `ecocode-report-writer` et lui transmettre `frontendData`, `projectName`
      et `timestamp`, sans `frontData` ni `backData`.

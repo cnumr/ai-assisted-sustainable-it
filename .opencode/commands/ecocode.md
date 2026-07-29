@@ -9,3 +9,6 @@ Lance un audit éco-conception. Périmètre : $ARGUMENTS
 
 Le routage utilise le premier token exact de `$ARGUMENTS` : `frontend` reste
 distinct de `front`.
+
+Syntaxes : `/ecocode frontend <url> [url...]`,
+`/ecocode frontend <fichier.json>` ou `/ecocode frontend init`.

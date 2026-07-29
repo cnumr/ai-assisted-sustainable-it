@@ -30,6 +30,10 @@ l’orchestrateur transmet ton résultat au rédacteur du rapport.
 - Consulte `mcp-greenit` avant l’audit, puis ne qualifie d’écart GreenIT qu’une
   observation reliée à une fiche effectivement retournée.
 - Exécute uniquement le JSON strict et les actions autorisées par le skill.
+- Refuse toute URL ou redirection hors HTTP(S). Reste en lecture seule par
+  défaut et retourne `confirmation_required` avant toute interaction
+  potentiellement mutante qui n’a pas été explicitement confirmée par
+  l’utilisateur via l’orchestrateur.
 - Mesure chaque point via Playwright et appelle `greenit_calculer_ecoindex` avec
   `dom_nodes`, `requests`, `size_kb` et l’URL finale.
 - Compte les Shadow DOM ouverts, compte `<svg>` et exclut ses descendants.
@@ -46,9 +50,11 @@ l’orchestrateur transmet ton résultat au rédacteur du rapport.
 
 ## Format de retour
 
-Retourne un unique objet JSON strict, sans Markdown avant ou après. Respecte
-exactement cette structure ; utilise des tableaux vides et `null` pour les
-valeurs indisponibles, sans omettre de clé :
+Retourne un unique objet JSON strict, sans Markdown avant ou après. Valide
+chaque clé et type contre le « Schéma de sortie strict » d’`audits/frontend`,
+qui interdit les clés supplémentaires. Respecte exactement cette structure ;
+utilise des tableaux vides et `null` pour les valeurs indisponibles, sans
+omettre de clé :
 
 ```json
 {
@@ -151,10 +157,13 @@ valeurs indisponibles, sans omettre de clé :
 
 Les objets montrés dans les tableaux définissent leur schéma ; retourner un
 tableau vide lorsqu'aucune observation correspondante n'existe. `statut` vaut
-`termine`, `erreur` ou `auth_required`. Dans ce dernier cas, renseigner
-`reprise_etape` et `url_cible`, conserver les pages déjà mesurées et retourner
-l'objet au parent sans capturer ni mesurer l'écran d'authentification. Pour les
-autres statuts, ces deux champs valent `null`.
+`termine`, `erreur`, `auth_required` ou `confirmation_required`. Pour les deux
+statuts `*_required`, renseigner l’index zéro-based de la prochaine étape non
+exécutée dans `reprise_etape` et l’URL HTTP(S) courante dans `url_cible`,
+conserver les pages déjà mesurées et retourner l'objet au parent. Ne capturer
+ni mesurer un écran d'authentification et ne jamais exécuter une action en
+attente de confirmation. Pour les autres statuts, ces deux champs valent
+`null`.
 
 Les valeurs EcoIndex, grade, GES et eau proviennent sans transformation du
 calculateur MCP. Une occurrence dédupliquée ne répète pas l’écart : elle ajoute

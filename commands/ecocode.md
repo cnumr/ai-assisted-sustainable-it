@@ -24,3 +24,10 @@ Use skill: audits
 Pass any arguments from `$ARGUMENTS` to determine the audit scope.
 Le routage utilise le premier token exact de `$ARGUMENTS` : `frontend` doit
 être traité avant et séparément de `front`.
+
+Syntaxes du mode runtime :
+
+- `/ecocode frontend <url> [url...]` — crée un parcours implicite ;
+- `/ecocode frontend <fichier.json>` — valide puis exécute les parcours JSON ;
+- `/ecocode frontend init` — assiste la création d’un fichier JSON sans
+  l’exécuter.
