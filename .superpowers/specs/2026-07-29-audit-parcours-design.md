@@ -106,6 +106,14 @@ les captures ou le rapport.
     "headers": {
       "Authorization": "Bearer ${AUDIT_TOKEN}",
       "X-Tenant-Id": "${AUDIT_TENANT_ID}"
+    },
+    "auth": {
+      "totp": {
+        "secretEnv": "AUDIT_TOTP_SECRET",
+        "algorithm": "SHA-1",
+        "digits": 6,
+        "period": 30
+      }
     }
   },
   "parcours": [
@@ -126,9 +134,13 @@ les captures ou le rapport.
 
 Le même contexte navigateur est conservé pendant un parcours afin de propager
 cookies et état de session après connexion. Il est isolé des autres exécutions
-et n'est pas persisté sur disque. Lorsqu'un écran de 2FA apparaît, l'agent
-demande le code temporaire ou l'approbation à l'utilisateur, puis poursuit
-après confirmation. Il ne stocke jamais ce code. Une clé physique/WebAuthn,
+et n'est pas persisté sur disque. Si `auth.totp` est configuré, l'agent génère
+le code TOTP courant en mémoire, le saisit dans l'écran 2FA détecté et l'oublie
+immédiatement. La graine TOTP, le code produit et les valeurs d'en-tête ne sont
+jamais journalisés, affichés, capturés ou inclus dans le rapport.
+
+Sans configuration TOTP, l'agent demande le code temporaire ou l'approbation
+à l'utilisateur, puis poursuit après confirmation. Une clé physique/WebAuthn,
 un CAPTCHA ou tout mécanisme qui exige une action humaine non accessible à
 Playwright est signalé comme bloquant pour le parcours concerné, sans tentative
 de contournement.
@@ -250,7 +262,8 @@ projet.
 ## Vérification
 
 Étendre les tests structurels pour le mode `parcours`, le schéma JSON, les trois
-exemples, les variables d'environnement, la propagation d'en-têtes, le 2FA,
+exemples, les variables d'environnement, la propagation d'en-têtes, le TOTP,
+le 2FA,
 l'assistance `parcours init`, le rapport de parcours, la règle SVG/Shadow DOM,
 les sections non GreenIT et les copies OpenCode. Étendre le test de routage
 Claude Code ou ajouter un test dédié.
