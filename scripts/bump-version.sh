@@ -39,6 +39,10 @@ declared_files() {
   jq -r '.files[] | "\(.path)\t\(.field)"' "$CONFIG"
 }
 
+declared_tag_files() {
+  jq -r '.tag_files[]?' "$CONFIG"
+}
+
 audit_excludes() {
   jq -r '.audit.exclude[]' "$CONFIG" 2>/dev/null
 }
@@ -76,7 +80,28 @@ cmd_check() {
     done
     has_drift=1
   else
-    echo "Tous les fichiers sont synchronisés à ${versions[0]}"
+    local current_version="${versions[0]}"
+    while IFS= read -r tag_path; do
+      [[ -z "$tag_path" ]] && continue
+      local fullpath="$REPO_ROOT/$tag_path"
+      if [[ ! -f "$fullpath" ]]; then
+        printf "  %-45s  MANQUANT\n" "$tag_path (tag)"
+        has_drift=1
+        continue
+      fi
+      local tag_versions
+      tag_versions=$(sed -nE 's/.*(#v[0-9]+\.[0-9]+\.[0-9]+).*/\1/p' "$fullpath" | sort -u)
+      if [[ "$tag_versions" == "#v$current_version" ]]; then
+        printf "  %-45s  %s\n" "$tag_path (tag)" "$tag_versions"
+      else
+        printf "  %-45s  attendu #v%s, obtenu %s\n" "$tag_path (tag)" "$current_version" "${tag_versions:-aucun}"
+        has_drift=1
+      fi
+    done < <(declared_tag_files)
+
+    if [[ "$has_drift" -eq 0 ]]; then
+      echo "Tous les fichiers sont synchronisés à $current_version"
+    fi
   fi
 
   return $has_drift
@@ -112,6 +137,9 @@ cmd_audit() {
   while IFS=$'\t' read -r path _field; do
     declared_paths+=("$path")
   done < <(declared_files)
+  while IFS= read -r tag_path; do
+    [[ -n "$tag_path" ]] && declared_paths+=("$tag_path")
+  done < <(declared_tag_files)
 
   local found_undeclared=0
   while IFS= read -r match; do
@@ -166,6 +194,17 @@ cmd_bump() {
     write_json_field "$fullpath" "$field" "$new_version"
     printf "  %-45s  %s -> %s\n" "$path ($field)" "$old_ver" "$new_version"
   done < <(declared_files)
+
+  while IFS= read -r tag_path; do
+    [[ -z "$tag_path" ]] && continue
+    local fullpath="$REPO_ROOT/$tag_path"
+    if [[ ! -f "$fullpath" ]]; then
+      echo "  SKIP (manquant) : $tag_path"
+      continue
+    fi
+    perl -0pi -e "s/#v[0-9]+\\.[0-9]+\\.[0-9]+/#v$new_version/g" "$fullpath"
+    printf "  %-45s  #v%s\n" "$tag_path (tag)" "$new_version"
+  done < <(declared_tag_files)
 
   echo ""
   echo "Terminé. Audit pour détecter les fichiers oubliés..."

@@ -25,11 +25,11 @@ Le plugin charge le bootstrap ecocode et enregistre les skills automatiquement.
 
 ## Mise à jour
 
-Pour épingler la version 2.1.0 :
+Pour épingler une version précise :
 
 ```json
 {
-  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/cnumr/ai-assisted-sustainable-it.git#v2.1.0"]
+  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/cnumr/ai-assisted-sustainable-it.git#v2.2.0"]
 }
 ```
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+
+### Corrigé
+
+- Valide les front matters YAML de tous les fichiers Markdown suivis par Git et
+  corrige les descriptions des skills d'audit front-end et back-end.
+
 ## 2.2.0 — 2026-07-29
 
 ### Ajouté

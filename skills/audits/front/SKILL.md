@@ -1,6 +1,6 @@
 ---
 name: ecocode-front
-description: Use when analyzing the ecological impact of front-end code: assets weight, HTTP requests, JavaScript bundles, CSS, images, fonts, browser rendering, lazy loading, caching, or web performance from a green IT perspective.
+description: "Use when analyzing the ecological impact of front-end code: assets weight, HTTP requests, JavaScript bundles, CSS, images, fonts, browser rendering, lazy loading, caching, or web performance from a green IT perspective."
 ---
 
 # EcoCode Front — Analyse éco-conception côté client

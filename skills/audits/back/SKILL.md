@@ -1,6 +1,6 @@
 ---
 name: ecocode-back
-description: Use when analyzing the ecological impact of back-end code: database queries, API payloads, server-side cache, background jobs, data transfers, N+1 queries, missing indexes, or server energy consumption from a green IT perspective.
+description: "Use when analyzing the ecological impact of back-end code: database queries, API payloads, server-side cache, background jobs, data transfers, N+1 queries, missing indexes, or server energy consumption from a green IT perspective."
 ---
 
 # EcoCode Back — Analyse éco-conception côté serveur

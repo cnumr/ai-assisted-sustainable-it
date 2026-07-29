@@ -6,6 +6,7 @@
 bash tests/structure/test-sustainable-it-structure.sh
 bash tests/structure/test-frontend-runtime-contract.sh
 bash tests/structure/test-release-metadata.sh
+bash tests/structure/test-yaml-frontmatter.sh
 ./scripts/bump-version.sh --audit
 ```
 

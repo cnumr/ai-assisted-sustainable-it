@@ -4,6 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
+source "$SCRIPT_DIR/test-helpers.sh"
 
 echo "========================================"
 echo " EcoCode — Suite de tests"
@@ -64,6 +65,7 @@ done
 
 # Tests rapides (lancés par défaut)
 tests=(
+    "test-timeout-helper.sh"
     "test-ecocode-bootstrap.sh"
     "test-ecocode-skill.sh"
 )
@@ -103,7 +105,7 @@ for test in "${tests[@]}"; do
     start_time=$(date +%s)
 
     if [ "$VERBOSE" = true ]; then
-        if timeout "$TIMEOUT" bash "$test_path"; then
+        if run_with_timeout "$TIMEOUT" bash "$test_path"; then
             end_time=$(date +%s)
             echo ""
             echo "  [PASS] $test ($((end_time - start_time))s)"
@@ -112,7 +114,7 @@ for test in "${tests[@]}"; do
             exit_code=$?
             end_time=$(date +%s)
             echo ""
-            if [ $exit_code -eq 124 ]; then
+            if is_timeout_exit "$exit_code"; then
                 echo "  [FAIL] $test (timeout après ${TIMEOUT}s)"
             else
                 echo "  [FAIL] $test ($((end_time - start_time))s)"
@@ -120,14 +122,14 @@ for test in "${tests[@]}"; do
             failed=$((failed + 1))
         fi
     else
-        if output=$(timeout "$TIMEOUT" bash "$test_path" 2>&1); then
+        if output=$(run_with_timeout "$TIMEOUT" bash "$test_path" 2>&1); then
             end_time=$(date +%s)
             echo "  [PASS] ($((end_time - start_time))s)"
             passed=$((passed + 1))
         else
             exit_code=$?
             end_time=$(date +%s)
-            if [ $exit_code -eq 124 ]; then
+            if is_timeout_exit "$exit_code"; then
                 echo "  [FAIL] (timeout après ${TIMEOUT}s)"
             else
                 echo "  [FAIL] ($((end_time - start_time))s)"

@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
 # Fonctions utilitaires pour les tests de skills Claude Code
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+run_with_timeout() {
+    local timeout_seconds="$1"
+    shift
+
+    if command -v timeout > /dev/null 2>&1; then
+        timeout "$timeout_seconds" "$@"
+    elif command -v gtimeout > /dev/null 2>&1; then
+        gtimeout "$timeout_seconds" "$@"
+    else
+        perl -e 'alarm(shift); exec @ARGV' "$timeout_seconds" "$@"
+    fi
+}
+
+is_timeout_exit() {
+    [ "$1" -eq 124 ] || [ "$1" -eq 142 ]
+}
 
 # Lance Claude Code avec un prompt et capture la sortie
 # Usage: run_claude "prompt" [timeout_secondes] [allowed_tools]
@@ -10,31 +29,37 @@ run_claude() {
     local output_file
     output_file=$(mktemp)
 
-    local cmd="claude -p \"$prompt\""
+    local cmd="claude -p --plugin-dir \"$REPO_ROOT\" \"$prompt\""
     if [ -n "$allowed_tools" ]; then
         cmd="$cmd --allowed-tools=$allowed_tools"
     fi
 
-    if timeout "$timeout" bash -c "$cmd" > "$output_file" 2>&1; then
+    if run_with_timeout "$timeout" bash -c "$cmd" > "$output_file" 2>&1; then
         cat "$output_file"
-        rm -f "$output_file"
+        trash "$output_file"
         return 0
     else
         local exit_code=$?
         cat "$output_file" >&2
-        rm -f "$output_file"
+        trash "$output_file"
         return $exit_code
     fi
 }
 
 # Vérifie que la sortie contient un pattern
-# Usage: assert_contains "sortie" "pattern" "nom du test"
+# Usage: assert_contains "sortie" [-i] "pattern" "nom du test"
 assert_contains() {
     local output="$1"
-    local pattern="$2"
-    local test_name="${3:-test}"
+    shift
+    local grep_flag=""
+    if [ "${1:-}" = "-i" ]; then
+        grep_flag="-i"
+        shift
+    fi
+    local pattern="$1"
+    local test_name="${2:-test}"
 
-    if echo "$output" | grep -q "$pattern"; then
+    if echo "$output" | grep $grep_flag -q "$pattern"; then
         echo "  [PASS] $test_name"
         return 0
     else
@@ -134,11 +159,13 @@ create_test_project() {
 cleanup_test_project() {
     local test_dir="$1"
     if [ -d "$test_dir" ]; then
-        rm -rf "$test_dir"
+        trash "$test_dir"
     fi
 }
 
 export -f run_claude
+export -f run_with_timeout
+export -f is_timeout_exit
 export -f assert_contains
 export -f assert_not_contains
 export -f assert_count

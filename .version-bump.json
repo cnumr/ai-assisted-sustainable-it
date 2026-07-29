@@ -15,10 +15,10 @@
     { "path": ".codex-plugin/marketplace.json", "field": "plugins.0.version" },
     { "path": "gemini-extension.json", "field": "version" }
   ],
+  "tag_files": ["docs/README.opencode.md"],
   "audit": {
     "exclude": [
       "CHANGELOG.md",
-      "README.opencode.md",
       "package-lock.json",
       "test-release-metadata.sh",
       "test-sustainable-it-structure.sh",
