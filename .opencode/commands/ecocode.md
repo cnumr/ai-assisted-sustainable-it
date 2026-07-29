@@ -5,4 +5,4 @@ agent: ecocode-orchestrator
 
 Lance un audit éco-conception. Périmètre : $ARGUMENTS
 
-- `frontend` — audit runtime des parcours front-end uniquement
+- `frontend` — audit runtime des parcours front-end uniquement (requiert le MCP `playwright`)

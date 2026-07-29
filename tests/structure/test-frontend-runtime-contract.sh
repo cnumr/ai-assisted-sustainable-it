@@ -4,6 +4,16 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SKILL="$ROOT/skills/audits/frontend/SKILL.md"
 AGENT="$ROOT/agents/ecocode-frontend-analyzer.md"
+REPORT_SKILL="$ROOT/skills/audits/report-writer/SKILL.md"
+REPORT_AGENT="$ROOT/agents/ecocode-report-writer.md"
+OPENCODE_REPORT_AGENT="$ROOT/.opencode/agents/ecocode-report-writer.md"
+COMMAND="$ROOT/commands/ecocode.md"
+OPENCODE_COMMAND="$ROOT/.opencode/commands/ecocode.md"
+README="$ROOT/README.md"
+CODEX_INSTALL="$ROOT/.codex/INSTALL.md"
+OPENCODE_INSTALL="$ROOT/.opencode/INSTALL.md"
+OPENCODE_README="$ROOT/docs/README.opencode.md"
+CHANGELOG="$ROOT/CHANGELOG.md"
 PASS=0
 FAIL=0
 
@@ -54,6 +64,21 @@ contains "agent transmet le développement web" "$AGENT" '"developpement_web"'
 contains "agent transmet les erreurs" "$AGENT" '"erreurs_execution"'
 contains "agent transmet la déduplication" "$AGENT" '"deduplication"'
 contains "agent désigne le rapport" "$AGENT" '"rapport": "audit-frontend"'
+
+contains "rédacteur décrit le rapport runtime" "$REPORT_SKILL" 'Audit runtime front-end'
+contains "rédacteur nomme le rapport runtime" "$REPORT_SKILL" 'YYYY-MM-DDTHH-MM-audit-frontend.md'
+contains "rédacteur sépare les parcours" "$REPORT_SKILL" '## Parcours exécutés'
+contains "rédacteur conserve les erreurs runtime" "$REPORT_SKILL" '## Erreurs d’exécution et limites'
+contains "agent rédacteur écrit le rapport runtime" "$REPORT_AGENT" '{timestamp}-audit-frontend.md'
+contains "agent OpenCode rédacteur écrit le rapport runtime" "$OPENCODE_REPORT_AGENT" '{timestamp}-audit-frontend.md'
+contains "commande exige Playwright" "$COMMAND" '`frontend` — audit runtime des parcours front-end uniquement (requiert le MCP `playwright`)'
+contains "commande OpenCode exige Playwright" "$OPENCODE_COMMAND" '`frontend` — audit runtime des parcours front-end uniquement (requiert le MCP `playwright`)'
+contains "README documente le runtime frontend" "$README" '/ecocode frontend             # Audit runtime des parcours front-end (requiert playwright)'
+contains "Codex documente Playwright requis" "$CODEX_INSTALL" '`playwright` MCP server configured for `/ecocode frontend` runtime audits (required)'
+contains "Codex documente la commande frontend" "$CODEX_INSTALL" '/ecocode frontend     # Runtime front-end journey audit (requires playwright)'
+contains "OpenCode documente la commande frontend" "$OPENCODE_INSTALL" '/ecocode frontend     # Runtime front-end journey audit (requires playwright)'
+contains "guide OpenCode documente le runtime frontend" "$OPENCODE_README" 'Analyse les parcours front-end runtime avec `/ecocode frontend` (MCP `playwright` requis).'
+contains "changelog annonce le rapport runtime" "$CHANGELOG" '{timestamp}-audit-frontend.md'
 
 echo
 echo "Résultat : $PASS passés, $FAIL échoués"

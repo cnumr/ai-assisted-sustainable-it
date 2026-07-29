@@ -28,6 +28,7 @@ choisir un modèle disponible adapté à sa tâche.
 ```text
 /ecocode                      # Audit complet du projet courant
 /ecocode front                # Analyse front-end uniquement
+/ecocode frontend             # Audit runtime des parcours front-end (requiert playwright)
 /ecocode back                 # Analyse back-end uniquement
 /ecocode https://example.com  # Analyse d'une URL (requiert playwright)
 /ecocode plan                 # Plan d'action depuis le dernier audit
@@ -38,7 +39,7 @@ choisir un modèle disponible adapté à sa tâche.
 
 - MCP [`mcp-greenit`](https://mcp-115-bp.greenit.eco/) — accès au référentiel
   Green IT (requis).
-- MCP `playwright` — analyse d'URLs en runtime (optionnel).
+- MCP `playwright` — requis pour `/ecocode frontend` et l'analyse d'URLs en runtime.
 
 ## Installation
 

@@ -4,6 +4,7 @@
 
 - [Codex CLI](https://github.com/openai/codex) installed
 - `mcp-greenit` MCP server configured
+- `playwright` MCP server configured for `/ecocode frontend` runtime audits (required)
 
 ## Installation
 
@@ -20,5 +21,6 @@ ln -s ~/.codex/plugins/ai-assisted-sustainable-it/skills/development ~/.codex/sk
 ```text
 /ecocode              # Full Sustainable IT audit
 /ecocode front        # Front-end analysis
+/ecocode frontend     # Runtime front-end journey audit (requires playwright)
 /ecocode back         # Back-end analysis
 ```

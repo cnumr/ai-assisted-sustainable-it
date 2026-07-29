@@ -22,6 +22,7 @@ Quand tu reçois les résultats d'audit :
 
 3. **Écris les fichiers d'audit** selon le style défini dans le skill `audits/report-writer` :
    - Si données front disponibles → `docs/ecocode/audits/{timestamp}-audit-front.md`
+   - Si données runtime `frontendData` disponibles → `docs/ecocode/audits/{timestamp}-audit-frontend.md`
    - Si données back disponibles → `docs/ecocode/audits/{timestamp}-audit-back.md`
 
 4. **Retourne les chemins** des fichiers créés à l'orchestrateur.
@@ -30,3 +31,4 @@ Quand tu reçois les résultats d'audit :
 
 - N'utilise que les données reçues en entrée. Ne relis jamais les fichiers source du projet.
 - Ne modifie aucun fichier en dehors de `docs/ecocode/audits/`.
+- Le runtime `/ecocode frontend` produit uniquement `audit-frontend.md` : ne le mélange jamais avec l'audit statique `audit-front.md`.

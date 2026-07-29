@@ -11,7 +11,7 @@ Arguments:
 
 - (none) — full audit of the current project
 - `front` — front-end analysis only
-- `frontend` — audit runtime des parcours front-end uniquement
+- `frontend` — audit runtime des parcours front-end uniquement (requiert le MCP `playwright`)
 - `back` — back-end analysis only
 - `<url>` — runtime analysis of a URL (requires playwright MCP)
 
