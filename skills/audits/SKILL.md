@@ -13,10 +13,11 @@ metadata:
 
 Point d'entrée unique pour tout audit d'éco-conception web. Ce skill identifie le périmètre (front, back, ou les deux), délègue aux sous-skills spécialisés, et produit un rapport synthétique final avec score d'impact et priorités de correction.
 
-L'audit est piloté par `ecocode-orchestrator`. Les six rôles partagent les
+L'audit est piloté par `ecocode-orchestrator`. Les sept rôles partagent les
 mêmes noms dans Claude Code, OpenCode et Codex : `ecocode-orchestrator`,
-`ecocode-front-analyzer`, `ecocode-back-analyzer`, `ecocode-report-writer`,
-`ecocode-planner` et `ecocode-fix-suggester`.
+`ecocode-front-analyzer`, `ecocode-frontend-analyzer`,
+`ecocode-back-analyzer`, `ecocode-report-writer`, `ecocode-planner` et
+`ecocode-fix-suggester`.
 
 ## Deux modes complémentaires
 
@@ -54,6 +55,12 @@ digraph routing {
 ```
 
 ## Étape −1 — Détecter le mode d'entrée
+
+**Si l'argument est `frontend` : déléguer exclusivement à `ecocode-frontend-analyzer`.**
+
+- Charger `audits/frontend` et lui transmettre les URL ou parcours fournis.
+- Ne pas déclencher `ecocode-front-analyzer`, ni l'audit statique `audits/front`.
+- Retourner le rapport `audit-frontend.md` produit pour chaque parcours, puis terminer.
 
 **Si l'argument est `plan`, `fix`, ou `fix RWEB_XXX` :**
 

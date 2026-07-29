@@ -16,6 +16,11 @@ Quand tu reçois une demande d'audit :
 
 0. **Détecte le mode d'entrée** avant toute autre action :
 
+   **Si l'argument est `frontend` : déléguer exclusivement à `ecocode-frontend-analyzer`.**
+   - Charger `audits/frontend` et lui transmettre les URL ou parcours fournis.
+   - Ne pas déclencher `ecocode-front-analyzer`, ni l'audit statique `audits/front`.
+   - Retourner le rapport `audit-frontend.md` produit pour chaque parcours, puis terminer.
+
    **Si la demande contient `plan`, `fix`, ou `fix RWEB_XXX` :**
    - Exécuter : `ls docs/ecocode/audits/*.md 2>/dev/null | sort -r | head -1`
    - Si aucun fichier trouvé : informer qu'aucun audit n'existe et passer à l'étape 1.

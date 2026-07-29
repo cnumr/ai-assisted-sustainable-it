@@ -66,11 +66,14 @@ check "skill design" "skills/design/SKILL.md"
 check "skill development" "skills/development/SKILL.md"
 check "skill audits" "skills/audits/SKILL.md"
 check "skill audit front" "skills/audits/front/SKILL.md"
+check "skill audit frontend" "skills/audits/frontend/SKILL.md"
 check "skill audit back" "skills/audits/back/SKILL.md"
 check "plans Superpowers" ".superpowers/plans"
 check "spécifications Superpowers" ".superpowers/specs"
 check "commande ecocode" "commands/ecocode.md"
 check "agent ecocode" "agents/ecocode-orchestrator.md"
+check "agent audit frontend" "agents/ecocode-frontend-analyzer.md"
+check "agent OpenCode audit frontend" ".opencode/agents/ecocode-frontend-analyzer.md"
 check "plugin Claude ecocode" ".claude-plugin/plugins/ecocode/plugin.json"
 check "plugin Codex ecocode" ".codex-plugin/plugins/ecocode/plugin.json"
 check "plugin Cursor ecocode" ".cursor-plugin/plugins/ecocode/plugin.json"
@@ -147,8 +150,16 @@ fi
 for spec in \
   "commands/ecocode.md:Use the \`audits\` skill" \
   "commands/ecocode.md:/ecocode délègue à \`ecocode-orchestrator\`" \
+  "commands/ecocode.md:\`frontend\` — audit runtime des parcours front-end uniquement" \
+  "skills/audits/SKILL.md:\`frontend\` : déléguer exclusivement à \`ecocode-frontend-analyzer\`" \
+  "skills/audits/SKILL.md:\`audit-frontend.md\`" \
   "agents/ecocode-orchestrator.md:skill \`audits\`" \
+  "agents/ecocode-orchestrator.md:\`frontend\` : déléguer exclusivement à \`ecocode-frontend-analyzer\`" \
+  "agents/ecocode-orchestrator.md:\`audit-frontend.md\`" \
   ".opencode/agents/ecocode-orchestrator.md:skill \`audits\`" \
+  ".opencode/commands/ecocode.md:\`frontend\` — audit runtime des parcours front-end uniquement" \
+  ".opencode/agents/ecocode-orchestrator.md:\`frontend\` : déléguer exclusivement à \`ecocode-frontend-analyzer\`" \
+  ".opencode/agents/ecocode-orchestrator.md:\`audit-frontend.md\`" \
   "README.md:skills/design ~/.codex/skills/design" \
   "README.md:skills/development ~/.codex/skills/development" \
   ".codex/INSTALL.md:skills/design ~/.codex/skills/design" \
