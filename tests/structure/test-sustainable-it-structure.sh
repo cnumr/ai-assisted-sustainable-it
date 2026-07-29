@@ -149,6 +149,8 @@ else
   echo "✗ bootstrap OpenCode charge le skill audits — chemin manquant"; FAIL=$((FAIL + 1))
 fi
 
+EXPECTED_VERSION=$(jq -r '.version' "$ROOT/package.json")
+
 for spec in \
   "commands/ecocode.md:Use the \`audits\` skill" \
   "commands/ecocode.md:/ecocode délègue à \`ecocode-orchestrator\`" \
@@ -192,7 +194,7 @@ for spec in \
   ".codex-plugin/marketplace.json:.plugins[0].version"; do
   path="${spec%%:*}"
   jq_expr="${spec#*:}"
-  json_check "version 2.1.0 dans $path ($jq_expr)" "$path" "$jq_expr" "2.1.0"
+  json_check "version $EXPECTED_VERSION dans $path ($jq_expr)" "$path" "$jq_expr" "$EXPECTED_VERSION"
 done
 
 echo
