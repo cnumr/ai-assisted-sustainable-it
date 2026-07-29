@@ -22,3 +22,5 @@ Use skill: audits
 ```
 
 Pass any arguments from `$ARGUMENTS` to determine the audit scope.
+Le routage utilise le premier token exact de `$ARGUMENTS` : `frontend` doit
+être traité avant et séparément de `front`.

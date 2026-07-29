@@ -6,3 +6,6 @@ agent: ecocode-orchestrator
 Lance un audit éco-conception. Périmètre : $ARGUMENTS
 
 - `frontend` — audit runtime des parcours front-end uniquement (requiert le MCP `playwright`)
+
+Le routage utilise le premier token exact de `$ARGUMENTS` : `frontend` reste
+distinct de `front`.

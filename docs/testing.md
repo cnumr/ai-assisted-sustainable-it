@@ -4,6 +4,7 @@
 
 ```bash
 bash tests/structure/test-sustainable-it-structure.sh
+bash tests/structure/test-frontend-runtime-contract.sh
 bash tests/structure/test-release-metadata.sh
 ./scripts/bump-version.sh --audit
 ```
@@ -35,3 +36,8 @@ console.log(typeof plugin.config);
 console.log(typeof plugin['experimental.chat.messages.transform']);
 EOF
 ```
+
+Ce contrôle vérifie que le plugin OpenCode expose ses hooks. Le contrat
+`/ecocode frontend`, ses agents OpenCode et le chargement de
+`audits/frontend` sont vérifiés par
+`tests/structure/test-frontend-runtime-contract.sh`.

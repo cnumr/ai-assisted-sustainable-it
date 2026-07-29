@@ -16,10 +16,25 @@ Quand tu reçois une demande d'audit :
 
 0. **Détecte le mode d'entrée** avant toute autre action :
 
-   **Si l'argument est `frontend` : déléguer exclusivement à `ecocode-frontend-analyzer`.**
-   - Charger `audits/frontend` et lui transmettre les URL ou parcours fournis.
-   - Ne pas déclencher `ecocode-front-analyzer`, ni l'audit statique `audits/front`.
-   - Retourner le rapport `audit-frontend.md` produit pour chaque parcours, puis terminer.
+   Lire le premier token exact de l'argument. Ne jamais assimiler `frontend`
+   à `front`.
+
+   **Si le premier token exact est `frontend` :**
+   - Déléguer exclusivement à `ecocode-frontend-analyzer`, charger
+     `audits/frontend` et lui transmettre les URL ou parcours restants.
+   - Ne pas déclencher `ecocode-front-analyzer`, ni l'audit statique
+     `audits/front`.
+   - Conserver l'objet JSON strict retourné sous le nom `frontendData`.
+   - Si un parcours a le statut `auth_required`, demander à l'utilisateur de
+     terminer l'authentification dans le navigateur, puis rappeler l'analyseur
+     avec l'entrée initiale et `frontendData` pour reprendre le parcours à `reprise_etape`.
+     Ne jamais demander de secret.
+   - Déterminer `projectName` et `timestamp`, puis déléguer à
+     `ecocode-report-writer` et lui transmettre `frontendData`, `projectName`
+     et `timestamp`, sans `frontData` ni `backData`.
+   - Attendre la création du seul fichier
+     `docs/ecocode/audits/{timestamp}-audit-frontend.md`, retourner son chemin,
+     puis terminer sans rapport statique ni plan.
 
    **Si la demande contient `plan`, `fix`, ou `fix RWEB_XXX` :**
    - Exécuter : `ls docs/ecocode/audits/*.md 2>/dev/null | sort -r | head -1`

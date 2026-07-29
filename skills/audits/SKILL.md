@@ -56,11 +56,26 @@ digraph routing {
 
 ## Étape −1 — Détecter le mode d'entrée
 
-**Si l'argument est `frontend` : déléguer exclusivement à `ecocode-frontend-analyzer`.**
+Lire le premier token exact de l'argument avant tout autre routage. Ne jamais
+assimiler `frontend` à `front`.
 
-- Charger `audits/frontend` et lui transmettre les URL ou parcours fournis.
-- Ne pas déclencher `ecocode-front-analyzer`, ni l'audit statique `audits/front`.
-- Retourner le rapport `audit-frontend.md` produit pour chaque parcours, puis terminer.
+**Si le premier token exact est `frontend` :**
+
+1. Déléguer exclusivement à `ecocode-frontend-analyzer`, en chargeant
+   `audits/frontend` et en lui transmettant les URL ou parcours restants.
+   Ne pas déclencher `ecocode-front-analyzer`, ni l'audit statique
+   `audits/front`.
+2. Conserver l'objet JSON strict retourné sous le nom `frontendData`.
+3. Si un parcours a le statut `auth_required`, demander à l'utilisateur de
+   terminer l'authentification dans le navigateur, puis déléguer de nouveau à
+   l'analyseur avec l'entrée initiale et `frontendData` pour reprendre le parcours à `reprise_etape`.
+   Ne jamais demander de secret.
+4. Une fois tous les parcours terminés ou en erreur, déterminer `projectName`
+   et `timestamp`, puis déléguer à `ecocode-report-writer` et transmettre `frontendData`,
+   `projectName` et `timestamp`, sans `frontData` ni `backData`.
+5. Attendre la création du seul fichier
+   `docs/ecocode/audits/{timestamp}-audit-frontend.md`, retourner son chemin,
+   puis terminer sans générer de rapport statique ni de plan.
 
 **Si l'argument est `plan`, `fix`, ou `fix RWEB_XXX` :**
 

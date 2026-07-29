@@ -7,6 +7,9 @@
 - Ajoute `/ecocode frontend`, un audit runtime distinct de l'audit statique
   `front`, qui requiert le MCP Playwright et produit
   `docs/ecocode/audits/{timestamp}-audit-frontend.md`.
+- Ajoute l'analyseur Codex dédié, la reprise d'un parcours après
+  authentification utilisateur et les schémas structurés des observations
+  runtime.
 
 ## 2.1.0 — 2026-07-24
 

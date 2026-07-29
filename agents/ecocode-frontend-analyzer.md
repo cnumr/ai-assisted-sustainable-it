@@ -58,6 +58,8 @@ valeurs indisponibles, sans omettre de clé :
     {
       "nom": "parcours",
       "statut": "termine",
+      "reprise_etape": null,
+      "url_cible": null,
       "pages": [
         {
           "nom": "accueil",
@@ -81,12 +83,37 @@ valeurs indisponibles, sans omettre de clé :
               "severity": "haute",
               "observation": "Constat mesuré",
               "preuve": "Mesure ou ressource observée",
+              "impact": "Impact mesuré ou observable",
+              "localisation": "parcours/accueil",
               "code_observe": null,
               "correction": null
             }
           ],
-          "performance": [],
-          "developpement_web": [],
+          "performance": [
+            {
+              "categorie": "performance",
+              "deduplication_key": "performance:https://example.com/app.js",
+              "severity": "moyenne",
+              "observation": "Alerte runtime mesurée sans fiche GreenIT",
+              "preuve": "Mesure, timing ou ressource observée",
+              "impact": "Impact mesuré ou observable",
+              "localisation": "parcours/accueil",
+              "correction": null
+            }
+          ],
+          "developpement_web": [
+            {
+              "categorie": "developpement_web",
+              "deduplication_key": "console:https://example.com/app.js",
+              "severity": "moyenne",
+              "observation": "Erreur web observée sans fiche GreenIT",
+              "preuve": "Erreur console, HTML ou API observée",
+              "impact": "Impact mesuré ou observable",
+              "localisation": "parcours/accueil#console",
+              "code_observe": null,
+              "correction": null
+            }
+          ],
           "deduplication": [
             {
               "deduplication_key": "asset:https://example.com/app.js",
@@ -94,7 +121,13 @@ valeurs indisponibles, sans omettre de clé :
             }
           ],
           "capture": null,
-          "limites": []
+          "limites": [
+            {
+              "code": "shadow_dom_ferme",
+              "scope": "page",
+              "message": "Limite de mesure constatée"
+            }
+          ]
         }
       ],
       "erreurs_execution": [
@@ -106,11 +139,24 @@ valeurs indisponibles, sans omettre de clé :
       ]
     }
   ],
-  "limites_globales": []
+  "limites_globales": [
+    {
+      "code": "collecte_reseau_non_isolee",
+      "scope": "execution",
+      "message": "Limite globale constatée"
+    }
+  ]
 }
 ```
 
-`statut` vaut `termine` ou `erreur`. Les valeurs EcoIndex, grade, GES et eau
-proviennent sans transformation du calculateur MCP. Une occurrence dédupliquée
-ne répète pas l’écart : elle ajoute seulement sa référence dans
-`deduplication`. Toutes les pages gardent leurs métriques.
+Les objets montrés dans les tableaux définissent leur schéma ; retourner un
+tableau vide lorsqu'aucune observation correspondante n'existe. `statut` vaut
+`termine`, `erreur` ou `auth_required`. Dans ce dernier cas, renseigner
+`reprise_etape` et `url_cible`, conserver les pages déjà mesurées et retourner
+l'objet au parent sans capturer ni mesurer l'écran d'authentification. Pour les
+autres statuts, ces deux champs valent `null`.
+
+Les valeurs EcoIndex, grade, GES et eau proviennent sans transformation du
+calculateur MCP. Une occurrence dédupliquée ne répète pas l’écart : elle ajoute
+seulement sa référence dans `deduplication`. Toutes les pages gardent leurs
+métriques.

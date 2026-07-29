@@ -48,9 +48,15 @@ lire, créer ni persister de fichier `storageState`.
 Si la page cible redirige vers une authentification :
 
 1. suspendre le parcours avant toute capture ou mesure de cet écran ;
-2. demander à l’utilisateur de terminer la connexion dans le navigateur ;
-3. vérifier que l’URL cible est de nouveau accessible ;
-4. reprendre à la dernière étape non exécutée.
+2. retourner immédiatement au skill parent le statut `auth_required`, l'URL
+   cible et l'index `reprise_etape` de la dernière étape non exécutée ;
+3. laisser le parent demander à l’utilisateur de terminer la connexion dans le
+   navigateur ;
+4. lorsque le parent rappelle l'analyseur, vérifier que l’URL cible est de
+   nouveau accessible et reprendre à `reprise_etape`.
+
+Le sous-agent ne dialogue jamais directement avec l'utilisateur. Le parent
+conserve les pages déjà mesurées dans `frontendData` pendant cette reprise.
 
 Les en-têtes de `contexte.headers` sont facultatifs et non sensibles. Avant de
 les appliquer :
@@ -141,9 +147,11 @@ fiche GreenIT vérifiée.
 
 Un JSON invalide empêche son exécution. Une action inconnue, un élément
 introuvable, une navigation ou une mesure impossible arrête seulement le parcours concerné.
-Conserver ses pages déjà mesurées et ajouter une erreur
-structurée avec parcours, étape, action et message. Aucune mesure n’est inventée
-pour une étape échouée.
+Conserver ses pages déjà mesurées et ajouter une erreur structurée avec
+parcours, étape, action et message. Aucune mesure n’est inventée pour une étape
+échouée. Une redirection vers une authentification
+n'est pas une erreur : elle produit `auth_required` et confie la reprise au
+parent comme décrit plus haut.
 
 Dédupliquer globalement sur tous les parcours les problèmes de composant,
 en-tête, pied de page, script, police ou asset partagé. Détailler la première
