@@ -77,7 +77,7 @@ des agents et suffit aux cas rares d'interaction.
         { "action": "fill", "label": "Rechercher", "value": "ordinateur" },
         { "action": "press", "key": "Enter" },
         { "action": "waitFor", "url": "**/recherche?*" },
-        { "action": "audit", "nom": "compte-connecte" },
+        { "action": "audit", "nom": "resultats-recherche" },
         { "action": "goto", "url": "https://example.com/panier", "audit": true },
         { "action": "click", "role": "button", "name": "Passer la commande" },
         { "action": "audit", "nom": "tunnel-commande" }
@@ -87,62 +87,56 @@ des agents et suffit aux cas rares d'interaction.
 }
 ```
 
-Les valeurs `${NOM_DE_VARIABLE}` sont résolues depuis l'environnement de
-l'utilisateur au moment de l'exécution. Elles ne sont ni affichées dans le
-rapport, ni enregistrées dans les captures, ni demandées à nouveau si elles
-sont déjà disponibles.
+### Authentification par session utilisateur
 
-### Contexte authentifié et en-têtes
+L'audit ne gère ni login, ni mot de passe, ni code TOTP, ni graine TOTP, ni
+en-tête d'authentification. Avant le parcours, l'utilisateur se connecte lui-même
+au service dans le navigateur contrôlé par Playwright. L'agent réutilise cette
+session existante, avec ses cookies et son état, uniquement pendant l'audit.
 
-Un scénario peut sélectionner un profil d'authentification et d'en-têtes
-opaque. Les secrets et en-têtes sensibles appartiennent à un courtier de
-secrets local ou distant ; aucune valeur sensible n'est écrite dans le JSON,
-les prompts, les appels Playwright, les logs, les captures ou le rapport.
+Si une page redirige vers une authentification, l'agent suspend le parcours et
+demande à l'utilisateur de terminer la connexion dans le navigateur. Il vérifie
+ensuite l'accès à la page cible et reprend à la dernière étape. Les écrans de
+connexion ne sont ni capturés ni intégrés au rapport. CAPTCHA, WebAuthn, clés
+physiques et 2FA restent des interactions utilisateur.
 
-Le courtier expose une unique opération de préparation de contexte, prenant le
-nom de profil et les origines autorisées. Il crée ou applique la session sans
-renvoyer de secret à l'agent. Le mode automatisé n'est disponible que lorsque
-ce courtier est installé et que le profil existe; le mode manuel reste la valeur
-par défaut et le repli obligatoire.
+Les fichiers `storageState` Playwright sont hors périmètre : ils peuvent contenir
+des cookies ou en-têtes permettant une usurpation et ne doivent pas être lus,
+créés ou persistés par l'audit.
+
+### En-têtes de parcours
+
+Le scénario accepte zéro, un ou plusieurs en-têtes **non sensibles** sous forme
+de liste, avec les origines auxquelles ils peuvent être envoyés :
 
 ```json
 {
   "contexte": {
-    "authProfile": "preproduction-admin"
+    "originesHeaders": ["https://preproduction.example.com"],
+    "headers": [
+      { "nom": "X-Tenant-Id", "valeur": "audit" },
+      { "nom": "X-Feature-Flag", "valeur": "eco-audit" }
+    ]
   },
   "parcours": [
     {
-      "nom": "espace-client",
+      "nom": "tableau-de-bord",
       "etapes": [
-        { "action": "goto", "url": "https://example.com/tableau-de-bord" },
-        { "action": "audit", "nom": "tableau-de-bord-authentifie" }
+        { "action": "goto", "url": "https://preproduction.example.com/tableau-de-bord", "audit": true }
       ]
     }
   ]
 }
 ```
 
-Le courtier applique l'authentification, les cookies, les en-têtes et le TOTP
-directement au contexte navigateur, puis retourne seulement un contexte prêt ou
-un échec à l'agent. Il ne retourne jamais le mot de passe, le token, la graine
-TOTP ni le code temporaire. Les en-têtes sensibles sont limités aux origines
-explicitement autorisées et retirés lors d'une redirection vers une autre
-origine. Les traces réseau sont désactivées ou redigées pour ces valeurs, et
-aucune capture n'est prise sur une page d'authentification.
-
-Sans courtier compatible, l'agent s'arrête au login et demande à l'utilisateur
-de s'authentifier lui-même dans le navigateur avant de reprendre l'audit. Il ne
-demande, ne reçoit ni ne saisit jamais un mot de passe, une graine TOTP ou un
-code 2FA. Une clé physique/WebAuthn, un CAPTCHA ou tout mécanisme qui exige une
-action humaine reste donc un point de reprise utilisateur, jamais une tentative
-de contournement.
-
-Les profils utilisent des comptes de test dédiés, à privilèges minimaux, avec
-durée de vie courte et rotation. Leur accès est journalisé côté courtier sans
-enregistrer les secrets. Un fichier `storageState` éventuellement fourni par
-Playwright est également sensible (cookies et en-têtes peuvent permettre une
-usurpation) : il est hors dépôt, chiffré ou protégé par les contrôles d'accès
-du système de secrets, et référencé comme un profil opaque.
+L'agent valide que chaque origine est HTTPS, que chaque URL du parcours est
+dans cette liste avant d'appliquer les en-têtes et qu'aucune redirection ne les
+transmet à une autre origine. Les noms `Authorization`, `Cookie`,
+`Proxy-Authorization`, `Set-Cookie`, ainsi que les valeurs de type jeton, mot
+de passe ou clé, sont refusés. Ils doivent être remplacés par la session ouverte
+par l'utilisateur. Si le MCP Playwright ne permet pas ce cloisonnement par
+origine, le parcours est refusé avec ses en-têtes au lieu de les envoyer à tous
+les domaines du contexte navigateur.
 
 #### Mélange de pages directes et d'étapes interactives
 
@@ -261,9 +255,8 @@ projet.
 ## Vérification
 
 Étendre les tests structurels pour le mode `parcours`, le schéma JSON, les trois
-exemples, le profil opaque, la propagation d'en-têtes par origine, le TOTP via
-courtier, le 2FA,
-l'assistance `parcours init`, le rapport de parcours, la règle SVG/Shadow DOM,
-les sections non GreenIT et les copies OpenCode. Étendre le test de routage
-Claude Code ou ajouter un test dédié.
+exemples, l'authentification par session utilisateur, les en-têtes non sensibles
+et leur cloisonnement par origine, l'assistance `parcours init`, le rapport de
+parcours, la règle SVG/Shadow DOM, les sections non GreenIT et les copies
+OpenCode. Étendre le test de routage Claude Code ou ajouter un test dédié.
 Les tests runtime Playwright/MCP restent hors du harness actuel.
