@@ -48,6 +48,80 @@ des agents et suffit aux cas rares d'interaction.
 }
 ```
 
+#### Parcours de simples URL
+
+```json
+{
+  "parcours": [
+    {
+      "nom": "decouverte",
+      "etapes": [
+        { "action": "goto", "url": "https://example.com/", "audit": true },
+        { "action": "goto", "url": "https://example.com/catalogue", "audit": true },
+        { "action": "goto", "url": "https://example.com/contact", "audit": true }
+      ]
+    }
+  ]
+}
+```
+
+#### Parcours avec interactions Playwright
+
+```json
+{
+  "parcours": [
+    {
+      "nom": "commande",
+      "etapes": [
+        { "action": "goto", "url": "https://example.com/connexion" },
+        { "action": "fill", "label": "Adresse e-mail", "value": "audit@example.test" },
+        { "action": "fill", "label": "Mot de passe", "value": "${AUDIT_PASSWORD}" },
+        { "action": "click", "role": "button", "name": "Se connecter" },
+        { "action": "waitFor", "url": "**/compte" },
+        { "action": "audit", "nom": "compte-connecte" },
+        { "action": "goto", "url": "https://example.com/panier", "audit": true },
+        { "action": "click", "role": "button", "name": "Passer la commande" },
+        { "action": "audit", "nom": "tunnel-commande" }
+      ]
+    }
+  ]
+}
+```
+
+Les valeurs `${NOM_DE_VARIABLE}` sont résolues depuis l'environnement de
+l'utilisateur au moment de l'exécution. Elles ne sont ni affichées dans le
+rapport, ni enregistrées dans les captures, ni demandées à nouveau si elles
+sont déjà disponibles.
+
+#### Mélange de pages directes et d'étapes interactives
+
+```json
+{
+  "parcours": [
+    {
+      "nom": "visiteur",
+      "etapes": [
+        { "action": "goto", "url": "https://example.com/", "audit": true },
+        { "action": "goto", "url": "https://example.com/blog", "audit": true }
+      ]
+    },
+    {
+      "nom": "recherche-filtre",
+      "etapes": [
+        { "action": "goto", "url": "https://example.com/recherche", "audit": true },
+        { "action": "fill", "label": "Rechercher", "value": "ordinateur" },
+        { "action": "press", "key": "Enter" },
+        { "action": "waitFor", "url": "**/recherche?*" },
+        { "action": "audit", "nom": "resultats-recherche" },
+        { "action": "check", "label": "Disponible" },
+        { "action": "click", "role": "button", "name": "Appliquer les filtres" },
+        { "action": "audit", "nom": "resultats-filtres" }
+      ]
+    }
+  ]
+}
+```
+
 Les actions autorisées sont `goto`, `click`, `fill`, `select`, `check`,
 `press`, `waitFor` et `audit`. Les interactions indiquent un repère accessible
 (`role` + `name`, `label` ou texte), résolu depuis le snapshot Playwright.
@@ -56,6 +130,16 @@ Les actions autorisées sont `goto`, `click`, `fill`, `select`, `check`,
 Un JSON invalide, une action inconnue ou un élément introuvable arrête seulement
 le parcours concerné, conserve les pages déjà mesurées et crée une erreur
 d'exécution dans le rapport. Aucune mesure n'est inventée pour une étape échouée.
+
+### Assistance à la création
+
+`/ecocode parcours init` ouvre une assistance textuelle pour produire le fichier
+JSON. Elle recueille une information à la fois : nom du parcours, URL de départ,
+pages directes à auditer, puis éventuelles interactions et points d'audit. Elle
+renvoie le JSON complet, valide les actions et champs autorisés, et explique les
+repères accessibles attendus. Elle n'exécute pas le parcours et n'écrit aucun
+fichier sans confirmation explicite. L'utilisateur peut ensuite lancer le JSON
+renvoyé avec `/ecocode parcours <fichier.json>`.
 
 ## Exécution
 
@@ -116,7 +200,8 @@ projet.
   et `skills/audits/report-writer/SKILL.md`.
 - Mettre à jour les agents canoniques orchestrateur, analyseur front et
   rédacteur, ainsi que leurs copies `.opencode/agents/`.
-- Documenter l'entrée dans `commands/ecocode.md`, `.opencode/commands/ecocode.md`,
+- Documenter les entrées et l'assistance dans `commands/ecocode.md`,
+  `.opencode/commands/ecocode.md`,
   `README.md`, `docs/README.opencode.md` et `.codex/INSTALL.md`.
 - Ne pas modifier les profils `.codex/agents/*.toml` : ils lisent les agents
   canoniques et conservent les efforts adaptés (orchestrateur élevé, analyseur
@@ -124,7 +209,8 @@ projet.
 
 ## Vérification
 
-Étendre les tests structurels pour le mode `parcours`, le schéma JSON, le
-rapport de parcours, la règle SVG/Shadow DOM, les sections non GreenIT et les
-copies OpenCode. Étendre le test de routage Claude Code ou ajouter un test dédié.
+Étendre les tests structurels pour le mode `parcours`, le schéma JSON, les trois
+exemples, l'assistance `parcours init`, le rapport de parcours, la règle
+SVG/Shadow DOM, les sections non GreenIT et les copies OpenCode. Étendre le test
+de routage Claude Code ou ajouter un test dédié.
 Les tests runtime Playwright/MCP restent hors du harness actuel.
