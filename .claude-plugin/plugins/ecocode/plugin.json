@@ -1,7 +1,7 @@
 {
   "name": "ecocode",
   "description": "Audit d'éco-conception web selon les 115 bonnes pratiques Green IT. Analyse front-end et back-end avec agents spécialisés.",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "author": {
     "name": "Renaud Heluin",
     "email": "renaud.heluin@novagaia.fr"
