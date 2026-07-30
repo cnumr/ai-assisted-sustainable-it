@@ -1,6 +1,6 @@
 {
   "name": "ecocode",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Audit d'éco-conception web statique et runtime selon les bonnes pratiques Green IT.",
   "author": {
     "name": "Renaud Heluin",

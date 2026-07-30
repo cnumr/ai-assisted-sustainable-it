@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.3.1 — 2026-07-30
+
+### Corrigé
+
+- Sépare strictement `audits/front` (analyse statique du dépôt) de
+  `audits/frontend` (audit runtime navigateur) : `front` ne référence plus
+  d'URL, d'authentification ni de Playwright, et son EcoIndex est explicitement
+  qualifié d'estimation basée sur le code source, jamais d'une mesure.
+- Élargit le périmètre de `audits/front` au-delà de Node/HTML : couvre
+  désormais les gabarits serveur (JSP, Twig, Blade, Thymeleaf, ERB…) quel que
+  soit le langage (PHP, Java, Python, Ruby, .NET…).
+- Documente explicitement les outils MCP Playwright requis par
+  `audits/frontend` (et son agent) pour éviter qu'un harness invoque le
+  navigateur via bash au lieu du MCP.
+- Resynchronise les agents OpenCode (`ecocode-front-analyzer`,
+  `ecocode-frontend-analyzer`, `ecocode-orchestrator`) avec leurs équivalents
+  canoniques.
+
 ## 2.3.0 — 2026-07-30
 
 ### Ajouté

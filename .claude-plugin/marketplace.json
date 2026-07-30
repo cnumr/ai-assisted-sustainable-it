@@ -10,7 +10,7 @@
       "name": "ecocode",
       "description": "Audit éco-conception web, 115 bonnes pratiques Green IT",
       "source": "./plugins/ecocode",
-      "version": "2.3.0",
+      "version": "2.3.1",
       "category": "development",
       "author": {
         "name": "Renaud Heluin",
