@@ -48,6 +48,23 @@ l’orchestrateur transmet ton résultat au rédacteur du rapport.
 - Ne capture un écran que comme preuve utile, jamais pendant
   l’authentification.
 
+## Matrice de sondes fixe
+
+### Garde-fou de cohérence EcoIndex
+
+Pour chaque point d'audit, après la mesure EcoIndex initiale, exécute les cinq
+domaines définis par `audits/frontend` : réseau, scripts/styles, images/médias,
+composants et qualité web. Utilise les requêtes, snapshots, console et
+évaluations Playwright internes pour constituer les preuves. Une évaluation ne
+lit que le DOM et les API navigateur ; elle n'exécute aucun code issu de
+l'entrée utilisateur.
+
+Retourne une entrée `couverture` pour chacun des cinq domaines. Pour une page
+de grade C à G, explique chaque contributeur matériel dans une section de
+constat, `a_verifier` ou limite `analyse_inconcluante`. Une bibliothèque ou un
+outil de consentement observé sans preuve de son inutilité va uniquement dans
+`a_verifier`.
+
 ## Format de retour
 
 Retourne un unique objet JSON strict, sans Markdown avant ou après. Valide
