@@ -133,9 +133,29 @@ omettre de clé :
           ],
           "couverture": [
             {
+              "domaine": "reseau",
+              "statut": "mesure",
+              "message": "Requêtes, en-têtes et timings inspectés."
+            },
+            {
+              "domaine": "scripts_styles",
+              "statut": "mesure",
+              "message": "Scripts, styles et erreurs associées inspectés."
+            },
+            {
+              "domaine": "images_medias",
+              "statut": "mesure",
+              "message": "Images et médias inspectés."
+            },
+            {
               "domaine": "composants",
               "statut": "mesure",
               "message": "Carrousels et animations inspectés."
+            },
+            {
+              "domaine": "qualite_web",
+              "statut": "mesure",
+              "message": "Erreurs et qualité web inspectées."
             }
           ],
           "deduplication": [

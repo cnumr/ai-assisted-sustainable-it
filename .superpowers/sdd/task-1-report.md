@@ -67,3 +67,17 @@ omettait `a_verifier` et `couverture`.
 RED : Résultat : 143 passés, 3 échoués
 GREEN : Résultat : 146 passés, 0 échoués
 ```
+
+## Couverture complète de la matrice
+
+L'exemple JSON canonique contient désormais une ligne `couverture` pour chacun
+des cinq domaines de la matrice : `reseau`, `scripts_styles`, `images_medias`,
+`composants` et `qualite_web`. Chaque ligne utilise le statut valide `mesure` et
+un message descriptif.
+
+Les cinq assertions ajoutées ont d'abord produit `147 passés, 4 échoués`, les
+quatre domaines absents étant signalés. Après la correction :
+
+```text
+GREEN : Résultat : 151 passés, 0 échoués
+```
