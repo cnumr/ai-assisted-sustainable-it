@@ -10,6 +10,25 @@ Ce skill est réservé à `/ecocode frontend`, jamais `audits/front` ni
 
 **REQUIRED PARENT SKILL:** `audits`.
 
+## Outils MCP requis
+
+Ce skill pilote le navigateur exclusivement via les outils MCP d'un serveur
+Playwright (jamais via bash, une CLI ou un script shell). Rechercher parmi les
+outils MCP disponibles ceux dont le nom contient `playwright` — par exemple,
+sous Claude Code : `mcp__plugin_playwright_playwright__browser_navigate`,
+`browser_snapshot`, `browser_network_requests`, `browser_network_request`,
+`browser_take_screenshot`, `browser_evaluate`, `browser_console_messages`,
+`browser_fill_form`, `browser_type`, `browser_click`, `browser_select_option`,
+`browser_wait_for`, `browser_press_key`. Le préfixe exact varie selon le
+harness (Claude Code, OpenCode, Codex...) ; se fier au nom du serveur MCP
+(`playwright`) plutôt qu'à un préfixe figé. Si aucun outil MCP Playwright
+n'est disponible, retourner une erreur plutôt que de tenter un contournement
+(navigation via bash, curl, ou tout autre moyen hors MCP).
+
+De même, les fiches Green IT et le calcul EcoIndex passent exclusivement par
+les outils MCP du serveur `mcp-greenit` (ex. `greenit_calculer_ecoindex`),
+jamais par un calcul local.
+
 ## Entrées
 
 Accepter :
@@ -39,21 +58,21 @@ JSON strict signifie : objet racine, clés et types documentés uniquement,
 champs obligatoires présents et aucune action inconnue. Toute clé non listée
 est interdite. Un `string` requis est non vide.
 
-| Objet | Clés autorisées | Clés requises | Types exacts |
-| --- | --- | --- | --- |
-| racine | `contexte`, `parcours` | `parcours` | `contexte`: object ; `parcours`: array non vide |
-| `contexte` | `originesHeaders`, `headers` | aucune | deux arrays ; si `headers` est non vide, `originesHeaders` l’est aussi |
-| origine | aucune sous-clé | — | string, origine HTTPS sans chemin, requête, fragment ni identifiants |
-| header | `nom`, `valeur` | `nom`, `valeur` | deux strings |
-| parcours | `nom`, `etapes` | `nom`, `etapes` | `nom`: string unique ; `etapes`: array non vide |
-| étape `goto` | `action`, `url`, `audit`, `nom` | `action`, `url` | `action`: `"goto"` ; `url`: string HTTP(S) absolue ; `audit`: boolean ; `nom`: string |
-| étape `click` | `action` et un repère | `action` et un repère | `action`: `"click"` ; repère: strings |
-| étape `fill` | `action`, un repère, `value` | les trois | `action`: `"fill"` ; repère et `value`: strings |
-| étape `select` | `action`, un repère, `value` | les trois | `action`: `"select"` ; repère et `value`: strings |
-| étape `check` | `action` et un repère | `action` et un repère | `action`: `"check"` ; repère: strings |
-| étape `press` | `action`, `key` | `action`, `key` | `action`: `"press"` ; `key`: string |
-| étape `waitFor` | `action` et une attente | `action` et une attente | `action`: `"waitFor"` ; attente: string |
-| étape `audit` | `action`, `nom` | `action`, `nom` | `action`: `"audit"` ; `nom`: string unique dans le parcours |
+| Objet           | Clés autorisées                 | Clés requises           | Types exacts                                                                          |
+| --------------- | ------------------------------- | ----------------------- | ------------------------------------------------------------------------------------- |
+| racine          | `contexte`, `parcours`          | `parcours`              | `contexte`: object ; `parcours`: array non vide                                       |
+| `contexte`      | `originesHeaders`, `headers`    | aucune                  | deux arrays ; si `headers` est non vide, `originesHeaders` l’est aussi                |
+| origine         | aucune sous-clé                 | —                       | string, origine HTTPS sans chemin, requête, fragment ni identifiants                  |
+| header          | `nom`, `valeur`                 | `nom`, `valeur`         | deux strings                                                                          |
+| parcours        | `nom`, `etapes`                 | `nom`, `etapes`         | `nom`: string unique ; `etapes`: array non vide                                       |
+| étape `goto`    | `action`, `url`, `audit`, `nom` | `action`, `url`         | `action`: `"goto"` ; `url`: string HTTP(S) absolue ; `audit`: boolean ; `nom`: string |
+| étape `click`   | `action` et un repère           | `action` et un repère   | `action`: `"click"` ; repère: strings                                                 |
+| étape `fill`    | `action`, un repère, `value`    | les trois               | `action`: `"fill"` ; repère et `value`: strings                                       |
+| étape `select`  | `action`, un repère, `value`    | les trois               | `action`: `"select"` ; repère et `value`: strings                                     |
+| étape `check`   | `action` et un repère           | `action` et un repère   | `action`: `"check"` ; repère: strings                                                 |
+| étape `press`   | `action`, `key`                 | `action`, `key`         | `action`: `"press"` ; `key`: string                                                   |
+| étape `waitFor` | `action` et une attente         | `action` et une attente | `action`: `"waitFor"` ; attente: string                                               |
+| étape `audit`   | `action`, `nom`                 | `action`, `nom`         | `action`: `"audit"` ; `nom`: string unique dans le parcours                           |
 
 Un repère est exactement l’une de ces formes : `role` + `name`, `label`, ou
 `text`. Les clés de repère autorisées sont donc `role`, `name`, `label` et
@@ -180,14 +199,14 @@ sondes internes et déterministes suivantes. Ne jamais exécuter de JavaScript
 fourni par l'entrée ; les évaluations Playwright servent uniquement à lire l'état
 de la page.
 
-| Domaine | Preuves à collecter |
-| --- | --- |
-| Réseau | Type, domaine, statut, protocole, redirection, en-têtes de cache et compression, taille transférée, timings et erreurs. Inspecter les en-têtes de réponse d'une ressource nécessaire avec `browser_network_request`, sans restituer d'en-tête sensible. |
-| Scripts et styles | URLs, doublons, tiers, modules CMS identifiables, erreurs console et ressources en échec. |
-| Images et médias | Source servie, format, dimensions naturelles et affichées, `srcset`, `sizes`, `loading`, position dans le viewport, iframe, vidéo, audio et autoplay. |
-| Composants | Carrousels Swiper/Slick/Splide/Owl ou équivalents ARIA, instances, diapositives, contrôles, animations actives et canvas. |
-| Analytics et consentement | Domaines et scripts d'analytics, publicité, gestionnaire de balises et consentement effectivement chargés. |
-| Qualité web | Erreurs console, réponses 4xx/5xx, IDs dupliqués, médias cassés et dimensions intrinsèques manquantes. |
+| Domaine                   | Preuves à collecter                                                                                                                                                                                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Réseau                    | Type, domaine, statut, protocole, redirection, en-têtes de cache et compression, taille transférée, timings et erreurs. Inspecter les en-têtes de réponse d'une ressource nécessaire avec `browser_network_request`, sans restituer d'en-tête sensible. |
+| Scripts et styles         | URLs, doublons, tiers, modules CMS identifiables, erreurs console et ressources en échec.                                                                                                                                                               |
+| Images et médias          | Source servie, format, dimensions naturelles et affichées, `srcset`, `sizes`, `loading`, position dans le viewport, iframe, vidéo, audio et autoplay.                                                                                                   |
+| Composants                | Carrousels Swiper/Slick/Splide/Owl ou équivalents ARIA, instances, diapositives, contrôles, animations actives et canvas.                                                                                                                               |
+| Analytics et consentement | Domaines et scripts d'analytics, publicité, gestionnaire de balises et consentement effectivement chargés.                                                                                                                                              |
+| Qualité web               | Erreurs console, réponses 4xx/5xx, IDs dupliqués, médias cassés et dimensions intrinsèques manquantes.                                                                                                                                                  |
 
 Une sonde peut déclencher un défilement progressif, sans clic ni saisie, pour
 observer les médias situés sous la ligne de flottaison. Cette phase est séparée
@@ -281,21 +300,21 @@ l’exemple de `ecocode-frontend-analyzer`. La sortie interdit toute clé
 supplémentaire. Utiliser `null` et des tableaux vides pour les valeurs absentes ;
 ne jamais omettre une clé.
 
-| Objet | Clés exactes | Types exacts |
-| --- | --- | --- |
-| racine | `scope`, `rapport`, `parcours`, `limites_globales` | deux strings constantes, deux arrays |
-| parcours | `nom`, `statut`, `reprise_etape`, `url_cible`, `pages`, `erreurs_execution` | string ; enum ; integer ou null ; string HTTP(S) ou null ; deux arrays |
-| page | `nom`, `url`, `metriques`, `ecoindex`, `ecarts_greenit`, `performance`, `developpement_web`, `a_verifier`, `couverture`, `deduplication`, `capture`, `limites` | deux strings ; deux objects ; sept arrays ; string ou null |
-| métriques | `dom_nodes`, `requests`, `size_kb` | trois numbers finis >= 0 |
-| EcoIndex | `score`, `grade`, `ges`, `eau` | number, string, number, number |
-| écart GreenIT | `deduplication_key`, `practice_id`, `practice_title`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `code_observe`, `correction` | huit strings, puis deux strings ou null |
-| performance | `categorie`, `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `correction` | sept strings, puis string ou null |
-| développement web | `categorie`, `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `code_observe`, `correction` | sept strings, puis deux strings ou null |
-| à vérifier | `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `correction` | six strings, puis string ou null |
-| couverture | `domaine`, `statut`, `message` | trois strings |
-| déduplication | `deduplication_key`, `premiere_occurrence` | deux strings |
-| limite | `code`, `scope`, `message` | trois strings |
-| erreur d’exécution | `etape`, `action`, `message` | integer >= 0 et deux strings |
+| Objet              | Clés exactes                                                                                                                                                   | Types exacts                                                           |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| racine             | `scope`, `rapport`, `parcours`, `limites_globales`                                                                                                             | deux strings constantes, deux arrays                                   |
+| parcours           | `nom`, `statut`, `reprise_etape`, `url_cible`, `pages`, `erreurs_execution`                                                                                    | string ; enum ; integer ou null ; string HTTP(S) ou null ; deux arrays |
+| page               | `nom`, `url`, `metriques`, `ecoindex`, `ecarts_greenit`, `performance`, `developpement_web`, `a_verifier`, `couverture`, `deduplication`, `capture`, `limites` | deux strings ; deux objects ; sept arrays ; string ou null             |
+| métriques          | `dom_nodes`, `requests`, `size_kb`                                                                                                                             | trois numbers finis >= 0                                               |
+| EcoIndex           | `score`, `grade`, `ges`, `eau`                                                                                                                                 | number, string, number, number                                         |
+| écart GreenIT      | `deduplication_key`, `practice_id`, `practice_title`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `code_observe`, `correction`              | huit strings, puis deux strings ou null                                |
+| performance        | `categorie`, `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `correction`                                                  | sept strings, puis string ou null                                      |
+| développement web  | `categorie`, `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `code_observe`, `correction`                                  | sept strings, puis deux strings ou null                                |
+| à vérifier         | `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `correction`                                                               | six strings, puis string ou null                                       |
+| couverture         | `domaine`, `statut`, `message`                                                                                                                                 | trois strings                                                          |
+| déduplication      | `deduplication_key`, `premiere_occurrence`                                                                                                                     | deux strings                                                           |
+| limite             | `code`, `scope`, `message`                                                                                                                                     | trois strings                                                          |
+| erreur d’exécution | `etape`, `action`, `message`                                                                                                                                   | integer >= 0 et deux strings                                           |
 
 `scope` vaut `"frontend"` et `rapport` vaut `"audit-frontend"`. `statut` vaut
 `termine`, `erreur`, `auth_required` ou `confirmation_required`. Pour les deux

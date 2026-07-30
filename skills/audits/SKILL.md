@@ -152,7 +152,6 @@ Indices pour détecter le front :
 - Présence de fichiers `.html`, `.jsx`, `.tsx`, `.vue`, `.svelte`
 - Dossiers `src/`, `public/`, `assets/`, `components/`
 - `package.json` avec dépendances front (React, Vue, Angular, etc.)
-- URL fournie par l'utilisateur
 
 Indices pour détecter le back :
 
@@ -184,8 +183,6 @@ Utiliser `greenit_fiches_prioritaires` pour identifier les pratiques les plus cr
 Pour un audit complet, lancer `ecocode-front-analyzer` et
 `ecocode-back-analyzer` en parallèle, puis attendre leurs résultats avant de
 déléguer au rédacteur et au planificateur.
-
-Pour le front accessible via URL, passer l'URL au sous-skill front.
 
 ## Étape 4 — Écrire les fichiers d'audit
 
@@ -240,14 +237,19 @@ Puis afficher le résumé final :
 
 ## Calcul de l'EcoIndex officiel
 
-Appeler `mcp-greenit : greenit_calculer_ecoindex` avec les 3 métriques mesurées pendant l'analyse front :
+`audits/front` est une analyse statique : elle n'ouvre jamais de navigateur
+et ne dispose donc jamais de métriques mesurées. Appeler
+`mcp-greenit : greenit_calculer_ecoindex` avec les 3 métriques **estimées**
+depuis l'analyse statique du code source (compter les éléments HTML/templates,
+les balises `<script>` et `<link>` ou équivalents selon le langage, et sommer
+les tailles de fichiers présents dans le dépôt/build), en signalant
+explicitement qu'il s'agit d'une estimation et non d'une mesure runtime :
 
-| Paramètre   | Source                                                    |
-| ----------- | --------------------------------------------------------- |
-| `dom_nodes` | Nœuds DOM comptés via Playwright ou analyse statique HTML |
-| `requests`  | Nombre de requêtes HTTP capturées via Playwright          |
-| `size_kb`   | Taille totale transférée en KB capturée via Playwright    |
-| `url`       | URL analysée (optionnel, pour contexte)                   |
+| Paramètre   | Source (estimation statique)                                         |
+| ----------- | -------------------------------------------------------------------- |
+| `dom_nodes` | Nœuds du gabarit HTML/template comptés statiquement                  |
+| `requests`  | Balises `<script>`/`<link>` et appels réseau identifiés dans le code |
+| `size_kb`   | Somme des tailles de fichiers du dépôt/build                         |
 
 Le MCP retourne :
 
@@ -255,7 +257,8 @@ Le MCP retourne :
 - Un **grade A à G** (A = excellent, G = très mauvais)
 - Une estimation des **émissions CO2** et de la **consommation d'eau** par page vue
 
-**Si l'analyse porte uniquement sur du code source (sans URL)**, estimer les métriques à partir de l'analyse statique (compter les éléments HTML, les balises `<script>` et `<link>`, et les tailles de fichiers) puis appeler quand même `calculer_ecoindex` avec ces estimations — en signalant qu'il s'agit d'une estimation.
+Pour une mesure runtime réelle (Playwright, métriques réseau mesurées), c'est
+`/ecocode frontend` qu'il faut utiliser, jamais `audits/front`.
 
 ## Calcul du score d'impact interne
 

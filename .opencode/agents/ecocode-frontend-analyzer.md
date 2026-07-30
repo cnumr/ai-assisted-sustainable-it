@@ -10,6 +10,13 @@ Charge `audits/frontend`, consulte `mcp-greenit`, exécute les points d'audit
 Playwright et retourne, par page, EcoIndex, GES, eau, métriques, problèmes
 GreenIT vérifiés, sections Performance/Développement web et limites.
 
+**Outils MCP requis :** pilote le navigateur exclusivement via les outils MCP
+d'un serveur dont le nom contient `playwright` (jamais via bash, une CLI ou un
+script shell). Consulte la section « Outils MCP requis » du skill
+`audits/frontend` pour la liste des outils attendus. Si aucun outil MCP
+Playwright n'est disponible dans ce harness, retourne une erreur plutôt que de
+tenter un contournement hors MCP.
+
 Retourne le même objet JSON strict que l'agent canonique
 `agents/ecocode-frontend-analyzer.md`, y compris `a_verifier` et `couverture`.
 Exécute la matrice de sondes fixe après la mesure EcoIndex initiale : réseau,

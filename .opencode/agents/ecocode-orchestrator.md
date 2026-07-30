@@ -75,14 +75,14 @@ Quand tu reçois une demande d'audit :
 
    Garder le mode choisi en contexte pour les étapes 6 et 7.
 
-2. **Identifie le périmètre** en lisant le projet (fichiers source, package.json, structure des dossiers, URLs fournies). Détermine si l'analyse concerne le front, le back, ou les deux.
+2. **Identifie le périmètre** en lisant le projet (fichiers source, package.json, structure des dossiers). Détermine si l'analyse concerne le front, le back, ou les deux.
 
 3. **Charge le référentiel Green IT** via le MCP `mcp-greenit` :
    - Appelle `greenit_fiches_prioritaires` pour identifier les pratiques à fort impact à prioriser
    - Garde les IDs des pratiques pour les transmettre aux agents spécialisés
 
 4. **Délègue l'analyse** aux agents spécialisés en leur transmettant :
-   - Le périmètre exact à analyser (chemins de fichiers, URLs)
+   - Le périmètre exact à analyser (chemins de fichiers)
    - Les pratiques Green IT prioritaires à vérifier en premier
    - Les instructions pour retourner un rapport structuré JSON + markdown
    - **Agent front :** `ecocode-front-analyzer` (si front détecté)

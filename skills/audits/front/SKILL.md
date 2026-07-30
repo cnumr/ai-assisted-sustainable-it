@@ -22,13 +22,14 @@ Pendant toute l'analyse, pour chaque problème détecté, noter immédiatement d
 
 Ces données ne sont pas affichées dans le rapport light mais servent à générer le guide de correction complet si l'utilisateur le demande — sans relire les fichiers.
 
-## Sources d'analyse
+## Source d'analyse
 
-| Source          | Méthode                                                  |
-| --------------- | -------------------------------------------------------- |
-| Fichiers locaux | Lire les fichiers source (HTML, JS, CSS, configs)        |
-| URL fournie     | Utiliser Playwright pour inspecter le rendu et le réseau |
-| Les deux        | Combiner analyse statique + analyse runtime              |
+Analyse statique exclusivement : lire les fichiers source du projet qui
+produisent le rendu client — HTML/templates (JSP, Twig, Blade, Thymeleaf,
+ERB…), JS, CSS, configs — quel que soit le langage ou la stack serveur
+(Node, PHP, Java, Python, Ruby, .NET…). Pour un audit runtime d'URL ou de
+parcours dans le navigateur, utiliser `/ecocode frontend`, jamais ce
+sous-skill.
 
 ## Axes d'analyse
 
@@ -175,66 +176,16 @@ Vérifier :
 - [ ] Pages non validées W3C → parsing plus coûteux pour le navigateur (RWEB_0061)
 - [ ] Textes non adaptés au web (trop longs, non scannables → temps de lecture et scrolling augmentés) (RWEB_0110)
 
-## Analyse via Playwright (si URL disponible)
+## Estimation de l'EcoIndex depuis le code source
 
-### Protocole d'authentification
+Aucune navigation, aucune authentification : ce sous-skill n'ouvre jamais de
+navigateur. Estimer les métriques depuis l'analyse statique :
 
-Avant toute analyse, détecter et gérer un éventuel mur d'authentification.
-
-**Détection d'un mur d'auth :**
-
-- URL redirigée vers `/login`, `/signin`, `/auth`, `/connexion`, `/sso`, etc.
-- Page contient `input[type="password"]`
-- Réponse HTTP 401 ou 403
-- Redirection vers un provider OAuth externe (Google, Microsoft, Okta…)
-
-**Protocole de gestion :**
-
-```
-1. Naviguer vers l'URL cible
-2. Prendre un snapshot → vérifier URL + présence d'un formulaire de connexion
-3. Si mur d'auth détecté :
-   a. Demander à l'utilisateur : identifiant + mot de passe
-   b. Remplir le formulaire et soumettre
-   c. Prendre un snapshot → vérifier si un 2FA est demandé
-
-4. Détection du type de 2FA :
-   - Champ OTP (6 chiffres, label "code", "authenticator", "vérification") → TOTP
-   - Mention "SMS" ou "code envoyé par message" → SMS
-   - Mention "approbation", "push", "Duo", "notification" → push notification
-   - Clé physique / WebAuthn (mention "clé de sécurité", "FIDO") → non automatisable
-
-5. Gestion par type :
-   - TOTP / SMS   : demander le code à l'utilisateur, le saisir dans le champ, soumettre
-   - Push          : demander à l'utilisateur d'approuver la notification, attendre la redirection (timeout 60s)
-   - WebAuthn      : IMPOSSIBLE À AUTOMATISER — prévenir l'utilisateur, proposer de passer l'analyse URL
-
-6. Vérifier le succès : URL revenue sur la cible, absence de formulaire d'auth
-7. Reprendre l'analyse normale
-```
-
-**Cas non gérés — arrêter et avertir :**
-
-- Clé physique WebAuthn/FIDO2 (impossible d'interagir avec le matériel)
-- CAPTCHA visuel ou audio
-- Authentification biométrique
-
-### Étapes d'analyse réseau
-
-```
-1. Naviguer vers l'URL (après authentification si nécessaire)
-2. Intercepter les requêtes réseau → lister ressources, tailles, types, domaines
-3. Mesurer DOMContentLoaded, Load, LCP, CLS
-4. Capturer le nombre de nœuds DOM
-5. Calculer : total des requêtes HTTP + taille totale transférée en KB
-6. Appeler mcp-greenit : greenit_calculer_ecoindex avec {dom_nodes, requests, size_kb, url}
-7. Lister les scripts tiers et leur poids
-8. Vérifier les headers de cache (Cache-Control, Expires, ETag)
-9. Vérifier le protocole (HTTP/1.1 vs HTTP/2)
-10. Détecter les redirections (301, 302)
-11. Vérifier la lecture automatique audio/vidéo
-12. Contrôler la présence d'un Service Worker
-```
+1. Compter les éléments HTML du gabarit source (`dom_nodes` estimé)
+2. Compter les balises `<script>`, `<link>` et appels réseau identifiables dans le code (`requests` estimé)
+3. Sommer les tailles de fichiers présents dans le dépôt/build (`size_kb` estimé)
+4. Appeler `mcp-greenit : greenit_calculer_ecoindex` avec `{dom_nodes, requests, size_kb}` estimés, en signalant qu'il s'agit d'une estimation statique et non d'une mesure runtime
+5. Vérifier dans la configuration (headers serveur, build) : Cache-Control/Expires, compression Gzip/Brotli, HTTP/2, Service Worker
 
 ## Format de rapport
 
@@ -287,7 +238,7 @@ Avant toute analyse, détecter et gérer un éventuel mur d'authentification.
 
 - **Analyser sans mcp-greenit** : toujours mapper au numéro RWEB_XXXX officiel
 - **Sévérité subjective** : baser la sévérité sur la fréquence d'exposition et le volume de données impliqué
-- **Oublier l'analyse runtime** : l'analyse statique seule manque les requêtes dynamiques, les autoplay, les scripts tiers
+- **Confondre avec l'audit runtime** : ce sous-skill reste statique ; pour les requêtes dynamiques, le rendu réel, les autoplay ou les scripts tiers effectivement chargés, orienter vers `/ecocode frontend`
 - **Confondre optimisation image et format** : RWEB_0049 (optimisation/compression) ≠ RWEB_0048 (dimensionnement)
 
 ## Format du guide de correction complet
