@@ -169,9 +169,41 @@ timings et erreurs console nécessaires aux preuves. Ne jamais inclure les
 valeurs de cookies ou d’en-têtes sensibles.
 
 Appeler obligatoirement `greenit_calculer_ecoindex` pour chaque page avec
-`dom_nodes`, `requests`, `size_kb` et l’`url` finale. Reprendre tels quels le
+`dom_nodes`, `requests`, `size_kb` et l'`url` finale. Reprendre tels quels le
 score EcoIndex, le grade, les GES et l’eau retournés par `mcp-greenit`. Ne pas
 les recalculer localement.
+
+### Matrice de sondes fixe
+
+Après la mesure initiale et avant la qualification des constats, exécuter les
+sondes internes et déterministes suivantes. Ne jamais exécuter de JavaScript
+fourni par l'entrée ; les évaluations Playwright servent uniquement à lire l'état
+de la page.
+
+| Domaine | Preuves à collecter |
+| --- | --- |
+| Réseau | Type, domaine, statut, protocole, redirection, en-têtes de cache et compression, taille transférée, timings et erreurs. |
+| Scripts et styles | URLs, doublons, tiers, modules CMS identifiables, erreurs console et ressources en échec. |
+| Images et médias | Source servie, format, dimensions naturelles et affichées, `srcset`, `sizes`, `loading`, position dans le viewport, iframe, vidéo, audio et autoplay. |
+| Composants | Carrousels Swiper/Slick/Splide/Owl ou équivalents ARIA, instances, diapositives, contrôles, animations actives et canvas. |
+| Qualité web | Erreurs console, réponses 4xx/5xx, IDs dupliqués, médias cassés et dimensions intrinsèques manquantes. |
+
+Une sonde peut déclencher un défilement progressif, sans clic ni saisie, pour
+observer les médias situés sous la ligne de flottaison. Cette phase est séparée
+de la fenêtre de collecte initiale et ne modifie jamais les entrées EcoIndex.
+
+### Garde-fou de cohérence EcoIndex
+
+EcoIndex est un résultat, pas la preuve d'une fiche RWEB précise. Pour chaque
+page de grade C à G, l'audit doit expliquer les contributeurs matériels aux
+nœuds DOM, requêtes et octets transférés. Chacun doit produire un écart GreenIT
+prouvé, une alerte Performance ou Développement web, une entrée `a_verifier`, ou
+une limite de mesure explicite.
+
+Si la première passe est insuffisante, exécuter toute la matrice puis le
+défilement progressif autorisé. Si le score reste inexpliqué, retourner une
+limite `analyse_inconcluante` décrivant le périmètre non mesuré. Ne jamais
+inventer un écart GreenIT pour remplir le rapport.
 
 ### Comptage DOM, Shadow DOM et SVG
 
@@ -211,6 +243,11 @@ Alertes runtime mesurées qui n’ont pas de fiche GreenIT vérifiée.
 Erreurs de console, HTML, API ou qualité de code observées qui n’ont pas de
 fiche GreenIT vérifiée.
 
+### À vérifier
+
+Preuves observées dans le navigateur qui exigent une validation métier ou du
+code source, et non un constat GreenIT.
+
 ## Erreurs et déduplication
 
 Un JSON invalide empêche son exécution. Une action inconnue, un élément
@@ -238,12 +275,14 @@ ne jamais omettre une clé.
 | --- | --- | --- |
 | racine | `scope`, `rapport`, `parcours`, `limites_globales` | deux strings constantes, deux arrays |
 | parcours | `nom`, `statut`, `reprise_etape`, `url_cible`, `pages`, `erreurs_execution` | string ; enum ; integer ou null ; string HTTP(S) ou null ; deux arrays |
-| page | `nom`, `url`, `metriques`, `ecoindex`, `ecarts_greenit`, `performance`, `developpement_web`, `deduplication`, `capture`, `limites` | deux strings ; deux objects ; cinq arrays ; string ou null |
+| page | `nom`, `url`, `metriques`, `ecoindex`, `ecarts_greenit`, `performance`, `developpement_web`, `a_verifier`, `couverture`, `deduplication`, `capture`, `limites` | deux strings ; deux objects ; six arrays ; string ou null |
 | métriques | `dom_nodes`, `requests`, `size_kb` | trois numbers finis >= 0 |
 | EcoIndex | `score`, `grade`, `ges`, `eau` | number, string, number, number |
 | écart GreenIT | `deduplication_key`, `practice_id`, `practice_title`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `code_observe`, `correction` | huit strings, puis deux strings ou null |
 | performance | `categorie`, `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `correction` | sept strings, puis string ou null |
 | développement web | `categorie`, `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `code_observe`, `correction` | sept strings, puis deux strings ou null |
+| à vérifier | `deduplication_key`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `correction` | six strings, puis string ou null |
+| couverture | `domaine`, `statut`, `message` | trois strings |
 | déduplication | `deduplication_key`, `premiere_occurrence` | deux strings |
 | limite | `code`, `scope`, `message` | trois strings |
 | erreur d’exécution | `etape`, `action`, `message` | integer >= 0 et deux strings |
@@ -259,6 +298,15 @@ créé comme preuve, jamais une image en base64. `code_observe` non nul est un
 string contenant un extrait textuel observé, expurgé de toute donnée sensible.
 `correction` non nulle est un string contenant la correction proposée, sans
 l’appliquer. Ces trois champs ne sont jamais des objets ou des arrays.
+
+`a_verifier` contient les observations crédibles dont l'utilité métier, la cause
+racine ou la nécessité légale ne peut pas être établie depuis le navigateur. Une
+ressource nommée n'est jamais qualifiée d'inutilisée par sa seule présence.
+
+`couverture` contient une ligne par domaine de la matrice. `statut` vaut
+`mesure`, `non_applicable`, `non_mesurable` ou `erreur`. Une page de grade C à G
+ne peut pas avoir toutes ses listes de constats vides sans une limite
+`analyse_inconcluante`.
 
 ## Contrat transmis au rédacteur
 
