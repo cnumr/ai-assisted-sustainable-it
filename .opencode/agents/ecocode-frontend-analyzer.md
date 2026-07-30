@@ -13,7 +13,12 @@ GreenIT vérifiés, sections Performance/Développement web et limites.
 Retourne le même objet JSON strict que l'agent canonique
 `agents/ecocode-frontend-analyzer.md`, y compris `a_verifier` et `couverture`.
 Exécute la matrice de sondes fixe après la mesure EcoIndex initiale : réseau,
-scripts/styles, images/médias, composants et qualité web. Pour un grade C à G,
+scripts/styles, images/médias, composants, analytics et consentement, puis
+qualité web. Retourne une couverture pour chacun des six domaines avec les
+statuts `measured`, `not_applicable`, `not_measurable` ou `failed`. Les scripts
+d'analytics, de publicité, de gestionnaire de balises ou de consentement vont
+dans `a_verifier` si leur nécessité reste inconnue; ne les qualifie RWEB_0111
+qu'avec la fiche MCP retournée et une preuve mesurée. Pour un grade C à G,
 explique les contributeurs matériels ou retourne une limite
 `analyse_inconcluante`; ne crée jamais un écart GreenIT sans fiche MCP et preuve
 mesurée.

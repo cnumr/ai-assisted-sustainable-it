@@ -10,6 +10,7 @@ tools:
   - mcp__plugin_playwright_playwright__browser_navigate
   - mcp__plugin_playwright_playwright__browser_snapshot
   - mcp__plugin_playwright_playwright__browser_network_requests
+  - mcp__plugin_playwright_playwright__browser_network_request
   - mcp__plugin_playwright_playwright__browser_take_screenshot
   - mcp__plugin_playwright_playwright__browser_evaluate
   - mcp__plugin_playwright_playwright__browser_console_messages
@@ -50,20 +51,25 @@ l’orchestrateur transmet ton résultat au rédacteur du rapport.
 
 ## Matrice de sondes fixe
 
+Pour chaque point d'audit, après la mesure EcoIndex initiale, exécute les six
+domaines définis par `audits/frontend` : réseau, scripts/styles, images/médias,
+composants, analytics et consentement, puis qualité web. Utilise les requêtes,
+snapshots, console et évaluations Playwright internes pour constituer les
+preuves. Utilise `browser_network_request` pour inspecter les en-têtes de
+réponse d'une ressource nécessaire à une preuve, sans restituer de valeur
+sensible. Une évaluation ne lit que le DOM et les API navigateur ; elle
+n'exécute aucun code issu de l'entrée utilisateur.
+
+Retourne une entrée `couverture` pour chacun des six domaines avec un statut
+`measured`, `not_applicable`, `not_measurable` ou `failed`. Les scripts
+d'analytics, de publicité, de gestionnaire de balises ou de consentement
+observés vont dans `a_verifier` lorsque leur nécessité ne peut pas être établie;
+ne les qualifie RWEB_0111 qu'avec la fiche MCP retournée et une preuve mesurée.
+
 ### Garde-fou de cohérence EcoIndex
 
-Pour chaque point d'audit, après la mesure EcoIndex initiale, exécute les cinq
-domaines définis par `audits/frontend` : réseau, scripts/styles, images/médias,
-composants et qualité web. Utilise les requêtes, snapshots, console et
-évaluations Playwright internes pour constituer les preuves. Une évaluation ne
-lit que le DOM et les API navigateur ; elle n'exécute aucun code issu de
-l'entrée utilisateur.
-
-Retourne une entrée `couverture` pour chacun des cinq domaines. Pour une page
-de grade C à G, explique chaque contributeur matériel dans une section de
-constat, `a_verifier` ou limite `analyse_inconcluante`. Une bibliothèque ou un
-outil de consentement observé sans preuve de son inutilité va uniquement dans
-`a_verifier`.
+Pour une page de grade C à G, explique chaque contributeur matériel dans une
+section de constat, `a_verifier` ou limite `analyse_inconcluante`.
 
 ## Format de retour
 
@@ -151,27 +157,32 @@ omettre de clé :
           "couverture": [
             {
               "domaine": "reseau",
-              "statut": "mesure",
+              "statut": "measured",
               "message": "Requêtes, en-têtes et timings inspectés."
             },
             {
               "domaine": "scripts_styles",
-              "statut": "mesure",
+              "statut": "measured",
               "message": "Scripts, styles et erreurs associées inspectés."
             },
             {
               "domaine": "images_medias",
-              "statut": "mesure",
+              "statut": "measured",
               "message": "Images et médias inspectés."
             },
             {
               "domaine": "composants",
-              "statut": "mesure",
+              "statut": "measured",
               "message": "Carrousels et animations inspectés."
             },
             {
+              "domaine": "analytics_consent",
+              "statut": "measured",
+              "message": "Analytics, publicité, gestionnaire de balises et consentement inspectés."
+            },
+            {
               "domaine": "qualite_web",
-              "statut": "mesure",
+              "statut": "measured",
               "message": "Erreurs et qualité web inspectées."
             }
           ],

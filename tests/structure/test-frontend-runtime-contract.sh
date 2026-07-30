@@ -39,6 +39,20 @@ contains() {
   fi
 }
 
+contains_regex() {
+  local description="$1"
+  local path="$2"
+  local pattern="$3"
+
+  if grep -Eq "$pattern" "$path"; then
+    echo "✓ $description"
+    PASS=$((PASS + 1))
+  else
+    echo "✗ $description — expression manquante : $pattern"
+    FAIL=$((FAIL + 1))
+  fi
+}
+
 excludes() {
   local description="$1"
   local path="$2"
@@ -140,6 +154,13 @@ contains "skill définit la couverture" "$SKILL" '`couverture`'
 contains "skill définit les pistes à vérifier" "$SKILL" '`a_verifier`'
 contains "skill protège le calcul initial" "$SKILL" 'ne modifie jamais les entrées EcoIndex'
 contains "skill refuse un audit vide pour grade bas" "$SKILL" 'grade C à G'
+contains "skill sonde analytics et consentement" "$SKILL" '| Analytics et consentement |'
+contains "skill associe analytics au RWEB vérifié" "$SKILL" 'RWEB_0111'
+contains "skill définit les statuts de couverture approuvés" "$SKILL" '`measured`, `not_applicable`, `not_measurable` ou `failed`'
+excludes "skill n'utilise pas les anciens statuts de couverture" "$SKILL" '`mesure`, `non_applicable`, `non_mesurable` ou `erreur`'
+contains "skill explique les contributeurs pour les grades C à G" "$SKILL" 'contributeurs matériels aux nœuds DOM, requêtes et octets transférés'
+contains "skill qualifie Swiper avec la fiche vérifiée" "$SKILL" 'RWEB_0010'
+contains "skill qualifie les images sous la ligne de flottaison" "$SKILL" 'RWEB_0051'
 contains "schéma page définit sept arrays" "$SKILL" '| page | `nom`, `url`, `metriques`, `ecoindex`, `ecarts_greenit`, `performance`, `developpement_web`, `a_verifier`, `couverture`, `deduplication`, `capture`, `limites` | deux strings ; deux objects ; sept arrays ; string ou null |'
 contains "rapport dédié" "$SKILL" 'docs/ecocode/audits/{timestamp}-audit-frontend.md'
 contains "skill retourne auth_required au parent" "$SKILL" '`auth_required`'
@@ -147,6 +168,7 @@ contains "skill confie la reprise au parent" "$SKILL" '`reprise_etape`'
 
 contains "agent exclusivement frontend" "$AGENT" 'exclusivement `/ecocode frontend`'
 contains "agent en lecture seule" "$AGENT" 'Tu ne modifies aucun fichier'
+contains_regex "agent lit les en-têtes de réponse individuels" "$AGENT" '^[[:space:]]*- mcp__plugin_playwright_playwright__browser_network_request$'
 contains "retour JSON strict" "$AGENT" 'Retourne un unique objet JSON strict'
 contains "agent utilise le skill runtime" "$AGENT" '`audits/frontend`'
 contains "agent transmet les sections séparées" "$AGENT" '"performance"'
@@ -161,7 +183,9 @@ contains "agent couvre le réseau" "$AGENT" '"domaine": "reseau"'
 contains "agent couvre les scripts et styles" "$AGENT" '"domaine": "scripts_styles"'
 contains "agent couvre les images et médias" "$AGENT" '"domaine": "images_medias"'
 contains "agent couvre les composants" "$AGENT" '"domaine": "composants"'
+contains "agent couvre analytics et consentement" "$AGENT" '"domaine": "analytics_consent"'
 contains "agent couvre la qualité web" "$AGENT" '"domaine": "qualite_web"'
+contains "agent utilise les statuts de couverture approuvés" "$AGENT" '"statut": "measured"'
 contains "agent transmet les erreurs" "$AGENT" '"erreurs_execution"'
 contains "agent transmet la déduplication" "$AGENT" '"deduplication"'
 contains "agent désigne le rapport" "$AGENT" '"rapport": "audit-frontend"'
@@ -215,9 +239,13 @@ contains "rédacteur consolide les constats" "$REPORT_SKILL" '## Constats transv
 contains "rédacteur produit les gains potentiels" "$REPORT_SKILL" '## Résumé des gains potentiels'
 contains "rédacteur produit le plan intégré" "$REPORT_SKILL" '## Plan d’action priorisé'
 contains "rédacteur produit la conclusion" "$REPORT_SKILL" '## Conclusion'
+contains "rédacteur ajoute l'annexe de preuves" "$REPORT_SKILL" '## Annexe des preuves et mesures'
+contains "rédacteur interdit les gains chiffrés inventés" "$REPORT_SKILL" 'Ne jamais inventer un gain chiffré'
 excludes "rédacteur OpenCode n'épingle pas un modèle indisponible" "$OPENCODE_REPORT_AGENT" 'anthropic/claude-3-5-sonnet-20241022'
 contains "agent rédacteur écrit le rapport runtime" "$REPORT_AGENT" '{timestamp}-audit-frontend.md'
 contains "agent OpenCode rédacteur écrit le rapport runtime" "$OPENCODE_REPORT_AGENT" '{timestamp}-audit-frontend.md'
+contains "agent rédacteur exige l'annexe de preuves" "$REPORT_AGENT" 'annexe des preuves et mesures'
+contains "agent OpenCode rédacteur exige l'annexe de preuves" "$OPENCODE_REPORT_AGENT" 'annexe des preuves et mesures'
 contains "commande exige Playwright" "$COMMAND" '`frontend` — audit runtime des parcours front-end uniquement (requiert le MCP `playwright`)'
 contains "commande route frontend par premier token" "$COMMAND" 'premier token exact'
 contains "commande OpenCode exige Playwright" "$OPENCODE_COMMAND" '`frontend` — audit runtime des parcours front-end uniquement (requiert le MCP `playwright`)'

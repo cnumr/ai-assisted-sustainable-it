@@ -173,6 +173,12 @@ Utiliser les colonnes `Priorité`, `Action`, `Périmètre`, `Justification` et
 Résumer les facteurs d’impact, les premières actions et la condition d'une
 mesure comparative fiable.
 
+## Annexe des preuves et mesures
+Pour chaque page, conserver les URL finales, métriques brutes, résultats
+EcoIndex reçus, preuves de requêtes et d'en-têtes non sensibles, extraits,
+captures utiles, déduplications et limites. Distinguer les données de la mesure
+initiale des sondes complémentaires et ne pas ajouter de preuve absente.
+
 ## Erreurs d’exécution et limites
 Conserver les erreurs et limites globales sans inventer de données.
 ```
@@ -183,4 +189,5 @@ Conserver les erreurs et limites globales sans inventer de données.
 - Toujours créer `docs/ecocode/audits/` avant d'écrire (idempotent)
 - Si une couche n'a pas été analysée (ex: audit front uniquement), ne pas créer le fichier correspondant
 - Si `frontendData` est disponible, créer uniquement `audit-frontend.md` pour le runtime ; ne pas créer `audit-front.md` sans `frontData`
+- Ne jamais inventer un gain chiffré, une cible numérique ou une preuve absente
 - Retourner les chemins exacts des fichiers créés pour que l'orchestrateur les affiche à l'utilisateur

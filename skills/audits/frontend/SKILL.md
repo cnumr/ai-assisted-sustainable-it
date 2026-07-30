@@ -182,10 +182,11 @@ de la page.
 
 | Domaine | Preuves à collecter |
 | --- | --- |
-| Réseau | Type, domaine, statut, protocole, redirection, en-têtes de cache et compression, taille transférée, timings et erreurs. |
+| Réseau | Type, domaine, statut, protocole, redirection, en-têtes de cache et compression, taille transférée, timings et erreurs. Inspecter les en-têtes de réponse d'une ressource nécessaire avec `browser_network_request`, sans restituer d'en-tête sensible. |
 | Scripts et styles | URLs, doublons, tiers, modules CMS identifiables, erreurs console et ressources en échec. |
 | Images et médias | Source servie, format, dimensions naturelles et affichées, `srcset`, `sizes`, `loading`, position dans le viewport, iframe, vidéo, audio et autoplay. |
 | Composants | Carrousels Swiper/Slick/Splide/Owl ou équivalents ARIA, instances, diapositives, contrôles, animations actives et canvas. |
+| Analytics et consentement | Domaines et scripts d'analytics, publicité, gestionnaire de balises et consentement effectivement chargés. |
 | Qualité web | Erreurs console, réponses 4xx/5xx, IDs dupliqués, médias cassés et dimensions intrinsèques manquantes. |
 
 Une sonde peut déclencher un défilement progressif, sans clic ni saisie, pour
@@ -194,11 +195,7 @@ de la fenêtre de collecte initiale et ne modifie jamais les entrées EcoIndex.
 
 ### Garde-fou de cohérence EcoIndex
 
-EcoIndex est un résultat, pas la preuve d'une fiche RWEB précise. Pour chaque
-page de grade C à G, l'audit doit expliquer les contributeurs matériels aux
-nœuds DOM, requêtes et octets transférés. Chacun doit produire un écart GreenIT
-prouvé, une alerte Performance ou Développement web, une entrée `a_verifier`, ou
-une limite de mesure explicite.
+EcoIndex est un résultat, pas la preuve d'une fiche RWEB précise. Pour chaque page de grade C à G, l'audit doit expliquer les contributeurs matériels aux nœuds DOM, requêtes et octets transférés. Chacun doit produire un écart GreenIT prouvé, une alerte Performance ou Développement web, une entrée `a_verifier`, ou une limite de mesure explicite.
 
 Si la première passe est insuffisante, exécuter toute la matrice puis le
 défilement progressif autorisé. Si le score reste inexpliqué, retourner une
@@ -247,6 +244,19 @@ fiche GreenIT vérifiée.
 
 Preuves observées dans le navigateur qui exigent une validation métier ou du
 code source, et non un constat GreenIT.
+
+Un domaine ou script d'analytics, de publicité, de gestionnaire de balises ou de
+consentement chargé est une preuve d'exécution, pas une preuve d'inutilité. Ne
+le qualifier RWEB_0111 que si cette fiche a été retournée par le MCP et que la
+preuve mesurée correspond à son exigence; sinon le placer dans `a_verifier`.
+Ne jamais recommander de supprimer un mécanisme de consentement pour réduire le
+poids de la page.
+
+Lorsqu'une instance Swiper est initialisée, consigner son nombre d'instances et
+de diapositives; produire un écart RWEB_0010 seulement si la fiche MCP a été
+retournée. Pour une image sous la ligne de flottaison sans `loading="lazy"`,
+conserver l'URL source et la preuve de viewport; produire un écart RWEB_0051
+seulement si la fiche MCP a été retournée.
 
 ## Erreurs et déduplication
 
@@ -303,10 +313,9 @@ l’appliquer. Ces trois champs ne sont jamais des objets ou des arrays.
 racine ou la nécessité légale ne peut pas être établie depuis le navigateur. Une
 ressource nommée n'est jamais qualifiée d'inutilisée par sa seule présence.
 
-`couverture` contient une ligne par domaine de la matrice. `statut` vaut
-`mesure`, `non_applicable`, `non_mesurable` ou `erreur`. Une page de grade C à G
-ne peut pas avoir toutes ses listes de constats vides sans une limite
-`analyse_inconcluante`.
+`couverture` contient une ligne par domaine de la matrice : `reseau`,
+`scripts_styles`, `images_medias`, `composants`, `analytics_consent` et
+`qualite_web`. `statut` vaut `measured`, `not_applicable`, `not_measurable` ou `failed`. Une page de grade C à G ne peut pas avoir toutes ses listes de constats vides sans une limite `analyse_inconcluante`.
 
 ## Contrat transmis au rédacteur
 
@@ -315,16 +324,25 @@ Le rédacteur reçoit cette sortie seulement lorsque tous les parcours sont
 
 `docs/ecocode/audits/{timestamp}-audit-frontend.md`
 
-Le rapport contient, dans cet ordre :
+Le rapport applique exactement le modèle détaillé d’`audits/report-writer`,
+dans cet ordre :
 
-1. les parcours exécutés et le sommaire des scores ;
-2. une section par parcours puis par point d’audit avec URL finale, métriques
-   brutes, EcoIndex, grade, GES et eau ;
-3. `### Écarts GreenIT`, avec identifiants et intitulés MCP exacts ;
-4. les extraits et corrections disponibles pour les écarts non dédupliqués ;
-5. `### Performance` ;
-6. `### Développement web` ;
-7. les erreurs d’exécution et limites de mesure.
+1. `## Synthèse exécutive` ;
+2. `## Parcours exécutés` ;
+3. `## Périmètre, méthode et couverture` ;
+4. `## Comparatif des pages` ;
+5. `## Résultats par page`, incluant les preuves, extraits, corrections,
+   déduplications et limites disponibles ;
+6. `## Constats transverses` ;
+7. `## Écarts GreenIT consolidés`, avec les identifiants et intitulés MCP
+   exacts ;
+8. `## Performance` ;
+9. `## Développement web` ;
+10. `## Résumé des gains potentiels` ;
+11. `## Plan d’action priorisé` ;
+12. `## Conclusion` ;
+13. `## Annexe des preuves et mesures` ;
+14. `## Erreurs d’exécution et limites`.
 
 Ajouter une capture uniquement lorsqu’elle constitue une preuve utile. Ne
 jamais capturer un écran de connexion ou une donnée sensible.
