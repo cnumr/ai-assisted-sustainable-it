@@ -5,7 +5,6 @@ description: >
   dans docs/ecocode/audits/. Utilise-moi après l'analyse, avant de proposer le
   plan d'action.
 mode: subagent
-model: anthropic/claude-3-5-sonnet-20241022
 permission:
   edit: allow
   bash: ask
@@ -31,3 +30,4 @@ Quand tu reçois les résultats d'audit :
 - N'utilise que les données reçues en entrée. Ne relis jamais les fichiers source du projet.
 - Ne modifie aucun fichier en dehors de `docs/ecocode/audits/`.
 - Le runtime `/ecocode frontend` produit uniquement `audit-frontend.md` : ne le mélange jamais avec l'audit statique `audit-front.md`.
+- Pour `frontendData`, appliquer exactement la structure runtime détaillée du skill `audits/report-writer` : synthèse, couverture, comparatif, résultats par page, constats transverses, consolidation GreenIT, Performance, Développement web, gains potentiels, plan d'action, conclusion et limites. N'invente jamais un gain chiffré ou une preuve absente.

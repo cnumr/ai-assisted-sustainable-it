@@ -128,49 +128,53 @@ type au lieu de le convertir ou de l’inventer.
 
 **Date :** YYYY-MM-DD HH:MM
 
+## Synthèse exécutive
+Afficher les pages, grades, principaux leviers et les actions P1/P2.
+
 ## Parcours exécutés
+Afficher les parcours, leurs statuts, les pages mesurées et les erreurs.
 
-| Parcours | Statut | Pages mesurées | Erreurs |
-| -------- | ------ | -------------- | ------- |
-| ...      | terminé / erreur | ... | ... |
+## Périmètre, méthode et couverture
+Afficher la fenêtre de collecte initiale, le défilement éventuel, les limites et
+la table des domaines `couverture` par page. Distinguer mesure initiale et
+diagnostic complémentaire.
 
-## Sommaire des scores
+## Comparatif des pages
+Afficher DOM, requêtes, transfert, EcoIndex, GES et eau pour chaque page.
 
-| Parcours | Point d’audit | URL finale | EcoIndex | GES | Eau |
-| -------- | ------------- | ---------- | -------- | --- | --- |
-| ...      | ...           | ...        | ...      | ... | ... |
+## Résultats par page
+Pour chaque page, écrire successivement : Écarts GreenIT, Performance,
+Développement web, À vérifier, preuves, déduplications et limites.
 
-## [Nom du parcours]
+## Constats transverses
+Regrouper les composants, scripts, tiers, polices, médias, cache et redirections
+partagés sans masquer les métriques de chaque page.
 
-### [Nom du point d’audit]
+## Écarts GreenIT consolidés
+Grouper les constats non dédupliqués par identifiant et intitulé RWEB exact.
 
-- **URL finale :** ...
-- **Métriques :** DOM : ..., requêtes : ..., transfert : ... KB
-- **EcoIndex :** .../100 — grade ...
-- **GES :** ...
-- **Eau :** ...
+## Performance
+Récapituler les alertes mesurées sans fiche RWEB.
 
-### Écarts GreenIT
+## Développement web
+Récapituler les erreurs navigateur, DOM, API et ressources observées sans fiche
+RWEB. Ne pas conclure à la conformité RGAA.
 
-Pour chaque écart non dédupliqué : identifiant et intitulé MCP exacts,
-sévérité, observation, preuve, extrait observé et correction disponible.
-Pour une occurrence dédupliquée : indiquer seulement sa référence stable et sa
-première occurrence.
+## Résumé des gains potentiels
+Utiliser les colonnes `Levier`, `Situation actuelle`, `Objectif`, `Gain
+potentiel` et `Confiance`. Chiffrer uniquement un gain déduit de données reçues;
+sinon indiquer un gain qualitatif et la mesure avant/après requise.
 
-### Performance
+## Plan d’action priorisé
+Utiliser les colonnes `Priorité`, `Action`, `Périmètre`, `Justification` et
+`Vérification après correction`. Prioriser P1 à P4 avec la grille effort/impact.
 
-Alertes runtime mesurées sans fiche GreenIT vérifiée.
-
-### Développement web
-
-Erreurs de console, HTML, API ou qualité de code observées sans fiche GreenIT
-vérifiée.
+## Conclusion
+Résumer les facteurs d’impact, les premières actions et la condition d'une
+mesure comparative fiable.
 
 ## Erreurs d’exécution et limites
-
-Lister les erreurs par parcours et les limites globales, sans inventer de
-mesure absente. Ajouter les captures uniquement lorsqu’elles sont des preuves
-utiles et jamais si elles affichent une authentification ou une donnée sensible.
+Conserver les erreurs et limites globales sans inventer de données.
 ```
 
 ## Règles impératives
