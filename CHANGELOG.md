@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.3.0 — 2026-07-30
+
+### Ajouté
+
+- Approfondit `/ecocode frontend` avec une matrice de sondes runtime pour le
+  réseau, les scripts, les médias, les composants, les analytics et la qualité
+  web, sans dépendance Lighthouse supplémentaire.
+- Ajoute un garde-fou de cohérence EcoIndex : les pages de grade C à G doivent
+  expliquer leurs contributeurs mesurés ou leurs limites de mesure.
+- Enrichit le rapport runtime avec une synthèse, la couverture des sondes, les
+  constats transverses, les gains potentiels, un plan d'action P1 à P4, une
+  conclusion et une annexe de preuves.
+
+### Corrigé
+
+- Corrige la configuration du rédacteur OpenCode et le test Claude Code du
+  routage `/ecocode`.
+
 ## 2.2.1 — 2026-07-29
 
 ### Corrigé

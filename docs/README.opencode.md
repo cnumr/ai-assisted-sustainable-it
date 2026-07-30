@@ -29,7 +29,7 @@ Pour épingler une version précise :
 
 ```json
 {
-  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/cnumr/ai-assisted-sustainable-it.git#v2.2.1"]
+  "plugin": ["ai-assisted-sustainable-it@git+https://github.com/cnumr/ai-assisted-sustainable-it.git#v2.3.0"]
 }
 ```
 
