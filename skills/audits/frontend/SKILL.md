@@ -275,7 +275,7 @@ ne jamais omettre une clé.
 | --- | --- | --- |
 | racine | `scope`, `rapport`, `parcours`, `limites_globales` | deux strings constantes, deux arrays |
 | parcours | `nom`, `statut`, `reprise_etape`, `url_cible`, `pages`, `erreurs_execution` | string ; enum ; integer ou null ; string HTTP(S) ou null ; deux arrays |
-| page | `nom`, `url`, `metriques`, `ecoindex`, `ecarts_greenit`, `performance`, `developpement_web`, `a_verifier`, `couverture`, `deduplication`, `capture`, `limites` | deux strings ; deux objects ; six arrays ; string ou null |
+| page | `nom`, `url`, `metriques`, `ecoindex`, `ecarts_greenit`, `performance`, `developpement_web`, `a_verifier`, `couverture`, `deduplication`, `capture`, `limites` | deux strings ; deux objects ; sept arrays ; string ou null |
 | métriques | `dom_nodes`, `requests`, `size_kb` | trois numbers finis >= 0 |
 | EcoIndex | `score`, `grade`, `ges`, `eau` | number, string, number, number |
 | écart GreenIT | `deduplication_key`, `practice_id`, `practice_title`, `severity`, `observation`, `preuve`, `impact`, `localisation`, `code_observe`, `correction` | huit strings, puis deux strings ou null |

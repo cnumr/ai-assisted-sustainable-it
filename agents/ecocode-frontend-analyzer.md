@@ -120,6 +120,24 @@ omettre de clé :
               "correction": null
             }
           ],
+          "a_verifier": [
+            {
+              "deduplication_key": "script:https://example.com/search.js",
+              "severity": "moyenne",
+              "observation": "Un module de recherche est chargé au démarrage.",
+              "preuve": "URL du script observée dans la fenêtre réseau.",
+              "impact": "Le navigateur ne permet pas d'établir son utilité métier.",
+              "localisation": "parcours/accueil",
+              "correction": "Valider son besoin puis différer ou retirer le module si possible."
+            }
+          ],
+          "couverture": [
+            {
+              "domaine": "composants",
+              "statut": "mesure",
+              "message": "Carrousels et animations inspectés."
+            }
+          ],
           "deduplication": [
             {
               "deduplication_key": "asset:https://example.com/app.js",
