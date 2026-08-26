@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Changements incompatibles
+
+- Distribue désormais uniquement les skills `design`, `development` et
+  `ecocode` via `npx skills@latest add cnumr/ai-assisted-sustainable-it`.
+- Supprime les plugins, profils d'agents, hooks, commandes et installations
+  spécifiques aux plateformes historiques.
+
 ## 2.3.1 — 2026-07-30
 
 ### Corrigé

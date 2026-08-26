@@ -1,44 +1,16 @@
 # Tester ai-assisted-sustainable-it
 
-## Tests de structure et de release
+## Tests locaux
 
 ```bash
-bash tests/structure/test-sustainable-it-structure.sh
-bash tests/structure/test-frontend-runtime-contract.sh
-bash tests/structure/test-release-metadata.sh
+bash tests/structure/test-skills-only-distribution.sh
 bash tests/structure/test-yaml-frontmatter.sh
-./scripts/bump-version.sh --audit
 ```
 
-## Tests Claude Code
+## Découverte par le CLI
 
 ```bash
-./tests/claude-code/run-skill-tests.sh
-./tests/claude-code/run-skill-tests.sh --verbose
-./tests/claude-code/run-skill-tests.sh --test test-ecocode-bootstrap.sh
+npx skills@latest add cnumr/ai-assisted-sustainable-it --list
 ```
 
-## Test du bootstrap
-
-```bash
-CLAUDE_PLUGIN_ROOT="$(pwd)" bash hooks/session-start
-```
-
-La sortie est un JSON contenant les guides `skills/design/SKILL.md` et
-`skills/development/SKILL.md`.
-
-## Test OpenCode
-
-```bash
-node --input-type=module <<'EOF'
-import { EcocodePlugin } from './.opencode/plugins/ecocode.js';
-const plugin = await EcocodePlugin({ client: null, directory: '.' });
-console.log(typeof plugin.config);
-console.log(typeof plugin['experimental.chat.messages.transform']);
-EOF
-```
-
-Ce contrôle vérifie que le plugin OpenCode expose ses hooks. Le contrat
-`/ecocode frontend`, ses agents OpenCode et le chargement de
-`audits/frontend` sont vérifiés par
-`tests/structure/test-frontend-runtime-contract.sh`.
+La commande doit proposer `design`, `development` et `ecocode`.

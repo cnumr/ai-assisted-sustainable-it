@@ -1,6 +1,6 @@
 ---
 name: ecocode
-description: Auditer explicitement l'éco-conception d'un projet ou d'un parcours web : front-end, back-end, runtime navigateur, pratiques Green IT manquantes et EcoIndex.
+description: "Auditer explicitement l'éco-conception d'un projet ou d'un parcours web : front-end, back-end, runtime navigateur, pratiques Green IT manquantes et EcoIndex."
 ---
 
 # EcoCode — audit éco-conception
