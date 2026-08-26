@@ -31,3 +31,9 @@ grep -Fq 'npx skills@latest add cnumr/ai-assisted-sustainable-it' "$root/README.
 grep -Fq 'mcp-greenit' "$root/README.md"
 grep -Fq 'playwright' "$root/README.md"
 ! grep -Fq '/plugin install' "$root/README.md"
+
+grep -Fq 'mcp-greenit' "$root/skills/ecocode/SKILL.md"
+grep -Fq 'sous-agents' "$root/skills/ecocode/SKILL.md"
+grep -Fq 'retourne exclusivement le contrat de constats' "$root/skills/ecocode/SKILL.md"
+grep -Fq "brouillon d'issue" "$root/skills/ecocode/references/restitution.md"
+grep -Fq 'demande explicite' "$root/skills/ecocode/references/restitution.md"
