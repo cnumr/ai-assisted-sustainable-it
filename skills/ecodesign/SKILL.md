@@ -1,12 +1,12 @@
 ---
-name: design
+name: ecodesign
 description: Passive eco-design guidelines. Apply them when defining a product, user journey, data model, or dependency. Loaded automatically at session start.
 ---
 
-# Éco-conception — Règles de conception actives
+# EcoDesign — règles de conception actives
 
 Applique ces règles automatiquement quand tu définis une solution. Pour son
-implémentation, applique aussi le skill `development`.
+implémentation, applique aussi le skill `ecocode`.
 
 ## Conception
 

@@ -1,42 +1,41 @@
 ---
 name: ecocode
-description: "Auditer explicitement l'éco-conception d'un projet ou d'un parcours web : front-end, back-end, runtime navigateur, pratiques Green IT manquantes et EcoIndex."
+description: Use when writing or modifying front-end, back-end, build, or cache configuration.
 ---
 
-# EcoCode — audit éco-conception
+# EcoCode — règles d'implémentation actives
 
-Utilise ce skill lorsqu'une personne demande un audit éco-conception, Green IT,
-EcoIndex, front-end, back-end ou runtime. Une demande naturelle est suffisante ;
-`/ecocode` est seulement un raccourci si l'hôte le comprend.
+Applique ces règles **automatiquement** quand tu écris ou modifies une solution. Pas besoin qu'on te le demande.
 
-## Routage
+## Front-end
 
-1. Déterminer le périmètre demandé : **front statique**, **back statique**,
-   **complet**, ou **runtime navigateur**. Si aucun périmètre n'est explicite,
-   proposer ces quatre choix.
-2. Vérifier `mcp-greenit` avant toute analyse. Pour le runtime, vérifier aussi
-   Playwright ; sans l'un de ces prérequis, expliquer ce qui manque et arrêter
-   la branche concernée.
-3. Lire la référence adaptée :
-   - front, back ou complet : [analyse statique](references/static-analysis.md) ;
-   - URL ou parcours navigateur : [analyse runtime](references/runtime-analysis.md).
-4. Analyser sans écrire ni modifier le projet, puis construire le seul objet
-   décrit dans le [contrat de constats](references/findings-contract.md).
-5. Présenter les constats, puis suivre le choix de [restitution](references/restitution.md).
+### Chargement
 
-## Sous-agents facultatifs
+- **Lazy-load** : attribut `loading="lazy"` sur toutes les `<img>` hors viewport ; `import()` dynamique pour le code non critique (`RWEB_0051`, `RWEB_0046`)
+- **Imports ciblés** : importe les fonctions, pas les libs entières — `import { debounce } from 'lodash-es'` pas `import _ from 'lodash'` (`RWEB_0015`)
+- **Taille images** : utilise `srcset`/`sizes`, format WebP ou AVIF de préférence au JPEG/PNG (`RWEB_0048`, `RWEB_0049`)
+- **Pas d'autoplay** : jamais `autoplay` sur `<video>` ou `<audio>` sans contrôle explicite utilisateur (`RWEB_0106`)
 
-Si l'hôte sait déléguer, il peut confier front et back à deux sous-agents en
-parallèle. Utiliser un modèle économique et rapide pour l'inventaire et la
-collecte ; réserver un modèle plus capable à la synthèse, aux décisions ou aux
-corrections complexes. Chaque sous-agent retourne exclusivement le contrat de
-constats, sans journal de recherche ni rapport intermédiaire.
+### DOM & rendu
 
-L'agent courant reste l'orchestrateur et réalise l'audit séquentiellement si
-les sous-agents, le choix de modèle ou le parallélisme ne sont pas disponibles.
+- **CSS > JS** : préfère `transition` et `animation` CSS aux animations JavaScript (`RWEB_0009`)
+- **CSS > images** : utilise `gradient`, `border-radius`, `clip-path` plutôt que des images décoratives (`RWEB_0037`)
+- **Batch DOM** : ne modifie pas le DOM pendant la traversée — regroupe les changements, utilise `DocumentFragment` (`RWEB_0044`)
+- **Cache DOM** : stocke les références DOM dans des variables avant les boucles — pas de `querySelector` répété (`RWEB_0054`)
+- **Délégation** : un seul event listener sur le parent au lieu de N listeners sur chaque enfant (`RWEB_0056`)
+- **Repaint/reflow** : évite de lire `offsetHeight`/`offsetWidth` juste après avoir modifié des styles CSS (`RWEB_0052`)
+- **Tâches JS** : découpe les traitements longs en chunks < 50ms — `requestIdleCallback`, `setTimeout(fn, 0)`, Web Workers (`RWEB_0053`)
 
-## Critère de fin
+## Back-end
 
-L'audit est terminé lorsque le périmètre est couvert ou limité explicitement,
-que chaque écart Green IT est prouvé par une fiche MCP, et que la personne a
-choisi ou refusé une suite de restitution.
+- **Async** : traite les opérations lourdes de manière asynchrone — jobs, queues, workers — ne bloque pas le thread principal (`RWEB_0007`)
+- **Cache calculs** : mémoïse les résultats coûteux — `@lru_cache` (Python), Redis, Memcache — plutôt que de recalculer (`RWEB_0016`)
+- **Batch queries** : évite les boucles qui génèrent N requêtes SQL — `select_related`/`prefetch_related` (Django), `include` (Laravel), `JOIN` ou `IN (...)` (`RWEB_0021`)
+- **Types DB** : utilise le type le plus petit adapté — `INT` pas `BIGINT`, `VARCHAR(n)` pas `TEXT` sans justification (`RWEB_0063`)
+- **Stockage minimal** : ne persiste que les données strictement nécessaires — pas de colonnes "au cas où" (`RWEB_0023`)
+- **TTL données** : toute table/collection a une politique d'expiration — TTL Redis, `deleted_at`, job de purge (`RWEB_0079`)
+
+## Build & config
+
+- **Cache-Control** : assets statiques avec content hash → `Cache-Control: max-age=31536000, immutable` (`RWEB_0075`)
+- **Minification** : configure le build tool pour minifier CSS, JS, HTML, SVG en production (`RWEB_0077`)
