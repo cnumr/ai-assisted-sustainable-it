@@ -11,3 +11,6 @@ npx skills@latest add cnumr/ai-assisted-sustainable-it --list
 
 Choisir la version selon Semantic Versioning, créer le commit de release,
 pousser le tag annoté puis publier les notes de `CHANGELOG.md`.
+
+La découverte doit proposer `ecodesign`, `ecocode` et
+`audit-ecoconception`.

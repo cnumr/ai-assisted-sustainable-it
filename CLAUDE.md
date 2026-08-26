@@ -4,9 +4,15 @@ Skills portables d'éco-conception numérique.
 
 ## Skills
 
-- `design` applique les règles de conception sobre.
-- `development` applique les règles de développement sobre.
-- `ecocode` réalise les audits explicites front-end, back-end et runtime.
+- `ecodesign` applique automatiquement les règles de conception sobre.
+- `ecocode` applique automatiquement les règles d'implémentation sobre.
+- `audit-ecoconception` réalise les audits explicites du code et du navigateur.
+
+```text
+$audit-ecoconception code front
+$audit-ecoconception code back
+$audit-ecoconception navigateur https://example.com
+```
 
 ## Prérequis
 

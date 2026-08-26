@@ -13,4 +13,5 @@ bash tests/structure/test-yaml-frontmatter.sh
 npx skills@latest add cnumr/ai-assisted-sustainable-it --list
 ```
 
-La commande doit proposer `design`, `development` et `ecocode`.
+La commande doit proposer `ecodesign`, `ecocode` et
+`audit-ecoconception`.

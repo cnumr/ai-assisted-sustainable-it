@@ -4,9 +4,9 @@
 
 ```text
 skills/
-├── design/SKILL.md
-├── development/SKILL.md
-└── ecocode/
+├── ecodesign/SKILL.md
+├── ecocode/SKILL.md
+└── audit-ecoconception/
     ├── SKILL.md
     └── references/
 tests/structure/
@@ -34,4 +34,4 @@ npx skills@latest add .
 ## Conventions de commit
 
 Utiliser les commits conventionnels, par exemple `feat: add audit rule` ou
-`fix(ecocode): correct cache guidance`.
+`fix(audit-ecoconception): correct cache guidance`.

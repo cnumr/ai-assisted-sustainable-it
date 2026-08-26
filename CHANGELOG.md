@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Changements incompatibles
+
+- Renomme les skills publics en `ecodesign`, `ecocode` et
+  `audit-ecoconception`, sans alias pour `design`, `development` ni l'ancien
+  skill d'audit `ecocode`.
+- Rend le périmètre d'audit explicite avec `code front`, `code back`, `code`
+  et `navigateur <URL>`.
+
 ## 3.0.0 — 2026-08-26
 
 ### Changements incompatibles

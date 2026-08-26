@@ -6,7 +6,8 @@ Installer les skills portables avec :
 npx skills@latest add cnumr/ai-assisted-sustainable-it
 ```
 
-`design` et `development` s'appliquent automatiquement pendant la conception
-et le développement. `ecocode` réalise les audits demandés explicitement.
+`ecodesign` et `ecocode` s'appliquent automatiquement pendant la conception
+et l'implémentation. `audit-ecoconception` réalise les audits demandés
+explicitement : `code front`, `code back`, `code` ou `navigateur <URL>`.
 
 `mcp-greenit` est requis pour tous les audits et Playwright pour le runtime.
