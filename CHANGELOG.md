@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.2 — 2026-09-08
+
+### Modifié
+
+- Définit un protocole EcoIndex navigateur reproductible pour les audits runtime :
+  viewport fixe, première visite sans données locales, défilement, attentes,
+  métriques `eco-index-*`, navigation avec cache et traçabilité du rapport.
+
 ## 3.0.1 — 2026-08-26
 
 ### Changements incompatibles
