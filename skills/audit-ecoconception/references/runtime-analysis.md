@@ -13,7 +13,9 @@ requiert une confirmation explicite avant son exécution. Ne jamais capturer un
 
 ## Mesure
 
-Ce protocole est la source de verite de toute mesure runtime EcoIndex.
+Pour une mesure EcoIndex, lire et appliquer [la methode navigateur](ecoindex-measurement.md).
+Le MCP GreenIT est la seule source de verite de la methode de collecte et du
+calcul.
 
 1. Lancer Chrome/Playwright avec un viewport de 1920 x 1080. Fin : le viewport
    effectif est verifie avant la navigation.
@@ -25,21 +27,13 @@ Ce protocole est la source de verite de toute mesure runtime EcoIndex.
 4. Faire defiler jusqu'en bas de page pour declencher les contenus charges au
    scroll, puis attendre 3 secondes. Fin : le bas est atteint et la seconde
    attente est ecoulee.
-5. Relever les trois metriques des audits Lighthouse du plugin `eco-index-*`,
-   ou d'une methode strictement equivalente : noeuds DOM, poids transfere et
-   requetes EcoIndex. Fin : les trois valeurs et leur source exacte sont
-   disponibles pour chaque page.
-6. Appeler `greenit_calculer_ecoindex` uniquement avec ces trois valeurs pour
-   calculer score, grade, GES et eau. Fin : aucune autre metrique n'entre dans
-   ce calcul.
-7. Documenter separement les erreurs console pertinentes, redirections, cache,
+5. Collecter `dom_nodes`, `requests` et `size_kb` avec la methode retournee par
+   `greenit_obtenir_methodologie_ecoindex`, puis appeler
+   `greenit_calculer_ecoindex`. Fin : les trois valeurs, leur methode et le
+   resultat sont disponibles, ou l'EcoIndex est explicitement non mesure.
+6. Documenter separement les erreurs console pertinentes, redirections, cache,
    tiers et medias observes. Fin : ces observations n'alterent pas les entrees
    EcoIndex.
-
-`eco-index-requests` est la seule source du nombre de requetes EcoIndex : ne
-pas le remplacer par le total des requetes Lighthouse, CDP ou Resource Timing.
-Compter les Shadow DOM ouverts ; compter l'element SVG mais pas ses descendants.
-Distinguer cette mesure de toute sonde complementaire.
 
 Dans un parcours multi-pages, conserver le cache pour les pages suivantes afin
 de reproduire une navigation utilisateur. Identifier chaque mesure comme
@@ -51,6 +45,17 @@ Pour un grade C à G, expliquer les contributeurs matériels observés ou décla
 une limite de mesure. Les fiches RWEB, alertes de performance, problèmes de
 qualité web et pistes à vérifier restent dans des catégories distinctes.
 
+## Preuves fonctionnelles du parcours
+
+Après le protocole de mesure EcoIndex ci-dessus, observer en lecture seule le
+parcours déclaré : navigation, recherche, hiérarchie des contenus, formats,
+documents, médias, formulaires, listes et choix de rétention exposés. Distinguer
+ces observations des intentions métier inférées ; une intention non prouvée va
+dans `a_verifier` avec les preuves ou données nécessaires.
+
+Ces observations ne sont pas une source de mesure EcoIndex et ne modifient pas
+la methode MCP appliquee aux metriques runtime.
+
 ## Restitution runtime
 
 Chaque rapport documente, pour chaque mesure, le viewport, les deux attentes,
@@ -61,4 +66,5 @@ de reproduire ou de limiter explicitement toute comparaison.
 ## Sortie
 
 Produire le [contrat de constats](findings-contract.md), avec les limites et
-métriques par page. Ne pas conclure sur l'accessibilité RGAA.
+métriques par page, en séparant `constats_fonctionnels` et `constats_ecocode`.
+Ne pas conclure sur l'accessibilité RGAA.

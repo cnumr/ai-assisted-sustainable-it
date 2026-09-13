@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.1.0 — 2026-09-13
+
+### Ajouté
+
+- Ajoute l'audit d'ecoconception fonctionnelle aux perimetres fonctionnel,
+  front, back, complet et navigateur, avec des constats separes de l'ecocode.
+- Ajoute les regles de preuve produit : les hypotheses metier non prouvees sont
+  declarees `a_verifier` avec les donnees necessaires.
+
+### Modifié
+
+- Rend la mesure EcoIndex runtime autonome : le navigateur applique la methode
+  fournie par `mcp-greenit`, puis utilise ses trois metriques pour le calcul.
+
 ## 3.0.2 — 2026-09-08
 
 ### Modifié
