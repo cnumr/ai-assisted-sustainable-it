@@ -4,11 +4,12 @@ Skills portables d'éco-conception numérique.
 
 ## Skills
 
-- `ecodesign` applique automatiquement les règles de conception sobre.
-- `ecocode` applique automatiquement les règles d'implémentation sobre.
-- `audit-ecoconception` réalise les audits explicites du code et du navigateur.
+- `ecodesign` et `ecocode` restent proactifs lors de la conception et de la
+  modification d'une solution.
+- `audit-ecoconception` audite l'eco-conception fonctionnelle et l'ecocode.
 
 ```text
+$audit-ecoconception fonctionnel
 $audit-ecoconception code front
 $audit-ecoconception code back
 $audit-ecoconception navigateur https://example.com
@@ -17,7 +18,7 @@ $audit-ecoconception navigateur https://example.com
 ## Prérequis
 
 - MCP `mcp-greenit` pour tout audit.
-- MCP `playwright` pour un audit runtime navigateur.
+- MCP `playwright` : requis pour les audits fonctionnels et runtime dans le navigateur.
 
 ## Installation
 

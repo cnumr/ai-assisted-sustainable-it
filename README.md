@@ -16,7 +16,7 @@ sont `ecodesign`, `ecocode` et `audit-ecoconception`.
 ## Prérequis des audits
 
 - MCP `mcp-greenit` : requis pour tous les audits ;
-- MCP `playwright` : requis pour les audits runtime dans le navigateur.
+- MCP `playwright` : requis pour les audits fonctionnels et runtime dans le navigateur.
 
 Le CLI d'installation ne configure pas ces MCP.
 
@@ -29,7 +29,7 @@ ou modifiez une solution. Aucun appel explicite n'est requis.
 | --- | --- | --- |
 | `ecodesign` | Automatique | Conception produit et technique. |
 | `ecocode` | Automatique | Implémentation, build et cache. |
-| `audit-ecoconception` | Explicite | Audit du code ou du navigateur. |
+| `audit-ecoconception` | Explicite | Audite l'eco-conception fonctionnelle et l'ecocode, le code ou le navigateur. |
 
 Les répertoires distribués sont `skills/ecodesign`, `skills/ecocode` et
 `skills/audit-ecoconception`.
@@ -37,11 +37,16 @@ Les répertoires distribués sont `skills/ecodesign`, `skills/ecocode` et
 Pour un audit explicite, les hôtes qui reconnaissent le préfixe `$` acceptent :
 
 ```text
+$audit-ecoconception fonctionnel
 $audit-ecoconception code front
 $audit-ecoconception code back
 $audit-ecoconception code
 $audit-ecoconception navigateur https://example.com
 ```
+
+`audit-ecoconception` audite l'eco-conception fonctionnelle et l'ecocode.
+`ecodesign` et `ecocode` restent proactifs lors de la conception et de la
+modification d'une solution.
 
 Une demande naturelle équivalente est portable entre les hôtes.
 
